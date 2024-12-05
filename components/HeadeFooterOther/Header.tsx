@@ -1,0 +1,131 @@
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import AnnouncementBarV1 from "./AnnouncementBarV1";
+
+const Header = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const path = usePathname();
+
+  const menu = [
+    {
+      path: "/",
+      label: "Home",
+    },
+    {
+      path: "/about",
+      label: "About Us",
+    },
+    {
+      path: "/contact",
+      label: "Contact Us",
+    },
+  ];
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  return (
+    <>
+      <AnnouncementBarV1 />
+      <div className=" shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] relative">
+        <header className="w-full templateContainer flex items-center justify-between py-2 px-4 md:px-8">
+          <Link href={"/"} className="block h-[55px] w-auto">
+            <Image
+              src={"/logo.webp"}
+              className="h-full w-full object-contain"
+              alt="Logo"
+              priority
+              height={500}
+              width={500}
+            />
+          </Link>
+          <nav className="hidden md:flex items-center gap-5 text-sm">
+            {menu.map((item, index) => {
+              return (
+                <Link href={item.path} key={index}>
+                  <span
+                    className={`block text-sm text-dark tracking-wide ${
+                      path === item.path ? "active-class" : "hover-class"
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
+          <Link href={"/register"} className=" md:hidden">
+            <button className="px-6 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-xs bg-dark text-white rounded-full leading-none tracking-wide font-medium">
+              Register
+            </button>
+          </Link>
+          <button
+            className="block md:hidden text-2xl"
+            onClick={toggleDrawer}
+            aria-label="Menu"
+          >
+            ☰
+          </button>
+          <Link href={"/register"} className="hidden md:block">
+            <button className="px-7 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-medium">
+              Register
+            </button>
+          </Link>
+        </header>
+
+        {/* Mobile Drawer */}
+        <>
+          {/* Overlay */}
+          <div
+            className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
+              isDrawerOpen ? "opacity-50" : "opacity-0 pointer-events-none"
+            }`}
+            onClick={toggleDrawer}
+          ></div>
+
+          {/* Drawer */}
+          <div
+            className={`lg:hidden fixed top-0 left-0 h-full w-[90%] bg-white z-50 shadow-lg transform transition-transform duration-300 ${
+              isDrawerOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+            <div className="w-full relative flex items-center justify-start px-6 shadow-lg py-3">
+              <div className="h-[55px]">
+                <Image
+                  src={"/logo.webp"}
+                  className="h-full w-full object-contain"
+                  alt="Logo"
+                  priority
+                  height={500}
+                  width={500}
+                />
+              </div>
+              <button
+                className="self-end text-xl absolute top-4 right-4"
+                onClick={toggleDrawer}
+                aria-label="Close Menu"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-6 flex flex-col gap-5">
+              {menu.map((item, index) => (
+                <Link href="/" key={index}>
+                  <span className="text-sm" onClick={toggleDrawer}>
+                    {item.label}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </>
+      </div>
+    </>
+  );
+};
+
+export default Header;

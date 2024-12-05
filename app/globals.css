@@ -1,21 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Martel:wght@200;300;400;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.templateContainer {
+  @apply container mx-auto px-4 md:px-6 lg:px-10;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  /* font-family: "Martel", serif; */
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+/* Common styles for menu items */
+.block {
+  display: inline-block;
+  position: relative;
+}
+
+/* Hover effect */
+.hover-class::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  border-radius: 100px;
+  background: linear-gradient(to right, #ee851c, #ee851c);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.hover-class:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+/* Active state effect */
+.active-class::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  border-radius: 100px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #ee851c, #ee851c);
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: translate(-50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, 0) rotate(360deg);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.rotating-ring {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Fade-Up and Fade-Down Animations */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Active Tab Animation Classes */
+.fade-up {
+  animation: fade-up 0.3s ease-in-out forwards;
+}
+
+.fade-down {
+  animation: fade-down 0.3s ease-in-out forwards;
+}
+
+/* Hidden Content */
+.hidden-content {
+  display: none; /* Ensures inactive content does not occupy any space */
 }
