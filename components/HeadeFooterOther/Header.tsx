@@ -26,9 +26,13 @@ const Header = () => {
       label: "About Us",
     },
     {
-      path: "/contact",
-      label: "Contact Us",
+      path: "/faqs",
+      label: "FAQs",
     },
+    // {
+    //   path: "/contact",
+    //   label: "Contact Us",
+    // },
   ];
 
   const toggleDrawer = () => {

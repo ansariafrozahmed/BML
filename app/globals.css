@@ -118,3 +118,7 @@ body {
 .bounce {
   animation: bounce 4s infinite;
 }
+
+.ant-modal .ant-modal-close {
+  display: none;
+}

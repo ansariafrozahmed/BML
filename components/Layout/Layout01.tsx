@@ -6,6 +6,7 @@ import Image from "next/image";
 import OurSocialMedia from "../Gallery/OurSocialMedia";
 import SocialMediaLinks from "../HeadeFooterOther/SocialMediaLinks";
 import EditBanner from "../UserEdit/EditBanner";
+import { Pencil } from "lucide-react";
 
 interface ContactDetail {
   label: string;
@@ -29,11 +30,7 @@ interface Layout01Props {
     username: string;
   };
   username: string;
-  isLoggedIn: {
-    status: boolean;
-    username?: string;
-    token?: string;
-  };
+  isLoggedIn: any;
 }
 
 const Layout01: React.FC<Layout01Props> = ({
@@ -43,7 +40,17 @@ const Layout01: React.FC<Layout01Props> = ({
 }) => {
   return (
     <>
-      <div className="h-[250px] lg:h-[350px] relative">
+      {isLoggedIn.status && (
+        <div className="bg-gradient-to-b from-black to-transparent text-white fixed w-full z-50 flex items-center gap-2 justify-center p-3">
+          <Pencil size={15} />
+          <span>Edit mode is on</span>
+        </div>
+      )}
+      <div
+        className={`group h-[250px] lg:h-[350px] relative ${
+          isLoggedIn.status && "cursor-pointer"
+        }`}
+      >
         <Image
           src={
             userData?.banner_image
@@ -58,6 +65,9 @@ const Layout01: React.FC<Layout01Props> = ({
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        {isLoggedIn.status && (
+          <div className="group-hover:bg-black/40 transition-all eas duration-100 absolute inset-0 "></div>
+        )}
         <div className="absolute inset-0 templateContainer flex  items-end justify-start pb-10">
           <div className="space-y-2">
             <h2 className="text-3xl lg:text-5xl font-light text-white">

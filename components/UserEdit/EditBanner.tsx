@@ -1,16 +1,30 @@
 "use client";
-import { Form, Modal, Upload, Tooltip, message } from "antd";
-import { Pencil } from "lucide-react";
+import { Form, Modal, Upload, Tooltip, message, Popover } from "antd";
+import { LoaderCircle, Pencil } from "lucide-react";
 import React, { useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import { useForm } from "antd/es/form/Form";
 
 const { Dragger } = Upload;
 
-const EditBanner: React.FC = (token: any) => {
+interface EditBannerProps {
+  token: any;
+}
+
+const EditBanner: React.FC<EditBannerProps> = (token) => {
+  const [form] = useForm();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const [uploading, setUploading] = useState(false);
 
+  const openModal = () => {
+    setOpen(true);
+    setUploading(false);
+  };
+
   const handleBannerUpload = async (values: { banner_image: any[] }) => {
+    // Ensure a file is provided
     if (!values.banner_image || values.banner_image.length === 0) {
       message.error("Please upload a banner image.");
       return;
@@ -21,10 +35,9 @@ const EditBanner: React.FC = (token: any) => {
     const formData = new FormData();
     formData.append("bannerImage", file);
 
-    console.log(token);
+    setUploading(true); // Set uploading to true before making the API call
 
     try {
-      setUploading(true);
       const response = await fetch(`${process.env.BACKEND}/api/uploadBanner`, {
         method: "POST",
         headers: {
@@ -33,43 +46,71 @@ const EditBanner: React.FC = (token: any) => {
         body: formData,
       });
 
-      if (response.ok) {
-        message.success("Banner image updated successfully!");
-        setOpen(false);
-      } else {
+      // Handle response
+      if (!response.ok) {
         const error = await response.json();
-        message.error(error.message || "Failed to upload banner image.");
+        throw new Error(error.message || "Failed to upload banner image.");
       }
-    } catch (error) {
-      message.error("An error occurred while uploading. Please try again.");
-    } finally {
-      setUploading(false);
+
+      // Success handling
+      router.refresh();
+      setTimeout(() => {
+        form.resetFields();
+        setOpen(false); // Close modal only if upload succeeds
+      }, 1000);
+    } catch (error: any) {
+      message.error(
+        error.message || "An error occurred while uploading. Please try again."
+      );
     }
   };
 
   return (
     <>
-      <Tooltip
+      {/* <Popover
         placement="left"
         color="#fff"
         className="text-black"
         title={<span className="text-primary px-2">Edit Banner Image</span>}
-      >
+      > */}
+      <div className="space-y-2">
         <div
-          onClick={() => setOpen(true)}
+          onClick={openModal}
+          className="bg-white p-2 rounded-full cursor-pointer shadow-2xl "
+        >
+          <Pencil size={18} className="text-primary" />
+        </div>
+        <div
+          onClick={openModal}
           className="bg-white p-2 rounded-full cursor-pointer shadow-2xl hover:scale-90 transition-transform ease-in-out duration-200"
         >
           <Pencil size={18} className="text-primary" />
         </div>
-      </Tooltip>
+        <div
+          onClick={openModal}
+          className="bg-white p-2 rounded-full cursor-pointer shadow-2xl hover:scale-90 transition-transform ease-in-out duration-200"
+        >
+          <Pencil size={18} className="text-primary" />
+        </div>
+      </div>
+      {/* </Popover> */}
 
       <Modal
         open={open}
         footer={null}
-        onCancel={() => setOpen(false)}
+        width={450}
+        onCancel={() => {
+          // if (uploading) {
+          //   setOpen(true);
+          // } else {
+          //   setOpen(false);
+          // }
+
+          !uploading && setOpen(false);
+        }}
         title="Update Your Banner"
       >
-        <Form onFinish={handleBannerUpload} layout="vertical">
+        <Form form={form} onFinish={handleBannerUpload} layout="vertical">
           <Form.Item
             name="banner_image"
             valuePropName="fileList"
@@ -97,9 +138,13 @@ const EditBanner: React.FC = (token: any) => {
             <button
               type="submit"
               disabled={uploading}
-              className="px-6 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-xs bg-dark text-white rounded-full leading-none tracking-wide font-medium"
+              className="px-6 py-4 hover:opacity-90 w-full flex items-center justify-center transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-medium"
             >
-              {uploading ? "Uploading..." : "Update"}
+              {uploading ? (
+                <LoaderCircle size={20} className="animate-spin" />
+              ) : (
+                "Update"
+              )}
             </button>
           </Form.Item>
         </Form>

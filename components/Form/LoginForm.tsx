@@ -109,6 +109,15 @@ const LoginForm = () => {
               />
             </Form.Item>
 
+            {/* <div className="-mt-4 mb-4 text-right">
+              <Link
+                href={"/forgot-password"}
+                className="text-xs w-full underline tracking-wide font-medium cursor-pointer hover:text-templateText text-templatePrimary"
+              >
+                Forgot your password ?
+              </Link>
+            </div> */}
+
             <Form.Item<FieldType>
               className="-mt-2"
               name="password"

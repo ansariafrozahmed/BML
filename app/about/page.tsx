@@ -28,7 +28,7 @@ const About = () => {
           तसेच एक अनोखं ओळखपत्र मिळावे, यासाठी हे व्यासपीठ उपयुक्त ठरेल.
         </p>
         <h2 className="text-primary text-2xl tracking-wide">वैशिष्ट्ये</h2>
-        <ul className="list-decimal list-inside space-y-4 text-base tracking-wider text-gray-700 leading-relaxed">
+        <ul className="list-decimal list-inside space-y-5 text-base tracking-wider text-gray-700 leading-relaxed">
           <li>
             डिजिटल प्रोफाइल: आपल्या बाप्पासाठी फोटो, व्हिडिओ, आणि माहिती
             सामावलेलं डिजिटल प्रोफाइल तयार करा.
