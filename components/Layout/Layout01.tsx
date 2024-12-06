@@ -5,6 +5,7 @@ import Shareprofile from "../Gallery/Shareprofile";
 import Image from "next/image";
 import OurSocialMedia from "../Gallery/OurSocialMedia";
 import SocialMediaLinks from "../HeadeFooterOther/SocialMediaLinks";
+import EditBanner from "../UserEdit/EditBanner";
 
 interface ContactDetail {
   label: string;
@@ -28,9 +29,18 @@ interface Layout01Props {
     username: string;
   };
   username: string;
+  isLoggedIn: {
+    status: boolean;
+    username?: string;
+    token?: string;
+  };
 }
 
-const Layout01: React.FC<Layout01Props> = ({ userData, username }) => {
+const Layout01: React.FC<Layout01Props> = ({
+  userData,
+  username,
+  isLoggedIn,
+}) => {
   return (
     <>
       <div className="h-[250px] lg:h-[350px] relative">
@@ -56,7 +66,15 @@ const Layout01: React.FC<Layout01Props> = ({ userData, username }) => {
             <SocialMediaLinks socialMedia={userData?.social_links} />
           </div>
         </div>
+        {/* ------------ */}
+        {/* SHOW IF USER IS LOGGED IN */}
+        {isLoggedIn.status && (
+          <div className="absolute z-[999] top-5 right-5">
+            <EditBanner token={isLoggedIn.token} />
+          </div>
+        )}
       </div>
+      {/* ----------- */}
       <div className="templateContainer flex flex-col lg:flex-row gap-16 w-full">
         <div className="w-full lg:w-[70%]">
           <ProfileTabs userData={userData} />
@@ -76,6 +94,16 @@ const Layout01: React.FC<Layout01Props> = ({ userData, username }) => {
           <Shareprofile username={username} />
         </div>
       </div>
+
+      {/* ------------- */}
+      {/* PREVIEW BUTTON */}
+      {isLoggedIn?.status && (
+        <div className="fixed bottom-5 right-5">
+          <button className="px-6 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-xs bg-dark text-white rounded-full leading-none tracking-wide font-medium">
+            PREVIEW
+          </button>
+        </div>
+      )}
     </>
   );
 };

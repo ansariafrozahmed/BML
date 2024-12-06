@@ -3,6 +3,9 @@ import React from "react";
 // import { EmblaOptionsType } from "embla-carousel";
 import FeaturesComp from "@/components/Features/FeaturesComp";
 import Hero from "@/components/Banner/Hero";
+import FeatureList from "@/components/Features/FeatureList";
+import Header from "@/components/HeadeFooterOther/Header";
+import Footer from "@/components/HeadeFooterOther/Footer";
 
 // const fetchBannerSettings = async () => {
 //   try {
@@ -36,13 +39,16 @@ const Home = async () => {
 
   return (
     <>
+      <Header />
       <Hero />
+      <FeatureList />
       {/* <Banner
         options={OPTIONS}
         desktopBanner={data[0].meta.desktop_banners}
         mobileBanner={data[0].meta.mobile_banners}
       /> */}
       <FeaturesComp />
+      <Footer />
     </>
   );
 };

@@ -1,8 +1,9 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Pencil } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import EditGallery from "../UserEdit/EditGallery";
 
 type GalleryItem = {
   title: string;
@@ -177,7 +178,10 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
   };
 
   return (
-    <>
+    <div className="relative p-6 space-y-5 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
+      <h2 className="text-lg tracking-wide">Gallery</h2>
+      <div className="h-[2px] w-20 bg-primary rounded-full"></div>
+      <EditGallery />
       {galleryError && (
         <p className="text-red-500 text-center">
           Failed to load gallery data. Reload again
@@ -186,7 +190,10 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
       {galleryData && !selectedYear && !selectedType && renderYears()}
       {selectedYear && !selectedType && renderContentTypes()}
       {selectedYear && selectedType && renderGalleryContent()}
-    </>
+
+      {/* ----------- */}
+      {/* EDIT GALLERY */}
+    </div>
   );
 };
 

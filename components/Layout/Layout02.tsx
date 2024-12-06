@@ -85,11 +85,7 @@ const Layout02: React.FC<Layout02Props> = ({ username }) => {
             </p>
           </div>
           {/* ------------- */}
-          <div className="p-6 space-y-5 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
-            <h2 className="text-lg tracking-wide">Gallery</h2>
-            <div className="h-[2px] w-20 bg-primary rounded-full"></div>
-            {/* <GalleryContainer /> */}
-          </div>
+          <GalleryContainer username={username} />
         </div>
         <div className="w-[30%] sticky top-5 h-full">
           <Shareprofile username={username} />

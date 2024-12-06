@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import GalleryContainer from "../Gallery/GalleryContainer";
-import CustomLightBox from "../Gallery/CustomLightBox";
 
 interface ContactDetail {
   label: string;

@@ -1,13 +1,19 @@
+"use server";
 import { cookies } from "next/headers"; // For Next.js 13+ (app directory)
 
-export default async function ValidateUser(): Promise<boolean> {
+interface Data {
+  status: boolean;
+  error?: string; // Include an error message if validation fails
+  username?: string;
+}
+
+export default async function ValidateUser(): Promise<Data> {
   try {
     const cookieStore = await cookies();
     const bmltkCookie = cookieStore.get("BMLTK");
 
     if (!bmltkCookie?.value) {
-      console.error("BMLTK cookie not found or empty.");
-      return false;
+      return { status: false, error: "Cookie Not Found" };
     }
 
     const cookieValue = bmltkCookie.value;
@@ -21,17 +27,17 @@ export default async function ValidateUser(): Promise<boolean> {
       },
     });
 
-    if (!response.ok) {
-      console.error(`API call failed: ${response.statusText}`);
-      return false;
-    }
-
     const result = await response.json();
-    console.log(result, "RESULT");
 
-    return result; // Ensure we always return a boolean
+    const data = {
+      token: cookieValue,
+      status: result.status,
+      username: result.username,
+      error: result.error,
+    };
+
+    return data; // Ensure we always return a boolean
   } catch (error) {
-    console.error("Error validating user:", error);
-    return false;
+    return { status: false, error: "Internal Server Error" };
   }
 }

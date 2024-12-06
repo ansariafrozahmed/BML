@@ -28,7 +28,7 @@ const Shareprofile: React.FC<ShareProfileProps> = ({ username }) => {
       </h2>
       <div className="space-x-1">
         <FacebookShareButton
-          url={`${process.env.FRONTEND}/profile/${username}`}
+          url={`${process.env.FRONTEND}/${username}`}
           quote={courseTitle}
           hashtag={"#bappamajhalaadka"}
         >
@@ -41,31 +41,24 @@ const Shareprofile: React.FC<ShareProfileProps> = ({ username }) => {
           <FacebookMessengerIcon size={32} round />
         </FacebookMessengerShareButton>
         <TelegramShareButton
-          url={`${process.env.FRONTEND}/course/${username}`}
+          url={`${process.env.FRONTEND}/${username}`}
           title={courseTitle}
         >
           <TelegramIcon size={32} round />
         </TelegramShareButton>
         <TwitterShareButton
-          url={`${process.env.FRONTEND}/course/${username}`}
+          url={`${process.env.FRONTEND}/${username}`}
           title={courseTitle}
         >
           <TwitterIcon size={32} round />
         </TwitterShareButton>
         <WhatsappShareButton
-          url={`${process.env.FRONTEND}/course/${username}`}
+          url={`${process.env.FRONTEND}/${username}`}
           title={courseTitle}
           separator=":: "
         >
           <WhatsappIcon size={32} round />
         </WhatsappShareButton>
-        <EmailShareButton
-          url={`${process.env.FRONTEND}/course/${username}`}
-          subject={"Bappa Majha Laadka"}
-          body=""
-        >
-          <EmailIcon size={32} round />
-        </EmailShareButton>
       </div>
     </div>
   );

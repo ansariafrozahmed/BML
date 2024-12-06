@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useForm } from "antd/es/form/Form";
-import toast, { Toaster } from "react-hot-toast";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
 
@@ -18,6 +19,7 @@ const LoginForm = () => {
   const [form] = useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     const requestData = {
@@ -38,19 +40,17 @@ const LoginForm = () => {
 
       if (!response.ok) {
         const errorResult = await response.json();
-        toast.error(errorResult.error);
+        toast(errorResult.error);
         return;
       }
 
       const result = await response.json();
-      toast.success(result.message);
+      toast(result.message);
       document.cookie = `BMLTK=${result.token}; path=/; SameSite=None; Secure`;
-      setTimeout(() => {
-        router.push(`/profile/${result.username}`);
-      }, 500);
+      router.push(`${process.env.FRONTEND}/${result.username}`);
     } catch (error: unknown) {
       console.error("Internal Server Error");
-      toast.error(
+      toast(
         error instanceof Error ? error.message : "An unexpected error occurred"
       );
     } finally {
@@ -66,9 +66,9 @@ const LoginForm = () => {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <ToastContainer />
       <div className="bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] w-[350px] space-y-2 p-6 rounded-md">
-        <div className="">
+        <Link href={"/"} className="block">
           <Image
             src={`/logo.webp`}
             alt={"Logo"}
@@ -76,7 +76,7 @@ const LoginForm = () => {
             width={200}
             className="w-[60px] h-full lg:w-[80px] object-contain"
           />
-        </div>
+        </Link>
         <div className="space-y-0.5">
           <h2 className="text-base font-medium text-templateText">Welcome</h2>
           <p className="text-xs text-templateText">
@@ -140,11 +140,8 @@ const LoginForm = () => {
                 </button>
               </Form.Item>
               <p className="text-center -mt-4 text-templateText capitalize text-xs">
-                New to {process.env.STORE_NAME?.replaceAll("-", " ")} ?{" "}
-                <Link
-                  href={"/register"}
-                  className="text-templatePrimary underline"
-                >
+                New to <span>Bappa Majha Laadka</span> ?{" "}
+                <Link href={"/register"} className="text-primary underline">
                   Create an account
                 </Link>
               </p>

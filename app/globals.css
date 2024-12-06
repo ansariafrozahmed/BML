@@ -8,8 +8,9 @@
   @apply container mx-auto px-4 md:px-6 lg:px-10;
 }
 
-* {
+body {
   /* font-family: "Martel", serif; */
+  background-color: white;
 }
 
 .no-scroll {
@@ -100,4 +101,20 @@
 /* Hidden Content */
 .hidden-content {
   display: none; /* Ensures inactive content does not occupy any space */
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounce {
+  animation: bounce 4s infinite;
 }

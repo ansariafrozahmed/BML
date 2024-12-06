@@ -2,11 +2,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AnnouncementBarV1 from "./AnnouncementBarV1";
+import ValidateUser from "@/lib/validateUser";
+import { Popover } from "antd";
 
 const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<{
+    status?: any;
+    username?: any;
+    error?: any;
+  } | null>(null);
   const path = usePathname();
 
   const menu = [
@@ -27,6 +34,46 @@ const Header = () => {
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+
+  const handleLogout = () => {
+    document.cookie = "BMLTK=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    setIsLoggedIn(null);
+  };
+
+  const renderProfileDropdown = (username: string) => {
+    return (
+      <div className="min-w-40">
+        <Link
+          href={`/${username}`}
+          className="block w-full hover:text-primary hover:bg-gray-100 cursor-pointer p-2 rounded"
+        >
+          My Profile
+        </Link>
+        <div
+          onClick={handleLogout}
+          className="hover:bg-gray-100 cursor-pointer p-2 rounded"
+        >
+          Logout
+        </div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    const getUserStatus = async () => {
+      try {
+        const result = await ValidateUser();
+
+        setIsLoggedIn(result);
+      } catch (error) {
+        // document.cookie =
+        //   "BMLTK=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        // setIsLoggedIn(null);
+      }
+    };
+
+    getUserStatus();
+  }, []);
 
   return (
     <>
@@ -58,9 +105,14 @@ const Header = () => {
               );
             })}
           </nav>
-          <Link href={"/register"} className=" md:hidden">
+          <Link
+            href={`${
+              isLoggedIn?.status ? `/${isLoggedIn?.username}` : "/login"
+            }`}
+            className=" md:hidden"
+          >
             <button className="px-6 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-xs bg-dark text-white rounded-full leading-none tracking-wide font-medium">
-              Register
+              {isLoggedIn?.status ? "My Profile" : "Login / Register"}
             </button>
           </Link>
           <button
@@ -70,11 +122,23 @@ const Header = () => {
           >
             ☰
           </button>
-          <Link href={"/register"} className="hidden md:block">
-            <button className="px-7 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-medium">
-              Register
-            </button>
-          </Link>
+
+          {isLoggedIn?.status ? (
+            <Popover
+              content={() => renderProfileDropdown(isLoggedIn?.username)}
+              placement="bottom"
+            >
+              <button className="px-7 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-medium">
+                My Account
+              </button>
+            </Popover>
+          ) : (
+            <Link href={`/login`} className="hidden md:block">
+              <button className="px-7 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-medium">
+                Login / Register
+              </button>
+            </Link>
+          )}
         </header>
 
         {/* Mobile Drawer */}

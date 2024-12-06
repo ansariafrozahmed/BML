@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-serif`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
-        <HeaderWrapper />
+        {/* <HeaderWrapper /> */}
         {children}
-        <FooterWrapper />
+        {/* <FooterWrapper /> */}
       </body>
     </html>
   );

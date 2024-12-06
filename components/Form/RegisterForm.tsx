@@ -6,7 +6,9 @@ import Link from "next/link";
 import { LoaderCircle, LockKeyhole, Mail, UserRound } from "lucide-react";
 import { useForm } from "antd/es/form/Form";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
+// import toast, { Toaster } from "react-hot-toast";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 type FieldType = {
   first_name?: string;
@@ -20,13 +22,6 @@ const RegisterForm = () => {
   const [form] = useForm();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [validMessage, setValidMessage] = useState(false);
-  const [validation, setValidation] = useState({
-    length: false,
-    uppercase: false,
-    number: false,
-    specialChar: false,
-  });
 
   const validateUsername = (username: string) => {
     // The regex checks for lowercase letters and numbers only.
@@ -43,25 +38,6 @@ const RegisterForm = () => {
     }
   };
 
-  const validatePassword = (value: string) => {
-    const length = value.length >= 8;
-    const uppercase = /[A-Z]/.test(value);
-    const number = /\d/.test(value);
-    const specialChar = /[!@#$%^&*]/.test(value);
-
-    setValidation({
-      length,
-      uppercase,
-      number,
-      specialChar,
-    });
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    validatePassword(value);
-  };
-
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     setLoading(true);
 
@@ -74,8 +50,6 @@ const RegisterForm = () => {
       password: values.password,
       joinedAt,
     };
-
-    console.log(`${process.env.BACKEND}/api/user_register`);
 
     try {
       const response = await fetch(`${process.env.BACKEND}/api/user_register`, {
@@ -92,17 +66,17 @@ const RegisterForm = () => {
         // Handle specific error message if available
         const errorMessage =
           data?.error || "An error occurred during registration.";
-        toast.error(errorMessage);
+        toast(errorMessage);
         return;
       }
 
-      toast.success("Registered successfully");
+      toast("Registered successfully");
       router.push("/login");
       form.resetFields();
       // Redirect to login page or perform further actions
     } catch (error) {
       console.error("Registration failed:", error);
-      toast.error("Failed to register. Please try again later.");
+      toast("Failed to register. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -114,9 +88,9 @@ const RegisterForm = () => {
 
   return (
     <>
-      <Toaster />
+      <ToastContainer />
       <div className="bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] w-[350px] space-y-3 p-6 rounded-md">
-        <div className="">
+        <Link href={"/"} className="block">
           <Image
             src={`/logo.webp`}
             alt={"Logo"}
@@ -124,7 +98,7 @@ const RegisterForm = () => {
             width={200}
             className="w-[60px] h-full lg:w-[80px] object-contain"
           />
-        </div>
+        </Link>
         <div className="space-y-0.5">
           <h2 className="text-base font-medium text-templateText">Welcome</h2>
           <p className="text-xs text-templateText">
@@ -199,7 +173,7 @@ const RegisterForm = () => {
             >
               <Input
                 prefix={<UserRound size={14} className="mr-1" />}
-                placeholder="Username"
+                placeholder="For Example : shindeChaRaaja"
                 className="border-gray-500 text-sm"
                 onChange={handleUsernameChange}
               />
@@ -228,9 +202,8 @@ const RegisterForm = () => {
               name="password"
               rules={[
                 {
-                  pattern:
-                    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
-                  message: "",
+                  pattern: /^.{3,}$/,
+                  message: "Password must be at least 3 characters long",
                 },
                 { required: true, message: "Please input your Password!" },
               ]}
@@ -238,45 +211,17 @@ const RegisterForm = () => {
               <Input.Password
                 prefix={<LockKeyhole size={14} className="mr-1" />}
                 type="password"
-                onFocus={() => setValidMessage(true)}
                 className="border-gray-500 text-sm"
                 placeholder="Password"
-                onChange={handlePasswordChange}
               />
             </Form.Item>
-
-            <div
-              className={`text-[0.75rem] tracking-wide transition-all duration-500 ease-in-out -mt-3 pb-4 overflow-hidden ${
-                validMessage ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-              }`}
-            >
-              {[
-                { rule: validation.length, message: "Minimum 8 characters" },
-                {
-                  rule: validation.uppercase,
-                  message: "At least one uppercase letter",
-                },
-                { rule: validation.number, message: "At least one number" },
-                {
-                  rule: validation.specialChar,
-                  message: "At least one special character (!@#$%^&*)",
-                },
-              ].map(({ rule, message }, index) => (
-                <p
-                  key={index}
-                  className={rule ? "text-green-700" : "text-red-700"}
-                >
-                  {message}
-                </p>
-              ))}
-            </div>
 
             <div>
               <Form.Item>
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`flex items-center -mt-4 capitalize justify-center w-full gap-2 border border-dark bg-dark hover:opacity-90 py-2.5 rounded-md text-sm tracking-widest text-white font-medium ${
+                  className={`flex items-center  capitalize justify-center w-full gap-2 border border-dark bg-dark hover:opacity-90 py-2.5 rounded-md text-sm tracking-widest text-white font-medium ${
                     loading ? "cursor-not-allowed" : "cursor-pointer"
                   }`}
                 >
@@ -287,11 +232,9 @@ const RegisterForm = () => {
                 </button>
               </Form.Item>
               <p className="text-center -mt-4 text-templateText text-xs">
-                Already {process.env.STORE_NAME?.replaceAll("-", " ")} user ?{" "}
-                <Link
-                  href={"/login"}
-                  className="text-templatePrimary underline"
-                >
+                Already <span className="text-primary">Bappa Majha Laadka</span>{" "}
+                user ?{" "}
+                <Link href={"/login"} className="text-primary underline">
                   Login now
                 </Link>
               </p>

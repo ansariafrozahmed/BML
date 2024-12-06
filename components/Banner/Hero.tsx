@@ -21,11 +21,11 @@ const Hero = () => {
             बाप्पा माझा लाडका
           </span>
           <div className="space-y-2 lg:space-y-4 -ml-1">
-            <h1 className="text-primaryDark text-primary leading-snug text-[45px]  lg:text-6xl tracking-wide uppercase font-extrabold">
+            <h1 className="text-primaryDark text-primary leading-snug text-[35px]  lg:text-6xl tracking-wide uppercase font-extrabold">
               तुमच्या गणपती मूर्तीकरिता
             </h1>
-            <h2 className="text-[35px] lg:text-5xl uppercase leading-snug text-primaryGreen tracking-wide font-extrabold">
-              एक लहान वेबसाईट तयार करा!
+            <h2 className="text-[30px] lg:text-5xl uppercase leading-snug text-primaryGreen tracking-wide font-extrabold">
+              एक मिनी वेबसाईट तयार करा!
             </h2>
           </div>
           <p className="text-sm tracking-wide w-full lg:w-[90%] text-gray-700">
