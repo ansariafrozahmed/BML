@@ -35,7 +35,7 @@ const Shareprofile: React.FC<ShareProfileProps> = ({ username }) => {
           <FacebookIcon size={32} round />
         </FacebookShareButton>
         <FacebookMessengerShareButton
-          url={"https://github.com/next-share"}
+          url={`${process.env.FRONTEND}/${username}`}
           appId={""}
         >
           <FacebookMessengerIcon size={32} round />

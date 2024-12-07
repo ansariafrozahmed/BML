@@ -9,26 +9,20 @@ const Hero = () => {
         backgroundImage: 'url("/408.webp")',
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: "left center",
       }}
     >
-      <div
-        id="home"
-        className="templateContainer flex flex-col  lg:flex-row text-dark lg:h-[550px] gap-6 "
-      >
-        <div className="w-full lg:w-[60%] my-auto pt-8 lg:pt-0 space-y-4">
-          <span className="uppercase tracking-widest font-normal text-">
-            बाप्पा माझा लाडका
-          </span>
-          <div className="space-y-2 lg:space-y-4 -ml-1">
-            <h1 className="text-primaryDark text-primary leading-snug text-[35px]  lg:text-6xl tracking-wide uppercase font-extrabold">
-              तुमच्या गणपती मूर्तीकरिता
+      <div className="templateContainer flex flex-col  lg:flex-row overflow-hidden text-dark lg:h-[550px] gap-6 ">
+        <div className="w-full lg:w-[60%] my-auto pt-12 lg:pt-0 space-y-4">
+          <div className="space-y-0 lg:space-y-4 -ml-1">
+            <h1 className="text-primaryDark text-primary leading-snug text-[25px]  lg:text-5xl  uppercase font-medium">
+              पारंपरिक सणाला डिजिटल तडका
             </h1>
-            <h2 className="text-[30px] lg:text-5xl uppercase leading-snug text-primaryGreen tracking-wide font-extrabold">
-              एक मिनी वेबसाईट तयार करा!
+            <h2 className="text-primaryDark text-dark leading-snug text-[25px]  lg:text-5xl  uppercase font-medium">
+              <span className="text-primary">म्हणजे</span> बाप्पा माझा लाडका!
             </h2>
           </div>
-          <p className="text-sm tracking-wide w-full lg:w-[90%] text-gray-700">
+          <p className="text-sm tracking- w-full lg:w-[90%] text-gray-700">
             गणपतीच्या शाश्वत सौंदर्याचा आणि कलात्मकतेचा आनंद घ्या आमच्या निवडक
             दिव्य प्रतिमांच्या संग्रहातून. प्रत्येक नजरेतून भक्ती आणि
             सर्जनशीलतेचा उत्सव साजरा करा.
@@ -36,7 +30,7 @@ const Hero = () => {
           {/* <ContactButton text="Get in touch" /> */}
         </div>
         {/* ----------------- */}
-        <div className="w-full h-full relative lg:w-[40%]">
+        <div className="w-full h-full px-8 lg:px-0 relative lg:w-[40%]">
           <div className="relative">
             {/* Head Ring positioned on top with rotation */}
             <Image
@@ -50,7 +44,7 @@ const Hero = () => {
             <Image
               src="/bappa.png"
               alt="Ganesh Idol"
-              className="object-contain select-none h-[550px] relative w-full"
+              className="object-contain select-none pt-14 lg:pt-0 lg:h-[550px] relative w-full"
               height={600}
               width={600}
             />

@@ -1,7 +1,16 @@
 // import React from "react";
 import Layout01 from "@/components/Layout/Layout01";
+import {
+  defaultDescription,
+  defaultTitle,
+  frontendURL,
+  openGraphImage,
+} from "@/lib/constants";
 import ValidateUser from "@/lib/validateUser";
+import { Metadata } from "next";
 import Link from "next/link";
+import QRCode from "qrcode";
+import path from "path";
 import NotFound from "./not-found";
 
 export const fetchUserData = async (username: string) => {
@@ -166,6 +175,89 @@ const ProfileExpired: React.FC<DataProps> = ({ isLoggedIn }) => (
     </div>
   </div>
 );
+
+export async function generateMetadata({
+  params,
+}: {
+  params: any;
+}): Promise<Metadata> {
+  const { username } = await params;
+  const url = `${process.env.FRONTEND}/${username}`;
+
+  try {
+    const data = await fetchUserData(username);
+
+    let qrCodeUrl;
+
+    if (data) {
+      const qrCodeFilePath = path.join("public", "qrcodes", `${username}.png`);
+      const qrCodePath = `/qrcodes/${username}.png`;
+
+      await QRCode.toFile(qrCodeFilePath, url, {
+        margin: 2,
+        scale: 10,
+      });
+      qrCodeUrl = `${process.env.FRONTEND}${qrCodePath}`;
+    }
+
+    return {
+      title: data.username || defaultTitle,
+      description: data.bio || defaultDescription,
+      openGraph: {
+        title: data.username || defaultTitle,
+        description: data.bio || defaultDescription,
+        url: `${process.env.FRONTEND}/blog/${data.username}`,
+        type: "website",
+        images: [
+          {
+            url: qrCodeUrl || "/og.webp",
+            width: 1200,
+            height: 630,
+            alt: data.username || defaultTitle,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: data.username || defaultTitle,
+        description: data.bio || defaultDescription,
+        images: [qrCodeUrl || "/og.webp"],
+      },
+      alternates: {
+        canonical: `${process.env.FRONTEND}/${data.username}`,
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: defaultTitle,
+      description: defaultDescription,
+      openGraph: {
+        title: defaultTitle,
+        description: defaultDescription,
+        url: `${process.env.FRONTEND}/${username}`,
+        type: "website",
+        images: [
+          {
+            url: `${process.env.FRONTEND}${openGraphImage}`,
+            width: 1200,
+            height: 630,
+            alt: defaultTitle,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: defaultTitle,
+        description: defaultDescription,
+        images: [`${process.env.FRONTEND}${openGraphImage}`],
+      },
+      alternates: {
+        canonical: `${process.env.FRONTEND}/${username}`,
+      },
+    };
+  }
+}
 
 export default async function ProfilePage({
   params,

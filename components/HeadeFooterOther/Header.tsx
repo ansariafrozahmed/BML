@@ -82,9 +82,9 @@ const Header = () => {
   return (
     <>
       <AnnouncementBarV1 />
-      <div className=" shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] relative">
+      <div className="sticky top-0 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] z-[999] bg-white">
         <header className="w-full templateContainer flex items-center justify-between py-2 px-4 md:px-8">
-          <Link href={"/"} className="block h-[55px] w-auto">
+          <Link href={"/"} className="block h-[50px] w-auto">
             <Image
               src={"/logo.webp"}
               className="h-full w-full object-contain"
@@ -99,7 +99,7 @@ const Header = () => {
               return (
                 <Link href={item.path} key={index}>
                   <span
-                    className={`block text-sm text-dark tracking-wide ${
+                    className={`block font-normal text-sm text-dark tracking-wide ${
                       path === item.path ? "active-class" : "hover-class"
                     }`}
                   >
@@ -109,40 +109,33 @@ const Header = () => {
               );
             })}
           </nav>
-          <Link
-            href={`${
-              isLoggedIn?.status ? `/${isLoggedIn?.username}` : "/login"
-            }`}
-            className=" md:hidden"
-          >
-            <button className="px-6 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-xs bg-dark text-white rounded-full leading-none tracking-wide font-medium">
-              {isLoggedIn?.status ? "My Profile" : "Login / Register"}
-            </button>
-          </Link>
+
+          <div>
+            {isLoggedIn?.status ? (
+              <Popover
+                content={() => renderProfileDropdown(isLoggedIn?.username)}
+                placement="bottom"
+              >
+                <button className="px-7 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
+                  My Account
+                </button>
+              </Popover>
+            ) : (
+              <Link href={`/login`} className="">
+                <button className="px-7 py-3 hover:scale-105 transition-all  ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
+                  Login / Register
+                </button>
+              </Link>
+            )}
+          </div>
+
           <button
-            className="block md:hidden text-2xl"
+            className="lg:hidden text-2xl"
             onClick={toggleDrawer}
             aria-label="Menu"
           >
             ☰
           </button>
-
-          {isLoggedIn?.status ? (
-            <Popover
-              content={() => renderProfileDropdown(isLoggedIn?.username)}
-              placement="bottom"
-            >
-              <button className="px-7 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-medium">
-                My Account
-              </button>
-            </Popover>
-          ) : (
-            <Link href={`/login`} className="hidden md:block">
-              <button className="px-7 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-medium">
-                Login / Register
-              </button>
-            </Link>
-          )}
         </header>
 
         {/* Mobile Drawer */}
@@ -182,7 +175,7 @@ const Header = () => {
             </div>
             <div className="p-6 flex flex-col gap-5">
               {menu.map((item, index) => (
-                <Link href="/" key={index}>
+                <Link href={item.path} key={index}>
                   <span className="text-sm" onClick={toggleDrawer}>
                     {item.label}
                   </span>

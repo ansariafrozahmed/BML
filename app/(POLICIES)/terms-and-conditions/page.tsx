@@ -1,4 +1,5 @@
-import RegisterForm from "@/components/Form/RegisterForm";
+import Footer from "@/components/HeadeFooterOther/Footer";
+import Header from "@/components/HeadeFooterOther/Header";
 import {
   defaultDescription,
   defaultTitle,
@@ -9,7 +10,7 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: `Register | Bappa Majha Laadka`,
+  title: `Terms & Conditions | Bappa Majha Laadka`,
   description: defaultDescription,
   openGraph: {
     title: defaultTitle,
@@ -32,26 +33,18 @@ export const metadata: Metadata = {
     images: [`${frontendURL}${openGraphImage}`],
   },
   alternates: {
-    canonical: `${frontendURL}/register`,
+    canonical: `${frontendURL}/terms-and-conditions`,
   },
 };
 
-const Register = () => {
+const Terms = () => {
   return (
-    <div
-      style={{
-        backgroundImage: 'url("/408.webp")',
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center right",
-      }}
-      className="bg-gray-100 h-screen"
-    >
-      <div className="templateContainer h-full flex items-center justify-center">
-        <RegisterForm />
-      </div>
-    </div>
+    <>
+      <Header />
+      Terms
+      <Footer />
+    </>
   );
 };
 
-export default Register;
+export default Terms;

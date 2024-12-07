@@ -44,9 +44,9 @@ export default function FeatureList() {
   ];
 
   return (
-    <div className="templateContainer mx-auto px-4 py-8 lg:py-16">
+    <div className="templateContainer mx-auto py-8 lg:py-16">
       <div className="text-center mb-0 lg:mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold max-w-4xl mx-auto leading-tight">
+        <h2 className="text-4xl md:text-5xl max-w-4xl mx-auto leading-snug">
           Our App Is Great For Individuals, Startups And Enterprises
         </h2>
       </div>

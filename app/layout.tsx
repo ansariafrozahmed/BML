@@ -6,13 +6,44 @@ import AnnouncementBarV1 from "@/components/HeadeFooterOther/AnnouncementBarV1";
 import NextTopLoader from "nextjs-toploader";
 import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
 import FooterWrapper from "@/components/HeadeFooterOther/FooterWrapper";
+<<<<<<< HEAD
 import ProviderComp from "@/components/provider";
+=======
+import {
+  defaultDescription,
+  defaultTitle,
+  frontendURL,
+  openGraphImage,
+} from "@/lib/constants";
+>>>>>>> 7cb63089b2b1713a647dea7db5148541de969868
 
 export const metadata: Metadata = {
-  title: "Bappa Majha Laadka",
-  description: "Bappa Majha Laadka",
+  title: defaultTitle,
+  description: defaultDescription,
+  openGraph: {
+    title: defaultTitle,
+    description: defaultDescription,
+    url: `${frontendURL}`,
+    type: "website",
+    images: [
+      {
+        url: `${frontendURL}${openGraphImage}`,
+        width: 1200,
+        height: 630,
+        alt: defaultTitle,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: defaultDescription,
+    images: [`${frontendURL}${openGraphImage}`],
+  },
+  alternates: {
+    canonical: `${frontendURL}`,
+  },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,7 +51,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-serif`}>
+      <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         {/* <HeaderWrapper /> */}
         <ProviderComp>{children}</ProviderComp>
