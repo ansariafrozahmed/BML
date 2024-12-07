@@ -1,7 +1,15 @@
 import LoginForm from "@/components/Form/LoginForm";
+import ValidateUser from "@/lib/validateUser";
+import { redirect } from "next/navigation";
 import React from "react";
 
-const Loginpage = () => {
+const Loginpage = async () => {
+  let isLoggedIn = await ValidateUser();
+
+  if (isLoggedIn.status) {
+    redirect(`/${isLoggedIn.username}`);
+  }
+
   return (
     <div
       style={{

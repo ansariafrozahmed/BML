@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-serif`}>
+      <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         {/* <HeaderWrapper /> */}
         {children}

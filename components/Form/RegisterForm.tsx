@@ -27,6 +27,9 @@ const RegisterForm = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [email, setEmail] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [checked, setChecked] = useState(false);
+
+  console.log(checked);
 
   const verifyEmail = async () => {
     try {
@@ -248,7 +251,7 @@ const RegisterForm = () => {
             >
               <Input
                 prefix={<UserRound size={14} className="mr-1" />}
-                placeholder="For Example : shindeChaRaaja"
+                placeholder="For Example : shindecharaja"
                 className="border-gray-500 text-sm"
                 onChange={handleUsernameChange}
               />
@@ -322,13 +325,22 @@ const RegisterForm = () => {
               />
             </Form.Item>
 
+            <div className="flex items-center gap-2 text-xs pb-2">
+              <input
+                type="checkbox"
+                onChange={(e) => setChecked(e.target.checked)}
+                className=""
+              />
+              <label>By accepting you agree to our polcies</label>
+            </div>
+
             <div>
               <Form.Item>
                 <button
                   type="submit"
-                  disabled={loading || !emailVerified}
+                  disabled={loading || !emailVerified || !checked}
                   className={`flex items-center  capitalize justify-center w-full gap-2 border border-dark bg-dark  py-2.5 rounded-md text-sm tracking-widest text-white font-medium ${
-                    loading || !emailVerified
+                    loading || !emailVerified || !checked
                       ? "cursor-not-allowed opacity-50"
                       : "cursor-pointer hover:opacity-90"
                   }`}
