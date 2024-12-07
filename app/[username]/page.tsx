@@ -1,9 +1,8 @@
 // import React from "react";
 import Layout01 from "@/components/Layout/Layout01";
-import Layout02 from "@/components/Layout/Layout02";
 import ValidateUser from "@/lib/validateUser";
-import Image from "next/image";
 import Link from "next/link";
+import NotFound from "./not-found";
 
 const fetchUserData = async (username: string) => {
   try {
@@ -201,10 +200,6 @@ export default async function ProfilePage({
     case 3:
       return <ProfileExpired isLoggedIn={isLoggedIn} />;
     default:
-      return (
-        <div className="h-screen w-screen flex items-center justify-center">
-          <h1 className="text-2xl font-bold">Unknown Profile Status</h1>
-        </div>
-      );
+      return NotFound()
   }
 }

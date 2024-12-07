@@ -38,6 +38,7 @@ const Layout01: React.FC<Layout01Props> = ({
   username,
   isLoggedIn,
 }) => {
+  console.log(userData, 'userData')
   return (
     <>
       {isLoggedIn.status && (
