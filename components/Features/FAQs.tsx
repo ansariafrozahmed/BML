@@ -1,131 +1,129 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { ChevronDown } from "lucide-react";
-import { Flame } from "lucide-react";
+import Footer from "@/components/HeadeFooterOther/Footer";
+import Header from "@/components/HeadeFooterOther/Header";
 import Image from "next/image";
-// import { MdDoubleArrow } from "react-icons/md";
+import React, { useState } from "react";
 
-// FAQ Data
-const faqData = [
-  {
-    question: "Looking For A Solution To Boost Productivity?",
-    answer:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly.",
-  },
-  {
-    question: "Need An Easy Way To Manage Your Projects?",
-    answer:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly.",
-  },
-  {
-    question: "Seeking A User-Friendly Solution For Your Team?",
-    answer:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly.",
-  },
-];
+const FAQSection = () => {
+  const [openFaq, setOpenFaq] = useState(null);
 
-export default function FAQSection() {
-  const [openItem, setOpenItem] = useState<number | null>(null);
-
-  const toggleItem = (index: number) => {
-    setOpenItem(openItem === index ? null : index);
+  const toggleFaq = (index: any) => {
+    setOpenFaq(openFaq === index ? null : index);
   };
 
+  const faqs = [
+    {
+      question: "What is your return policy?",
+      answer:
+        "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
+    },
+    {
+      question: "Do you offer international shipping?",
+      answer:
+        "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
+    },
+    {
+      question: "How can I track my order?",
+      answer:
+        "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer:
+        "We accept all major credit cards, PayPal, and other digital payment methods.",
+    },
+    {
+      question: "What is your return policy?",
+      answer:
+        "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
+    },
+    {
+      question: "Do you offer international shipping?",
+      answer:
+        "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
+    },
+    {
+      question: "How can I track my order?",
+      answer:
+        "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer:
+        "We accept all major credit cards, PayPal, and other digital payment methods.",
+    },
+    {
+      question: "What is your return policy?",
+      answer:
+        "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
+    },
+    {
+      question: "Do you offer international shipping?",
+      answer:
+        "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
+    },
+    {
+      question: "How can I track my order?",
+      answer:
+        "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer:
+        "We accept all major credit cards, PayPal, and other digital payment methods.",
+    },
+  ];
   return (
-    <div className="templateContainer py-16">
-      <div className="grid gap-x-10 md:grid-cols-2 items-start">
-        <div className="  mx-auto p-6">
-          {/* Header Section */}
-          <div className="mb-8 text-center">
-            <div className="mb-4 bg-amber-100 text-amber-900 hover:bg-amber-100 inline-flex items-center px-2 py-1 rounded">
-              <Flame className="w-4 h-4 mr-1 text-orange-500" />
-              FAQs
+    <>
+      <Header />
+      <div>
+        <div className="templateContainer flex flex-col lg:flex-row items-start gap-10 w-full space-y-5 py-6 lg:py-12">
+          <div className="w-[45%] sticky hidden lg:block top-20 ">
+            <Image
+              height={600}
+              width={600}
+              src="/mockup1.png"
+              alt="Analytics Dashboard Preview"
+              className="object-contain w-full h-full"
+            />
+          </div>
+          <div className="w-full lg:w-[55%] space-y-6">
+            <h1 className="text-2xl text-center lg:text-left md:text-4xl leading-tight">
+              Frequently Asked Questions!
+            </h1>
+            <div className="w-full space-y-4">
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="bg-white border border-gray-100 rounded-md shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]"
+                >
+                  <button
+                    onClick={() => toggleFaq(index)}
+                    className="w-full flex justify-between items-center px-4 py-4 text-left text-gray-800 font-medium focus:outline-none"
+                  >
+                    <span>{faq.question}</span>
+                    <span
+                      className={`transform transition-transform duration-200 ${
+                        openFaq === index ? "rotate-180" : ""
+                      }`}
+                    >
+                      ▼
+                    </span>
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-4 py-3 text-gray-600 border-t border-gray-200">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-            <h2 className="text-3xl font-bold mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-muted-foreground">
-              There are many variations of passages of Lorem Ipsum available,
-              but the majority have suffered alteration in some form.
-            </p>
-          </div>
-
-          {/* Accordion Section */}
-          <div className="space-y-4">
-            {faqData.map((item, index) => (
-              <AccordionItem
-                key={index}
-                question={item.question}
-                answer={item.answer}
-                isOpen={openItem === index}
-                onClick={() => toggleItem(index)}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="relative">
-          <div>
-            <Image
-              src="/home/dashboard1.png"
-              className="w-full rounded-2xl overflow-hidden"
-              width={800}
-              height={800}
-              alt="s"
-            />
-          </div>
-          <div className="absolute -bottom-8 -left-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
-            <Image
-              src="/home/dashboard2.png"
-              className="w-40 rounded-2xl"
-              width={800}
-              height={800}
-              alt="s"
-            />
           </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
-}
+};
 
-function AccordionItem({
-  question,
-  answer,
-  isOpen,
-  onClick,
-}: {
-  question: string;
-  answer: string;
-  isOpen: boolean;
-  onClick: () => void;
-}) {
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  return (
-    <div className="border  rounded-lg  ">
-      <button
-        className="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none"
-        onClick={onClick}
-        aria-expanded={isOpen}
-      >
-        <span className="font-medium text-gray-900">{question}</span>
-        <ChevronDown
-          className={`w-5 h-5 text-amber-500 transition-transform duration-200 ${
-            isOpen ? "transform rotate-90" : ""
-          }`}
-        />
-      </button>
-      <div
-        ref={contentRef}
-        className={`overflow-hidden transition-all duration-300 ${
-          isOpen ? "max-h-screen" : "max-h-0"
-        }`}
-        style={{
-          maxHeight: isOpen ? contentRef.current?.scrollHeight : 0,
-        }}
-      >
-        <div className="px-6 pb-4 text-gray-600">{answer}</div>
-      </div>
-    </div>
-  );
-}
+export default FAQSection;

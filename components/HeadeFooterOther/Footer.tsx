@@ -32,9 +32,9 @@ const Footer = () => {
           <div className="h-[2px] rounded-full w-24 bg-primaryGreen"></div>
           <div className="flex flex-col gap-4 text-primaryDark text-xs tracking-widest font-medium uppercase">
             <Link href={"/"}>FAQs</Link>
-            <Link href={"/"}>Terms & Conditions</Link>
-            <Link href={"/"}>Privacy Policy</Link>
-            <Link href={"/"}>Refund Policy</Link>
+            <Link href={"/terms-and-conditions"}>Terms & Conditions</Link>
+            <Link href={"/privacy-policy"}>Privacy Policy</Link>
+            <Link href={"/refund-policy"}>Refund Policy</Link>
           </div>
         </div>
         <div className="space-y-5">
@@ -44,9 +44,9 @@ const Footer = () => {
           <div className="h-[2px] rounded-full w-24 bg-primaryGreen"></div>
           <div className="flex flex-col gap-4 text-primaryDark text-xs tracking-widest font-medium uppercase">
             <Link href={"/"}>Home</Link>
-            <Link href={"/"}>About</Link>
-            <Link href={"/"}>Register</Link>
-            <Link href={"/"}>Login</Link>
+            <Link href={"/about"}>About</Link>
+            <Link href={"/register"}>Register</Link>
+            <Link href={"/login"}>Login</Link>
           </div>
         </div>
 

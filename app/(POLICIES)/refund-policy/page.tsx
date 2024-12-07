@@ -1,4 +1,5 @@
-import FAQSection from "@/components/Features/FAQs";
+import Footer from "@/components/HeadeFooterOther/Footer";
+import Header from "@/components/HeadeFooterOther/Header";
 import {
   defaultDescription,
   defaultTitle,
@@ -9,7 +10,7 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: `FAQs | Bappa Majha Laadka`,
+  title: `Refund Policy | Bappa Majha Laadka`,
   description: defaultDescription,
   openGraph: {
     title: defaultTitle,
@@ -32,12 +33,18 @@ export const metadata: Metadata = {
     images: [`${frontendURL}${openGraphImage}`],
   },
   alternates: {
-    canonical: `${frontendURL}/faqs`,
+    canonical: `${frontendURL}/refund-policy`,
   },
 };
 
-const Faqs = () => {
-  return <FAQSection />;
+const Refund = () => {
+  return (
+    <>
+      <Header />
+      Refund
+      <Footer />
+    </>
+  );
 };
 
-export default Faqs;
+export default Refund;

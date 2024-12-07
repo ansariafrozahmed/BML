@@ -14,8 +14,8 @@ const renderContactDetails = (contact_details: ContactDetail[]) => (
     </h2>
     <div className="space-y-4">
       {contact_details?.map((item, index) => (
-        <>
-          <div key={index} className="flex items-center gap-4">
+        <div key={index}>
+          <div className="flex items-center gap-4">
             {item?.label && (
               <span className="font-medium text-gray-600 w-32 text-base">
                 {item.label}
@@ -28,7 +28,7 @@ const renderContactDetails = (contact_details: ContactDetail[]) => (
             )}
           </div>
           <hr />
-        </>
+        </div>
       ))}
     </div>
   </div>

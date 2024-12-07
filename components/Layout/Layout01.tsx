@@ -68,9 +68,9 @@ const Layout01: React.FC<Layout01Props> = ({
         )}
         <div className="absolute inset-0 templateContainer flex  items-end justify-start pb-10">
           <div className="space-y-2">
-            <h2 className="text-3xl lg:text-5xl font-light text-white">
+            <h1 className="text-3xl lg:text-5xl font-light text-white">
               {userData?.username}
-            </h2>
+            </h1>
             <SocialMediaLinks socialMedia={userData?.social_links} />
           </div>
         </div>
