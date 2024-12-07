@@ -6,6 +6,7 @@ import AnnouncementBarV1 from "@/components/HeadeFooterOther/AnnouncementBarV1";
 import NextTopLoader from "nextjs-toploader";
 import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
 import FooterWrapper from "@/components/HeadeFooterOther/FooterWrapper";
+import ProviderComp from "@/components/provider";
 
 export const metadata: Metadata = {
   title: "Bappa Majha Laadka",
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body className={`font-serif`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         {/* <HeaderWrapper /> */}
-        {children}
+        <ProviderComp>{children}</ProviderComp>
         {/* <FooterWrapper /> */}
       </body>
     </html>

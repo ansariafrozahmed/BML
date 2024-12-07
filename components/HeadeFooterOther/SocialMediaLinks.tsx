@@ -10,25 +10,26 @@ interface SocialMediaLinksProps {
 
 const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ socialMedia }) => {
   // Frontend icon paths
+  console.log(socialMedia, 'socialMedia')
   const icons = [
     {
-      key: "Facebook",
+      key: "facebook",
       iconPath: "/social media icons/facebook.png",
     },
     {
-      key: "Instagram",
+      key: "instagram",
       iconPath: "/social media icons/instagram.png",
     },
     {
-      key: "Twitter",
+      key: "twitter",
       iconPath: "/social media icons/twitter.png",
     },
     {
-      key: "LinkedIn",
+      key: "linkedin",
       iconPath: "/social media icons/linkedin.png",
     },
     {
-      key: "Youtube",
+      key: "youtube",
       iconPath: "/social media icons/youtube.png",
     },
   ];
@@ -69,6 +70,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ socialMedia }) => {
       iconPath: matchingIcon?.iconPath || "", // Fallback if no matching icon is found
     };
   });
+
 
   return (
     <div className="flex text-white items-center justify-start gap-2">

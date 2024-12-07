@@ -3,7 +3,7 @@
 import { ArrowLeft, Pencil } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import EditGallery from "../UserEdit/EditGallery";
+// import EditGallery from "../UserEdit/EdiSocailLinks";
 
 type GalleryItem = {
   title: string;
@@ -181,7 +181,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
     <div className="relative p-6 space-y-5 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
       <h2 className="text-lg tracking-wide">Gallery</h2>
       <div className="h-[2px] w-20 bg-primary rounded-full"></div>
-      <EditGallery />
+      {/* <EditGallery /> */}
       {galleryError && (
         <p className="text-red-500 text-center">
           Failed to load gallery data. Reload again

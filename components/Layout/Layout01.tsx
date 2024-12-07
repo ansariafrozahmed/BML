@@ -1,18 +1,19 @@
+"use client";
 import React from "react";
 import ProfileTabs from "../Tabs/ProfileTabs";
 import ProfileSidebar from "../Gallery/ProfileSidebar";
 import Shareprofile from "../Gallery/Shareprofile";
 import Image from "next/image";
-import OurSocialMedia from "../Gallery/OurSocialMedia";
 import SocialMediaLinks from "../HeadeFooterOther/SocialMediaLinks";
 import EditBanner from "../UserEdit/EditBanner";
-import { Pencil } from "lucide-react";
-import { QRCode } from "antd";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 interface ContactDetail {
   label: string;
   value: string;
 }
+
 interface Layout01Props {
   userData: {
     banner_image: string;
@@ -32,28 +33,37 @@ interface Layout01Props {
   };
   username: string;
   isLoggedIn: any;
+  isEdit: any;
 }
 
 const Layout01: React.FC<Layout01Props> = ({
   userData,
   username,
   isLoggedIn,
+  isEdit,
 }) => {
-  console.log(userData, 'userData')
-  return (
-    <>
-      {isLoggedIn.status && (
-        <div className="bg-gradient-to-b from-black to-transparent text-white fixed w-full z-50 flex items-center gap-2 justify-center p-3">
-          <Pencil size={15} />
-          <span>Edit mode is on</span>
-        </div>
-      )}
+  const userProfile = useSelector((state: RootState) => state.userProfile);
 
+  // Check if isEdit is true or 'true' string
+  const isEditMode = isEdit === true || isEdit === "true";
+
+  // Fallback to userData if userProfile is missing certain data (e.g., banner_image)
+  let bannerImage =
+    (userProfile?.banner_image?.url as any) ||
+    `${process.env.BACKEND}/upload/banner/${userData.banner_image}`;
+
+  // Handle the case where the banner image might be a Blob
+  if (isEditMode && bannerImage instanceof Blob) {
+    bannerImage = URL.createObjectURL(bannerImage); // Convert Blob to URL for preview
+  }
+
+  return (
+    <div className="">
       <div className={`group h-[250px] lg:h-[350px] relative `}>
         <Image
           src={
-            userData?.banner_image
-              ? `${process.env.BACKEND}/upload/banner/${userData.banner_image}`
+            bannerImage
+              ? bannerImage // If it's a Blob, use the URL created from Blob
               : "https://nichemedia.co.nz/wp-content/uploads/2023/03/placeholder-banner.png"
           }
           alt={userData?.username}
@@ -64,24 +74,23 @@ const Layout01: React.FC<Layout01Props> = ({
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-        {isLoggedIn.status && (
-          <div className="group-hover:bg-black/40 transition-all eas duration-100 absolute inset-0 "></div>
+        {isLoggedIn.logged && (
+          <div className="group-hover:bg-black/40 transition-all ease duration-100 absolute inset-0 "></div>
         )}
-        <div className="absolute inset-0 templateContainer flex  items-end justify-start pb-10">
+        <div className="absolute inset-0 templateContainer flex items-end justify-start pb-10">
           <div className="space-y-2">
             <h2 className="text-3xl lg:text-5xl font-light text-white">
               {userData?.username}
             </h2>
-            <SocialMediaLinks socialMedia={userData?.social_links} />
+            <SocialMediaLinks
+              socialMedia={
+                (userProfile?.social_links?.length > 0 &&
+                  userProfile?.social_links) ||
+                (userData?.social_links as any)
+              }
+            />
           </div>
         </div>
-        {/* ------------ */}
-        {/* SHOW IF USER IS LOGGED IN */}
-        {isLoggedIn.status && (
-          <div className="absolute z-[999] top-5 right-5">
-            <EditBanner token={isLoggedIn.token} />
-          </div>
-        )}
       </div>
       {/* ----------- */}
       <div className="templateContainer flex flex-col lg:flex-row gap-16 w-full">
@@ -103,7 +112,7 @@ const Layout01: React.FC<Layout01Props> = ({
           <Shareprofile username={username} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
