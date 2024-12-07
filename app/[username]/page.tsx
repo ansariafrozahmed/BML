@@ -189,13 +189,15 @@ export async function generateMetadata({
   try {
     const data = await fetchUserData(username);
 
-    const qrCodeFilePath = path.join("public", "qrcodes", `${username}.png`);
-    const qrCodePath = `/qrcodes/${username}.png`; // Publicly accessible path
+    if (data) {
+      const qrCodeFilePath = path.join("public", "qrcodes", `${username}.png`);
+      const qrCodePath = `/qrcodes/${username}.png`;
 
-    await QRCode.toFile(qrCodeFilePath, url, {
-      margin: 2,
-      scale: 10,
-    });
+      await QRCode.toFile(qrCodeFilePath, url, {
+        margin: 2,
+        scale: 10,
+      });
+    }
 
     const qrCodeUrl = `${process.env.FRONTEND}${qrCodePath}`;
 
