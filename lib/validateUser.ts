@@ -5,6 +5,7 @@ interface Data {
   status: boolean;
   error?: string; // Include an error message if validation fails
   username?: string;
+  logged?: boolean; // User is logged in or not
 }
 
 export default async function ValidateUser(): Promise<Data> {
@@ -34,6 +35,7 @@ export default async function ValidateUser(): Promise<Data> {
       status: result.status,
       username: result.username,
       error: result.error,
+      logged: true,
     };
 
     return data; // Ensure we always return a boolean

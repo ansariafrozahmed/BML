@@ -10,10 +10,10 @@ import ValidateUser from "@/lib/validateUser";
 import { Metadata } from "next";
 import Link from "next/link";
 import QRCode from "qrcode";
-import { writeFileSync } from "fs";
 import path from "path";
+import NotFound from "./not-found";
 
-const fetchUserData = async (username: string) => {
+export const fetchUserData = async (username: string) => {
   try {
     const response = await fetch(
       `${process.env.BACKEND}/api/getUserData/${username}`,
@@ -37,8 +37,6 @@ const fetchUserData = async (username: string) => {
     console.error(error);
   }
 };
-
-type UsernameParams = Promise<{ username: string }>;
 
 interface DataProps {
   isLoggedIn: any;
@@ -181,7 +179,7 @@ const ProfileExpired: React.FC<DataProps> = ({ isLoggedIn }) => (
 export async function generateMetadata({
   params,
 }: {
-  params: UsernameParams;
+  params: any;
 }): Promise<Metadata> {
   const { username } = await params;
   const url = `${process.env.FRONTEND}/${username}`;
@@ -263,14 +261,37 @@ export async function generateMetadata({
 
 export default async function ProfilePage({
   params,
+  searchParams, // searchParams will be an object, not URLSearchParams
 }: {
-  params: UsernameParams;
+  params: any;
+  searchParams: Record<string, string | string[]>; // Correct type
 }) {
-  const { username } = await params;
+  const { username } = params;
+
+  // Access the query parameter 'isedit' from searchParams object
+  const isEdit = searchParams?.edit || null; // If 'isedit' exists in searchParams, access it
+
+  console.log(isEdit); // Check the value of 'isedit'
+
+  // Fetch user data
   const userData = await fetchUserData(username);
+  const isLoggedIn = await ValidateUser();
 
-  let isLoggedIn = await ValidateUser();
+  // Handle user not found case
+  if (!userData) {
+    return <NotFound />;
+  }
 
+  // Check if the logged-in user matches the profile being accessed
+  const isUserMatch = isLoggedIn?.username === username;
+
+  // Enhance the `isLoggedIn` object to include the match status
+  const userSession = {
+    ...isLoggedIn,
+    logged: isUserMatch,
+  };
+
+  // Handle different user statuses
   switch (userData.status) {
     case 0:
       return <ProfilePending />;
@@ -278,19 +299,16 @@ export default async function ProfilePage({
       return (
         <Layout01
           username={username}
-          isLoggedIn={isLoggedIn}
+          isLoggedIn={userSession}
           userData={userData}
+          isEdit={isEdit}
         />
       );
     case 2:
-      return <ProfileBlocked isLoggedIn={isLoggedIn} />;
+      return <ProfileBlocked isLoggedIn={userSession} />;
     case 3:
-      return <ProfileExpired isLoggedIn={isLoggedIn} />;
+      return <ProfileExpired isLoggedIn={userSession} />;
     default:
-      return (
-        <div className="h-screen w-screen flex items-center justify-center">
-          <h1 className="text-2xl font-bold">Unknown Profile Status</h1>
-        </div>
-      );
+      return <NotFound />;
   }
 }
