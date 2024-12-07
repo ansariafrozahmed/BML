@@ -276,8 +276,7 @@ const RegisterForm = () => {
                 />
                 {emailVerified ? (
                   <div
-                    onClick={verifyEmail}
-                    className={`flex cursor-pointer bg-green-500 items-center py-[10px] justify-center rounded-lg leading-none !text-xs tracking-wide w-28 text-white`}
+                    className={`flex bg-green-500 items-center py-[10px] justify-center rounded-lg leading-none !text-xs tracking-wide w-28 text-white`}
                   >
                     Verified
                   </div>
@@ -285,7 +284,9 @@ const RegisterForm = () => {
                   <>
                     {!isButtonDisabled && (
                       <div
-                        onClick={verifyEmail}
+                        onClick={() => {
+                          !sendingOtp && verifyEmail();
+                        }}
                         className={`flex cursor-pointer hover:bg-primary/90 items-center py-[10px] justify-center rounded-lg leading-none !text-xs tracking-wide w-28 text-white ${
                           isButtonDisabled ? "bg-gray-400" : "bg-primary"
                         }`}

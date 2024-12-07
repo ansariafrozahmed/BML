@@ -7,6 +7,7 @@ import OurSocialMedia from "../Gallery/OurSocialMedia";
 import SocialMediaLinks from "../HeadeFooterOther/SocialMediaLinks";
 import EditBanner from "../UserEdit/EditBanner";
 import { Pencil } from "lucide-react";
+import { QRCode } from "antd";
 
 interface ContactDetail {
   label: string;
@@ -47,11 +48,8 @@ const Layout01: React.FC<Layout01Props> = ({
           <span>Edit mode is on</span>
         </div>
       )}
-      <div
-        className={`group h-[250px] lg:h-[350px] relative ${
-          isLoggedIn.status && "cursor-pointer"
-        }`}
-      >
+
+      <div className={`group h-[250px] lg:h-[350px] relative `}>
         <Image
           src={
             userData?.banner_image
@@ -105,16 +103,6 @@ const Layout01: React.FC<Layout01Props> = ({
           <Shareprofile username={username} />
         </div>
       </div>
-
-      {/* ------------- */}
-      {/* PREVIEW BUTTON */}
-      {isLoggedIn?.status && (
-        <div className="fixed bottom-5 right-5">
-          <button className="px-6 py-3 hover:scale-105 transition-all ease-in-out duration-200 text-xs bg-dark text-white rounded-full leading-none tracking-wide font-medium">
-            PREVIEW
-          </button>
-        </div>
-      )}
     </>
   );
 };

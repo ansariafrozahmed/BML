@@ -189,11 +189,6 @@ export default async function ProfilePage({
           isLoggedIn={isLoggedIn}
           userData={userData}
         />
-        // <Layout02
-        // username={username}
-        // isLoggedIn={isLoggedIn}
-        // userData={userData}
-        // />
       );
     case 2:
       return <ProfileBlocked isLoggedIn={isLoggedIn} />;
