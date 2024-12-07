@@ -189,6 +189,8 @@ export async function generateMetadata({
   try {
     const data = await fetchUserData(username);
 
+    let qrCodeUrl;
+
     if (data) {
       const qrCodeFilePath = path.join("public", "qrcodes", `${username}.png`);
       const qrCodePath = `/qrcodes/${username}.png`;
@@ -197,9 +199,8 @@ export async function generateMetadata({
         margin: 2,
         scale: 10,
       });
+      qrCodeUrl = `${process.env.FRONTEND}${qrCodePath}`;
     }
-
-    const qrCodeUrl = `${process.env.FRONTEND}${qrCodePath}`;
 
     return {
       title: data.username || defaultTitle,
@@ -222,7 +223,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         title: data.username || defaultTitle,
         description: data.bio || defaultDescription,
-        images: [qrCodeUrl],
+        images: [qrCodeUrl || "/og.webp"],
       },
       alternates: {
         canonical: `${process.env.FRONTEND}/${data.username}`,
