@@ -6,16 +6,13 @@ import AnnouncementBarV1 from "@/components/HeadeFooterOther/AnnouncementBarV1";
 import NextTopLoader from "nextjs-toploader";
 import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
 import FooterWrapper from "@/components/HeadeFooterOther/FooterWrapper";
-<<<<<<< HEAD
 import ProviderComp from "@/components/provider";
-=======
 import {
   defaultDescription,
   defaultTitle,
   frontendURL,
   openGraphImage,
 } from "@/lib/constants";
->>>>>>> 7cb63089b2b1713a647dea7db5148541de969868
 
 export const metadata: Metadata = {
   title: defaultTitle,
