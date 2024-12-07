@@ -1,8 +1,6 @@
 // import React from "react";
 import Layout01 from "@/components/Layout/Layout01";
-import Layout02 from "@/components/Layout/Layout02";
 import ValidateUser from "@/lib/validateUser";
-import Image from "next/image";
 import Link from "next/link";
 
 const fetchUserData = async (username: string) => {
@@ -190,11 +188,6 @@ export default async function ProfilePage({
           isLoggedIn={isLoggedIn}
           userData={userData}
         />
-        // <Layout02
-        // username={username}
-        // isLoggedIn={isLoggedIn}
-        // userData={userData}
-        // />
       );
     case 2:
       return <ProfileBlocked isLoggedIn={isLoggedIn} />;

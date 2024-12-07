@@ -97,7 +97,7 @@ const LoginForm = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input!",
+                  message: "Please enter username or email!",
                   type: "string",
                 },
               ]}
@@ -138,7 +138,7 @@ const LoginForm = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`flex items-center -mt-4 capitalize justify-center w-full gap-2 border border-dark bg-dark hover:opacity-90 py-2.5 rounded-md text-sm tracking-widest text-white font-medium ${
+                  className={`flex items-center  capitalize justify-center w-full gap-2 border border-dark bg-dark hover:opacity-90 py-2.5 rounded-md text-sm tracking-widest text-white font-medium ${
                     loading ? "cursor-not-allowed" : "cursor-pointer"
                   }`}
                 >
