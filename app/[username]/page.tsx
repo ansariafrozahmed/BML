@@ -10,6 +10,8 @@ import ValidateUser from "@/lib/validateUser";
 import { Metadata } from "next";
 import Link from "next/link";
 import QRCode from "qrcode";
+import { writeFileSync } from "fs";
+import path from "path";
 
 const fetchUserData = async (username: string) => {
   try {
@@ -187,10 +189,15 @@ export async function generateMetadata({
   try {
     const data = await fetchUserData(username);
 
-    const qrCodeDataUrl = await QRCode.toDataURL(url, {
-      margin: 2, // Add some margin
-      scale: 10, // Adjust scale for size
+    const qrCodeFilePath = path.join("public", "qrcodes", `${username}.png`);
+    const qrCodePath = `/qrcodes/${username}.png`; // Publicly accessible path
+
+    await QRCode.toFile(qrCodeFilePath, url, {
+      margin: 2,
+      scale: 10,
     });
+
+    const qrCodeUrl = `${process.env.FRONTEND}${qrCodePath}`;
 
     return {
       title: data.username || defaultTitle,
@@ -202,7 +209,7 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            url: qrCodeDataUrl || "/og.webp",
+            url: qrCodeUrl || "/og.webp",
             width: 1200,
             height: 630,
             alt: data.username || defaultTitle,
@@ -213,7 +220,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         title: data.username || defaultTitle,
         description: data.bio || defaultDescription,
-        images: [qrCodeDataUrl || "/og.webp"],
+        images: [qrCodeUrl],
       },
       alternates: {
         canonical: `${process.env.FRONTEND}/${data.username}`,
