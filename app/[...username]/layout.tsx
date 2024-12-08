@@ -4,12 +4,11 @@ import { fetchUserData } from "./page";
 import ValidateUser from "@/lib/validateUser";
 
 const RootLayout = async ({ children, params }: any) => {
-  const { username } = params;
-
-  const userData = await fetchUserData(username);
+  const data = await params;
+  const userData = await fetchUserData(data?.username?.[0]);
   const isLoggedIn = await ValidateUser();
 
-  const isUserMatch = isLoggedIn?.username === username;
+  const isUserMatch = isLoggedIn?.username === data?.username?.[0];
 
   // Enhance the `isLoggedIn` object to include the match status
   const userSession = {
@@ -17,10 +16,13 @@ const RootLayout = async ({ children, params }: any) => {
     logged: isUserMatch,
   };
 
+  console.log(data, 'in layout')
+
   return (
     <div className="flex">
       {/* Sidebar */}
-      {userSession.logged && (
+
+      {userSession.logged && data?.username?.[1] === 'edit' && (
         <Sidebar userData={userData} userSession={userSession} />
       )}
 

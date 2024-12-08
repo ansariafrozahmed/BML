@@ -266,15 +266,14 @@ export default async function ProfilePage({
   params: any;
   searchParams: Record<string, string | string[]>; // Correct type
 }) {
-  const { username } = params;
+  const data = await params;
 
+  console.log(data, 'data asas')
   // Access the query parameter 'isedit' from searchParams object
   const isEdit = searchParams?.edit || null; // If 'isedit' exists in searchParams, access it
 
-  console.log(isEdit); // Check the value of 'isedit'
-
   // Fetch user data
-  const userData = await fetchUserData(username);
+  const userData = await fetchUserData(data?.username?.[0]);
   const isLoggedIn = await ValidateUser();
 
   // Handle user not found case
@@ -283,7 +282,7 @@ export default async function ProfilePage({
   }
 
   // Check if the logged-in user matches the profile being accessed
-  const isUserMatch = isLoggedIn?.username === username;
+  const isUserMatch = isLoggedIn?.username === data?.[0];
 
   // Enhance the `isLoggedIn` object to include the match status
   const userSession = {
@@ -298,7 +297,7 @@ export default async function ProfilePage({
     case 1:
       return (
         <Layout01
-          username={username}
+          username={data?.[0]}
           isLoggedIn={userSession}
           userData={userData}
           isEdit={isEdit}

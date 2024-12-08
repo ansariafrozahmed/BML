@@ -8,7 +8,7 @@ interface ContactDetail {
 }
 
 const renderContactDetails = (contact_details: ContactDetail[]) => (
-  <div className="space-y-4 bg-white p-2 rounded-md shadow-md">
+  <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
     <h2 className="text-xl font-semibold tracking-wider text-primary">
       Contact Details
     </h2>

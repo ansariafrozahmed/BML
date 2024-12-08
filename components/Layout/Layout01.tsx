@@ -39,7 +39,6 @@ interface Layout01Props {
 const Layout01: React.FC<Layout01Props> = ({
   userData,
   username,
-  isLoggedIn,
   isEdit,
 }) => {
   const userProfile = useSelector((state: RootState) => state.userProfile);
@@ -50,7 +49,7 @@ const Layout01: React.FC<Layout01Props> = ({
   // Fallback to userData if userProfile is missing certain data (e.g., banner_image)
   let bannerImage =
     (userProfile?.banner_image?.url as any) ||
-    `${process.env.BACKEND}/upload/banner/${userData.banner_image}`;
+    (userData.banner_image && `${process.env.BACKEND}/upload/banner/${userData.banner_image}`) || null;
 
   // Handle the case where the banner image might be a Blob
   if (isEditMode && bannerImage instanceof Blob) {
@@ -74,9 +73,9 @@ const Layout01: React.FC<Layout01Props> = ({
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-        {isLoggedIn.logged && (
+        {/* {isLoggedIn.logged && (
           <div className="group-hover:bg-black/40 transition-all ease duration-100 absolute inset-0 "></div>
-        )}
+        )} */}
         <div className="absolute inset-0 templateContainer flex items-end justify-start pb-10">
           <div className="space-y-2">
             <h1 className="text-3xl lg:text-5xl font-light text-white">

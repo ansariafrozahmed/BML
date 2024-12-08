@@ -8,11 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import axios from "axios";
 import { updateUserProfile } from "@/store/userProfile";
+import { useRouter } from "next/navigation";
+import { showMessage } from "@/lib/reuse";
 
 const Sidebar = ({ userData, userSession }: any) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar starts closed
   const userProfile = useSelector((state: RootState) => state.userProfile);
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const activate =
     userProfile?.banner_image || userProfile?.social_links?.length > 0;
@@ -21,17 +24,22 @@ const Sidebar = ({ userData, userSession }: any) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  console.log(userProfile, 'userProfile')
 
   const handleSaveProfile = async () => {
     try {
+      setLoading(true)
       // Create FormData object to send as multipart/form-data
       const formData = new FormData();
 
       // Append banner image if present
       if (userProfile.banner_image) {
-        formData.append("banner_image", userProfile.banner_image[0]);
+        formData.append("banner_image", userProfile.banner_image?.originFileObj);
       }
 
+      if (userProfile.social_links?.length > 0) {
+        formData.append("social_links", JSON.stringify(userProfile.social_links));
+      }
       // Send data to backend using axios with FormData
       const response = await axios.post(
         `${process.env.BACKEND}/api/updateBulkProfile`,
@@ -45,10 +53,9 @@ const Sidebar = ({ userData, userSession }: any) => {
 
       // Handle response
       if (response.status === 200) {
-        console.log("Profile updated successfully");
-
-        // Nullify each field in userProfile after successful save
-        dispatch(updateUserProfile({ banner_image: null, social_links: null }));
+        showMessage(`Profile updated successfully`, 'success')
+        router.refresh()
+        setLoading(false)
       } else {
         console.error("Failed to update profile", response.data);
       }
@@ -69,15 +76,14 @@ const Sidebar = ({ userData, userSession }: any) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 z-[999] h-svh bg-white shadow-lg border-b-4 border-orange-600 transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:sticky md:translate-x-0 md:w-[30%] w-[80%]`}
+        className={`fixed top-0 left-0 z-[999] h-svh bg-white shadow-lg border-b-4 border-orange-600 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:sticky md:translate-x-0 md:w-[30%] w-[80%]`}
       >
         {/* Sidebar Content */}
         <div>
           <ProfileName userData={userData} />
           <div className="mt-5 overflow-y-auto">
-            <UpdateComponent social_links={userData?.social_links} />
+            <UpdateComponent token={userSession?.token} banner_image={userData?.banner_image} social_links={userData?.social_links} />
           </div>
         </div>
 
@@ -86,6 +92,7 @@ const Sidebar = ({ userData, userSession }: any) => {
           <div></div>
           <Button
             disabled={!activate}
+            loading={loading}
             onClick={handleSaveProfile}
             className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
           >
