@@ -10,8 +10,9 @@ const userProfile = createSlice({
       last_name: null,
       bio: null,
       email: null,
-      contact_details: null // Initialize as an empty array
-    }
+      contact_details: null, // Initialize as an empty array
+    },
+    colorPicker: null,
   } as any,
   reducers: {
     updateUserProfile(state, action) {
@@ -45,10 +46,12 @@ const userProfile = createSlice({
     },
     // New reducer to update account details
     updateAccountDetails(state, action) {
-      const { first_name, last_name, bio, contact_details, email } = action.payload;
+      const { first_name, last_name, bio, contact_details, email } =
+        action.payload;
 
       // Update specific fields if provided
-      if (first_name !== undefined) state.accountDetails.first_name = first_name;
+      if (first_name !== undefined)
+        state.accountDetails.first_name = first_name;
       if (last_name !== undefined) state.accountDetails.last_name = last_name;
       if (bio !== undefined) state.accountDetails.bio = bio;
       if (email !== undefined) state.accountDetails.email = email;
@@ -57,10 +60,19 @@ const userProfile = createSlice({
       if (contact_details !== undefined) {
         state.accountDetails.contact_details = contact_details;
       }
-    }
+    },
+    updateColorPicker(state, action) {
+      state.colorPicker = action.payload; // Updates only the color picker
+    },
   },
 });
 
-export const { updateUserProfile, updateBannerImage, updateSocialLink, updateAccountDetails } = userProfile.actions;
+export const {
+  updateUserProfile,
+  updateBannerImage,
+  updateSocialLink,
+  updateAccountDetails,
+  updateColorPicker
+} = userProfile.actions;
 
 export default userProfile.reducer;

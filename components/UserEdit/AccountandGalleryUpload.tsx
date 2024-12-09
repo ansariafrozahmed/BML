@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import GalleryUploadModal from './GalleryUploadModal';
+import { usePathname } from 'next/navigation';
 
 const AccountandGalleryUpload = ({
     isLoggedIn,
@@ -13,7 +14,7 @@ const AccountandGalleryUpload = ({
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDismissed, setIsDismissed] = useState(false); // Track dismissal of the card
-
+    const path = usePathname()
     // Function to toggle the modal
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -29,11 +30,11 @@ const AccountandGalleryUpload = ({
     return (
         <>
             {/* Main floating action button */}
-            <div className="fixed bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-orange-500 text-white rounded-xl p-4 shadow-lg border border-orange-400 flex items-center gap-4 ">
+            <div className="fixed bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-user_primary text-white rounded-xl p-4 shadow-lg border border-user_primary flex items-center gap-4 ">
                 {/* Dismiss Button */}
                 <button
                     onClick={handleDismiss}
-                    className="absolute -top-3 right-0 text-white bg-orange-600 hover:bg-orange-700 rounded-full p-1 shadow-sm"
+                    className="absolute -top-3 right-0 text-white bg-user_primary hover:bg-user_primary/80 rounded-full p-1 shadow-sm"
                 >
                     ✖
                 </button>
@@ -50,7 +51,7 @@ const AccountandGalleryUpload = ({
                 <div className="md:flex gap-2 md:space-y-0 space-y-2">
                     <button
                         onClick={isLoggedIn ? toggleModal : undefined}
-                        className="ml-auto bg-white text-orange-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-orange-100 hover:shadow-lg transition-all duration-300 ease-in-out"
+                        className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md  hover:shadow-lg transition-all duration-300 ease-in-out"
                     >
                         {isLoggedIn ? 'Upload Memory' : (
                             <Link href="/register">
@@ -60,9 +61,9 @@ const AccountandGalleryUpload = ({
                     </button>
                     {!isEdit && (
                         <button
-                            className="ml-auto bg-white text-orange-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-orange-100 hover:shadow-lg transition-all duration-300 ease-in-out"
+                            className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md  hover:shadow-lg transition-all duration-300 ease-in-out"
                         >
-                            <Link href={`${window.location.pathname}/edit`}>
+                            <Link href={`${path}/edit`}>
                                 Edit Profile
                             </Link>
                         </button>

@@ -2,6 +2,11 @@ import Sidebar from "@/components/UserEdit/Sidebar";
 import React from "react";
 import { fetchUserData } from "./page";
 import ValidateUser from "@/lib/validateUser";
+import ColorPallete from "@/components/Colorpallete";
+const ColorPalette01 = {
+  user_primary: "#F5762E", // Deep brown as the primary color for a grounded feel.
+  user_dark: "#262626", // Dark gray for main text, softer than black.
+};
 
 const RootLayout = async ({ children, params }: any) => {
   const data = await params;
@@ -16,13 +21,12 @@ const RootLayout = async ({ children, params }: any) => {
     logged: isUserMatch,
   };
 
-  console.log(data, 'in layout')
-
   return (
     <div className="flex">
       {/* Sidebar */}
 
-      {userSession.logged && data?.username?.[1] === 'edit' && (
+      <ColorPallete colorPallete={userData?.colors || ColorPalette01} />
+      {userSession.logged && data?.username?.[1] === "edit" && (
         <Sidebar userData={userData} userSession={userSession} />
       )}
 

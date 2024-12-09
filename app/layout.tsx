@@ -7,6 +7,7 @@ import NextTopLoader from "nextjs-toploader";
 import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
 import FooterWrapper from "@/components/HeadeFooterOther/FooterWrapper";
 import ProviderComp from "@/components/provider";
+
 import {
   defaultDescription,
   defaultTitle,
@@ -41,6 +42,8 @@ export const metadata: Metadata = {
     canonical: `${frontendURL}`,
   },
 };
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -51,6 +54,7 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         {/* <HeaderWrapper /> */}
+
         <ProviderComp>{children}</ProviderComp>
         {/* <FooterWrapper /> */}
       </body>

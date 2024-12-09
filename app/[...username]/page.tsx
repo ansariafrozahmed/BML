@@ -270,7 +270,6 @@ export default async function ProfilePage({
   // Access the query parameter 'isedit' from searchParams object
   const isEdit = data?.username?.[1] || null; // If 'isedit' exists in searchParams, access it
 
-  console.log(isEdit, 'isEdit')
   // Fetch user data
   const userData = await fetchUserData(data?.username?.[0]);
   const isLoggedIn = await ValidateUser();

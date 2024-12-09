@@ -11,10 +11,8 @@ export default {
       colors: {
         primary: "#F5762E",
         dark: "#262626",
-        selectedCOLOR: '#F26B0F',
-        lightColor: "#fdba74",
-        textColor: "#fff",
-        textSecondary: "#c2411c",
+        user_primary: "var(--template-user_primary)",
+        user_dark: "var(--template-user_dark)",
       },
     },
   },
