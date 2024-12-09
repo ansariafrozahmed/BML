@@ -10,7 +10,6 @@ interface SocialMediaLinksProps {
 
 const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ socialMedia }) => {
   // Frontend icon paths
-  console.log(socialMedia, 'socialMedia')
   const icons = [
     {
       key: "facebook",

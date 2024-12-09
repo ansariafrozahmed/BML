@@ -1,19 +1,40 @@
 "use client";
 import React, { useState } from "react";
 import GalleryContainer from "../Gallery/GalleryContainer";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
-interface ContactDetail {
-  label: string;
-  value: string;
-}
 
-const renderContactDetails = (contact_details: ContactDetail[]) => (
-  <div className="space-y-4 bg-white p-2 rounded-md shadow-md">
+
+const renderContactDetails = (userData: any) => (
+  <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
     <h2 className="text-xl font-semibold tracking-wider text-primary">
       Contact Details
     </h2>
     <div className="space-y-4">
-      {contact_details?.map((item, index) => (
+      <div >
+        <div className="flex items-center gap-4">
+          <span className="font-medium text-gray-600 w-32 text-base">
+            Full Name
+          </span>
+          <span className="text-gray-800 text-base">
+            {userData?.first_name || ""} {userData?.last_name || ""}
+          </span>
+        </div>
+        <hr />
+      </div>
+      <div >
+        <div className="flex items-center gap-4">
+          <span className="font-medium text-gray-600 w-32 text-base">
+            Email
+          </span>
+          <span className="text-gray-800 text-base">
+            {userData?.email}
+          </span>
+        </div>
+        <hr />
+      </div>
+      {userData?.contact_details?.length > 0 && userData?.contact_details?.map((item: any, index: number) => (
         <div key={index}>
           <div className="flex items-center gap-4">
             {item?.label && (
@@ -38,7 +59,7 @@ interface ProfileTabsProps {
   userData: {
     banner_image: string;
     bio: string;
-    contact_details: ContactDetail[];
+    contact_details: any[];
     email: string;
     first_name: string;
     last_name: string;
@@ -54,11 +75,14 @@ interface ProfileTabsProps {
 }
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
+  const userProfile = useSelector((state: RootState) => state.userProfile)
+  const validateData = (userProfile?.accountDetails?.first_name || userProfile?.accountDetails?.last_name || userProfile?.accountDetails?.email || userProfile?.accountDetails?.bio || userProfile?.accountDetails?.contact_details?.length > 0) && userProfile?.accountDetails
+
   const tabs = [
     {
       id: 1,
       label: "About",
-      content: renderContactDetails(userData?.contact_details),
+      content: renderContactDetails(validateData || userData),
     },
     {
       id: 2,
@@ -89,11 +113,10 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${
-              activeTab === tab.id
-                ? "border-primary text-primary"
-                : "text-dark border-white hover:text-primary"
-            }`}
+            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${activeTab === tab.id
+              ? "border-primary text-primary"
+              : "text-dark border-white hover:text-primary"
+              }`}
           >
             {tab.label}
           </button>
@@ -101,13 +124,12 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
       </div>
 
       {/* Content */}
-      <div className="my-4">
+      <div className="mt-4">
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={`tab-content ${
-              activeTab === tab.id ? animationClass : "hidden-content"
-            }`}
+            className={`tab-content ${activeTab === tab.id ? animationClass : "hidden-content"
+              }`}
           >
             {activeTab === tab.id && (
               <div className="text-sm py-2">{tab.content}</div>

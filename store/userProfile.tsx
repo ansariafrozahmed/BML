@@ -5,6 +5,13 @@ const userProfile = createSlice({
   initialState: {
     banner_image: null,
     social_links: [], // Initialize as an empty array
+    accountDetails: {
+      first_name: null,
+      last_name: null,
+      bio: null,
+      email: null,
+      contact_details: null // Initialize as an empty array
+    }
   } as any,
   reducers: {
     updateUserProfile(state, action) {
@@ -14,8 +21,6 @@ const userProfile = createSlice({
       state.banner_image = action.payload; // Updates only the banner image
     },
     updateSocialLink(state, action) {
-      console.log(action.payload, "action.payload");
-
       const updatedLinks = action.payload.updatedSocialLinks;
 
       // Initialize social_links as an empty array if null
@@ -38,10 +43,24 @@ const userProfile = createSlice({
         }
       });
     },
+    // New reducer to update account details
+    updateAccountDetails(state, action) {
+      const { first_name, last_name, bio, contact_details, email } = action.payload;
+
+      // Update specific fields if provided
+      if (first_name !== undefined) state.accountDetails.first_name = first_name;
+      if (last_name !== undefined) state.accountDetails.last_name = last_name;
+      if (bio !== undefined) state.accountDetails.bio = bio;
+      if (email !== undefined) state.accountDetails.email = email;
+
+      // If contact_details are provided, update the whole contact_details array
+      if (contact_details !== undefined) {
+        state.accountDetails.contact_details = contact_details;
+      }
+    }
   },
 });
 
-export const { updateUserProfile, updateBannerImage, updateSocialLink } =
-  userProfile.actions;
+export const { updateUserProfile, updateBannerImage, updateSocialLink, updateAccountDetails } = userProfile.actions;
 
 export default userProfile.reducer;

@@ -18,6 +18,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.(png|jpe?g|gif|svg|webp)$/,
+      use: ['file-loader'], // Make sure you have file-loader or url-loader configured
+    });
+    return config;
+  },
 };
 
 export default nextConfig;
