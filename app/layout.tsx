@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/HeadeFooterOther/Header";
-import Footer from "@/components/HeadeFooterOther/Footer";
-import AnnouncementBarV1 from "@/components/HeadeFooterOther/AnnouncementBarV1";
 import NextTopLoader from "nextjs-toploader";
-import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
-import FooterWrapper from "@/components/HeadeFooterOther/FooterWrapper";
 import ProviderComp from "@/components/provider";
 
 import {
@@ -56,7 +51,6 @@ export default function RootLayout({
         {/* <HeaderWrapper /> */}
 
         <ProviderComp>{children}</ProviderComp>
-        {/* <FooterWrapper /> */}
       </body>
     </html>
   );

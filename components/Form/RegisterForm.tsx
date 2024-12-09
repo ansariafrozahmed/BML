@@ -29,8 +29,6 @@ const RegisterForm = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [checked, setChecked] = useState(false);
 
-  console.log(checked);
-
   const verifyEmail = async () => {
     try {
       setSendingOtp(true);
@@ -77,9 +75,9 @@ const RegisterForm = () => {
     const value = e.target.value;
     if (!validateUsername(value)) {
       // You can set error state here or trigger UI feedback if needed
-      console.log(
-        "Invalid username! Must contain only lowercase letters and numbers."
-      );
+      // console.log(
+      //   "Invalid username! Must contain only lowercase letters and numbers."
+      // );
     }
   };
 

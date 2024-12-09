@@ -1,85 +1,102 @@
-import Link from 'next/link';
-import React, { useState } from 'react';
-import GalleryUploadModal from './GalleryUploadModal';
-import { usePathname } from 'next/navigation';
+"use client";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import GalleryUploadModal from "./GalleryUploadModal";
+import { Pencil } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const AccountandGalleryUpload = ({
-    isLoggedIn,
-    isEdit,
-    token
+  isLoggedIn,
+  isEdit,
+  token,
 }: {
-    isLoggedIn: boolean;
-    isEdit: boolean;
-    token: string;
+  isLoggedIn: boolean;
+  isEdit: boolean;
+  token: string;
 }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isDismissed, setIsDismissed] = useState(false); // Track dismissal of the card
-    const path = usePathname()
-    // Function to toggle the modal
-    const toggleModal = () => {
-        setIsModalOpen(!isModalOpen);
-    };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false); // Track dismissal of the card
+  const [currentPath, setCurrentPath] = useState<string>(""); // Track current pathname
+  const path = usePathname();
+  
+  useEffect(() => {
+    // Only runs on the client side
+    setCurrentPath(path);
+  }, []);
 
-    // Function to dismiss the floating card
-    const handleDismiss = () => {
-        setIsDismissed(true);
-    };
+  // Function to toggle the modal
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
-    if (isDismissed) return null; // Do not render the card if dismissed
+  // Function to dismiss the floating card
+  const handleDismiss = () => {
+    setIsDismissed(true);
+  };
 
+  if (isDismissed)
     return (
-        <>
-            {/* Main floating action button */}
-            <div className="fixed bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-user_primary text-white rounded-xl p-4 shadow-lg border border-user_primary flex items-center gap-4 ">
-                {/* Dismiss Button */}
-                <button
-                    onClick={handleDismiss}
-                    className="absolute -top-3 right-0 text-white bg-user_primary hover:bg-user_primary/80 rounded-full p-1 shadow-sm"
-                >
-                    ✖
-                </button>
+      <div
+        onClick={() => setIsDismissed(false)}
+        className="fixed bottom-5 right-5 bg-user_primary p-2.5 text-white rounded-full cursor-pointer hover:scale-90 transition-all eas duration-200 z-[999]"
+      >
+        <Pencil size={20} />
+      </div>
+    ); // Do not render the card if dismissed
 
-                {/* Floating Card Content */}
-                <div className="flex flex-col items-center text-center">
-                    <h3 className="text-xl font-bold">Ganpati Bappa Morya! 🙏</h3>
-                    <p className="text-sm text-white/90 mt-1">
-                        {isLoggedIn
-                            ? "You're all set! Share your Ganpati Bappa memories now! 🌟"
-                            : "Join our community and share your Ganpati Bappa memories! 🌟"}
-                    </p>
-                </div>
-                <div className="md:flex gap-2 md:space-y-0 space-y-2">
-                    <button
-                        onClick={isLoggedIn ? toggleModal : undefined}
-                        className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md  hover:shadow-lg transition-all duration-300 ease-in-out"
-                    >
-                        {isLoggedIn ? 'Upload Memory' : (
-                            <Link href="/register">
-                                Create Account
-                            </Link>
-                        )}
-                    </button>
-                    {!isEdit && (
-                        <button
-                            className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md  hover:shadow-lg transition-all duration-300 ease-in-out"
-                        >
-                            <Link href={`${path}/edit`}>
-                                Edit Profile
-                            </Link>
-                        </button>
-                    )}
-                </div>
-            </div>
+  return (
+    <>
+      {/* Main floating action button */}
+      <div className="fixed flex-col lg:flex-row bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-user_primary text-white rounded-xl p-4 shadow-lg border border-user_primary flex items-center gap-4 ">
+        {/* Dismiss Button */}
+        <button
+          onClick={handleDismiss}
+          className="absolute -top-3 right-0 text-white bg-user_primary hover:bg-user_primary rounded-full min-h-8 min-w-8 flex items-center justify-center shadow-sm"
+        >
+          ✖
+        </button>
 
-            {/* Modal for creating a post */}
-            {isModalOpen && (
-                <>
-                    {/* You can include your modal content here */}
-                    <GalleryUploadModal active={isModalOpen} handleChange={toggleModal} token={token} />
-                </>
+        {/* Floating Card Content */}
+        <div className="flex flex-col items-center text-center">
+          <h3 className="text-xl font-bold">Ganpati Bappa Morya! 🙏</h3>
+          <p className="text-sm text-white/90 mt-1">
+            {isLoggedIn
+              ? "You're all set! Share your Ganpati Bappa memories now! 🌟"
+              : "Join our community and share your Ganpati Bappa memories! 🌟"}
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={isLoggedIn ? toggleModal : undefined}
+            className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-user_primary hover:shadow-lg transition-all duration-300 ease-in-out"
+          >
+            {isLoggedIn ? (
+              "Upload Memory"
+            ) : (
+              <Link href="/register">Create yours now !</Link>
             )}
+          </button>
+          {!isEdit && isLoggedIn && (
+            <button className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-user_primary hover:shadow-lg transition-all duration-300 ease-in-out">
+              <Link href={`${currentPath}/edit`}>Edit Profile</Link>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Modal for creating a post */}
+      {isModalOpen && (
+        <>
+          {/* You can include your modal content here */}
+          <GalleryUploadModal
+            active={isModalOpen}
+            handleChange={toggleModal}
+            token={token}
+          />
         </>
-    );
+      )}
+    </>
+  );
 };
 
 export default AccountandGalleryUpload;

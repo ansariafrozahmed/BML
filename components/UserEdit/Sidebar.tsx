@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import axios from "axios";
 import { updateUserProfile } from "@/store/userProfile";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { showMessage } from "@/lib/reuse";
 import Link from "next/link";
 
@@ -18,6 +18,8 @@ const Sidebar = ({ userData, userSession }: any) => {
   const [loading, setLoading] = useState(false);
   const [previewMode, setPreview] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  
   const validateData =
     (userProfile?.accountDetails?.first_name ||
       userProfile?.accountDetails?.last_name ||
@@ -94,6 +96,11 @@ const Sidebar = ({ userData, userSession }: any) => {
     }
   };
 
+  const handleExitEditMode = () => {
+    // Remove "edit" from the URL
+    const newPath = pathname.replace("/edit", "");
+    router.push(newPath);
+  };
   return (
     <>
       {/* Background Mask */}
@@ -152,6 +159,12 @@ const Sidebar = ({ userData, userSession }: any) => {
       <div className="bg-white fixed top-0 z-[888] flex justify-between w-full shadow-2xl">
         <div></div>
         <div className={previewMode ? "flex-1" : ""}>
+          <span
+            onClick={handleExitEditMode}
+            className="lg:hidden mr-5 tracking-wide"
+          >
+            Exit edit mode
+          </span>
           <button
             className={`transition-all md:hidden duration-300 ease-in-out p-3 ${
               isSidebarOpen

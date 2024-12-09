@@ -28,7 +28,7 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
 
       // After showing confirmation, redirect to homepage
       setTimeout(() => {
-        router.push("/"); // Redirect to the home page
+        router.push("/login"); // Redirect to the home page
       }, 2000); // Redirect after 2 seconds
     }, 1500);
   };

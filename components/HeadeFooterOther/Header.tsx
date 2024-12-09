@@ -65,14 +65,9 @@ const Header = () => {
 
   useEffect(() => {
     const getUserStatus = async () => {
-      try {
+      if (!isLoggedIn) {
         const result = await ValidateUser();
-
         setIsLoggedIn(result);
-      } catch (error) {
-        // document.cookie =
-        //   "BMLTK=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        // setIsLoggedIn(null);
       }
     };
 

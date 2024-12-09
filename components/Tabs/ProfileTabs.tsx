@@ -4,53 +4,58 @@ import GalleryContainer from "../Gallery/GalleryContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
-
-
 const renderContactDetails = (userData: any) => (
   <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
     <h2 className="text-xl font-semibold tracking-wider text-user_primary">
       Contact Details
     </h2>
     <div className="space-y-4">
-      <div >
-        <div className="flex items-center gap-4">
-          <span className="font-medium text-gray-600 w-32 text-base">
-            Full Name
-          </span>
-          <span className="text-gray-800 text-base">
-            {userData?.first_name || ""} {userData?.last_name || ""}
-          </span>
-        </div>
-        <hr />
-      </div>
-      <div >
-        <div className="flex items-center gap-4">
-          <span className="font-medium text-gray-600 w-32 text-base">
-            Email
-          </span>
-          <span className="text-gray-800 text-base">
-            {userData?.email}
-          </span>
-        </div>
-        <hr />
-      </div>
-      {userData?.contact_details?.length > 0 && userData?.contact_details?.map((item: any, index: number) => (
-        <div key={index}>
-          <div className="flex items-center gap-4">
-            {item?.label && (
+      <div>
+        {userData?.first_name && userData?.first_name && (
+          <>
+            <div className="flex items-center gap-4">
               <span className="font-medium text-gray-600 w-32 text-base">
-                {item.label}
+                Full Name
               </span>
-            )}
-            {item?.value && (
               <span className="text-gray-800 text-base">
-                {item.value || "NA"}
+                {userData?.first_name || ""} {userData?.last_name || ""}
               </span>
-            )}
+            </div>
+            <hr />
+          </>
+        )}
+      </div>
+      <div>
+        {userData?.email && (
+          <>
+            <div className="flex items-center gap-4">
+              <span className="font-medium text-gray-600 w-32 text-base">
+                Email
+              </span>
+              <span className="text-gray-800 text-base">{userData?.email}</span>
+            </div>
+            <hr />
+          </>
+        )}
+      </div>
+      {userData?.contact_details?.length > 0 &&
+        userData?.contact_details?.map((item: any, index: number) => (
+          <div key={index}>
+            <div className="flex items-center gap-4">
+              {item?.label && (
+                <span className="font-medium text-gray-600 w-32 text-base">
+                  {item.label}
+                </span>
+              )}
+              {item?.value && (
+                <span className="text-gray-800 text-base">
+                  {item.value || "NA"}
+                </span>
+              )}
+            </div>
+            <hr />
           </div>
-          <hr />
-        </div>
-      ))}
+        ))}
     </div>
   </div>
 );
@@ -75,8 +80,14 @@ interface ProfileTabsProps {
 }
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
-  const userProfile = useSelector((state: RootState) => state.userProfile)
-  const validateData = (userProfile?.accountDetails?.first_name || userProfile?.accountDetails?.last_name || userProfile?.accountDetails?.email || userProfile?.accountDetails?.bio || userProfile?.accountDetails?.contact_details?.length > 0) && userProfile?.accountDetails
+  const userProfile = useSelector((state: RootState) => state.userProfile);
+  const validateData =
+    (userProfile?.accountDetails?.first_name ||
+      userProfile?.accountDetails?.last_name ||
+      userProfile?.accountDetails?.email ||
+      userProfile?.accountDetails?.bio ||
+      userProfile?.accountDetails?.contact_details?.length > 0) &&
+    userProfile?.accountDetails;
 
   const tabs = [
     {
@@ -128,8 +139,9 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={`tab-content ${activeTab === tab.id ? animationClass : "hidden-content"
-              }`}
+            className={`tab-content ${
+              activeTab === tab.id ? animationClass : "hidden-content"
+            }`}
           >
             {activeTab === tab.id && (
               <div className="text-sm py-2">{tab.content}</div>

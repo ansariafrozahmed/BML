@@ -1,11 +1,36 @@
 import Sidebar from "@/components/UserEdit/Sidebar";
 import React from "react";
-import { fetchUserData } from "./page";
+// import { fetchUserData } from "./page";
 import ValidateUser from "@/lib/validateUser";
 import ColorPallete from "@/components/Colorpallete";
 const ColorPalette01 = {
   user_primary: "#F5762E", // Deep brown as the primary color for a grounded feel.
   user_dark: "#262626", // Dark gray for main text, softer than black.
+};
+
+const fetchUserData = async (username: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.BACKEND}/api/getUserData/${username}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      // throw new Error("Failed to fetch user data.");
+      const errorResult = await response.json();
+      return false;
+    }
+
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const RootLayout = async ({ children, params }: any) => {

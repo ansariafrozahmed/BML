@@ -12,7 +12,7 @@ import QRCode from "qrcode";
 import path from "path";
 import NotFound from "./not-found";
 
-export const fetchUserData = async (username: string) => {
+const fetchUserData = async (username: string) => {
   try {
     const response = await fetch(
       `${process.env.BACKEND}/api/getUserData/${username}`,
@@ -258,13 +258,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProfilePage({
-  params,
-  searchParams, // searchParams will be an object, not URLSearchParams
-}: {
-  params: any;
-  searchParams: Record<string, string | string[]>; // Correct type
-}) {
+export default async function ProfilePage({ params }: { params: any }) {
   const data = await params;
 
   // Access the query parameter 'isedit' from searchParams object
@@ -281,11 +275,12 @@ export default async function ProfilePage({
 
   // Check if the logged-in user matches the profile being accessed
   const isUserMatch = isLoggedIn?.username === data?.username?.[0];
-  const userSession = isLoggedIn?.status ? {
-    ...isLoggedIn,
-    logged: isUserMatch,
-  } : { ...isLoggedIn };
-
+  const userSession = isLoggedIn?.status
+    ? {
+        ...isLoggedIn,
+        logged: isUserMatch,
+      }
+    : { ...isLoggedIn };
 
   // Handle different user statuses
   switch (userData.status) {
