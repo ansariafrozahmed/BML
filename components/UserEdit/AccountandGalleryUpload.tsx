@@ -49,17 +49,19 @@ const AccountandGalleryUpload = ({
       {/* Main floating action button */}
       <div className="fixed flex-col lg:flex-row bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-user_primary text-white rounded-xl p-4 shadow-lg border border-user_primary flex items-center gap-4 ">
         {/* Dismiss Button */}
-        <button
-          onClick={handleDismiss}
-          className="absolute -top-3 right-0 text-white bg-user_dark hover:bg-user_primary rounded-full min-h-8 min-w-8 flex items-center justify-center shadow-sm"
-        >
-          ✖
-        </button>
+        {isLoggedIn && (
+          <button
+            onClick={handleDismiss}
+            className="absolute -top-3 right-0 text-white bg-user_dark hover:bg-user_primary rounded-full min-h-8 min-w-8 flex items-center justify-center shadow-sm"
+          >
+            ✖
+          </button>
+        )}
 
         {/* Floating Card Content */}
         <div className="flex flex-col items-center text-center">
-          <h3 className="text-xl font-bold">Ganpati Bappa Morya! 🙏</h3>
-          <p className="text-sm text-white/90 mt-1">
+          {/* <h3 className="text-xl font-bold">Ganpati Bappa Morya! 🙏</h3> */}
+          <p className="text-base leading-tight text-white/90 mt-1">
             {isLoggedIn
               ? "You're all set! Share your Ganpati Bappa memories now! 🌟"
               : "Join our community and share your Ganpati Bappa memories! 🌟"}

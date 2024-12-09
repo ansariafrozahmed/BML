@@ -13,8 +13,8 @@ const EditBanner = ({ banner_image, token }: any) => {
   const [fileList, setFileList] = useState<any[]>([]); // State to store uploaded files
   const [dbImage, setDbImage] = useState<string | null>(null); // State for database image
   const dispatch = useDispatch();
-  const Router = useRouter()
-  
+  const Router = useRouter();
+
   useEffect(() => {
     // Set database image if it exists
     if (banner_image) {
@@ -45,7 +45,7 @@ const EditBanner = ({ banner_image, token }: any) => {
   // Remove file handler for uploaded files
   const handleRemove = (file: any) => {
     setFileList([]);
-    dispatch(updateBannerImage(""));
+    dispatch(updateBannerImage("" as any));
   };
 
   // Remove file handler for database image
@@ -63,15 +63,15 @@ const EditBanner = ({ banner_image, token }: any) => {
       );
 
       if (response.status === 200) {
-        showMessage("Image removed successfully", 'success');
+        showMessage("Image removed successfully", "success");
         setDbImage(null); // Remove the database image from preview
-        Router.refresh()
+        Router.refresh();
       } else {
-        showMessage("Failed to remove the image", 'error');
+        showMessage("Failed to remove the image", "error");
       }
     } catch (error) {
       console.error("Error deleting the banner image:", error);
-      showMessage("An error occurred while deleting the image", 'error');
+      showMessage("An error occurred while deleting the image", "error");
     }
   };
 

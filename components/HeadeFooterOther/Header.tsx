@@ -116,11 +116,18 @@ const Header = () => {
                 </button>
               </Popover>
             ) : (
-              <Link href={`/login`} className="">
-                <button className="px-7 py-3 hover:scale-105 transition-all  ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
-                  Login / Register
+              // <div className="space-x-2">
+              //   <Link href={`/login`} className="">
+              //     <button className="px-7 py-2.5 hover:scale-105 transition-all  ease-in-out border border-dark text-dark duration-200 text-sm bg-white rounded-full leading-none tracking-wide font-normal">
+              //       Login
+              //     </button>
+              //   </Link>
+              <Link href={`/register`} className="">
+                <button className="px-7 py-2.5 border border-dark hover:scale-105 transition-all  ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
+                  Register for free
                 </button>
               </Link>
+              // </div>
             )}
           </div>
 

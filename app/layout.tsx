@@ -9,6 +9,7 @@ import {
   frontendURL,
   openGraphImage,
 } from "@/lib/constants";
+import CustomLightBox from "@/components/Gallery/CustomLightBox";
 
 export const metadata: Metadata = {
   title: defaultTitle,
@@ -47,7 +48,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
-        <ProviderComp>{children}</ProviderComp>
+        <ProviderComp>
+          {children}
+          {/* <CustomLightBox /> */}
+        </ProviderComp>
       </body>
     </html>
   );

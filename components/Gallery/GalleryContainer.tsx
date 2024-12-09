@@ -63,7 +63,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
   };
 
   const renderYears = () => (
-    <div className="grid grid-cols-3 lg:flex items-center gap-5">
+    <div className="grid grid-cols-4 lg:flex items-center gap-4">
       {galleryData &&
         Object.keys(galleryData).map((year) => (
           <div
@@ -93,7 +93,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
         <ArrowLeft size={20} strokeWidth={1} className="mb-0.5" />
         Back
       </button>
-      <div className="grid grid-cols-3 lg:flex items-center gap-5">
+      <div className="grid grid-cols-4 lg:flex items-center gap-4">
         {["images", "videos"].map((type) => (
           <div
             key={type}
@@ -126,15 +126,18 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
       <div>
         <button
           onClick={() => setSelectedType(null)}
-          className="mb-4 flex items-center gap-2 text-sm tracking-wide transition"
+          className="mb-3 flex items-center gap-2 text-sm tracking-wide transition"
         >
           <ArrowLeft size={20} strokeWidth={1} className="mb-0.5" />
           Back
         </button>
         {items.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2 lg:gap-4">
             {items.map((item, index) => (
-              <div key={index} className="p-3 bg-white space-y-2 shadow-lg">
+              <div
+                key={index}
+                className="p-1.5 lg:p-3 border rounded bg-white space-y-2 shadow-lg"
+              >
                 {selectedType === "images" ? (
                   <>
                     <Image
@@ -148,9 +151,9 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                           : ""
                       }
                       alt={`Gallery image ${index}`}
-                      className=" aspect-[4/2.8] w-full object-cover"
+                      className=" aspect-[4/2.8] rounded-[2px] w-full object-cover"
                     />
-                    <p className="text-center capitalize tracking-wide text-gray-700 text-base">
+                    <p className="text-center capitalize tracking-wide text-gray-700 text-xs lg:text-base">
                       {(item as GalleryItem).title || "Image description"}
                     </p>
                   </>
@@ -175,9 +178,9 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
   };
 
   return (
-    <div className="relative p-6 space-y-5 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
-      <h2 className="text-lg tracking-wide">Gallery</h2>
-      <div className="h-[2px] w-20 bg-primary rounded-full"></div>
+    <div className="relative py-4 px-3 space-y-5 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
+      {/* <h2 className="text-lg tracking-wide">Gallery</h2> */}
+      {/* <div className="h-[2px] w-20 bg-primary rounded-full"></div> */}
       {/* <EditGallery /> */}
       {galleryError && (
         <p className="text-red-500 text-center">

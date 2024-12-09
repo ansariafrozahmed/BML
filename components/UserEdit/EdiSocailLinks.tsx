@@ -96,7 +96,7 @@ const EditSocialLinks = ({ social_links }: any) => {
             // console.log(updatedSocialLinks, 'updatedSocialLinks')
 
             // Dispatch the complete social links state (all fields)
-            dispatch(updateSocialLink({ updatedSocialLinks }));
+            dispatch(updateSocialLink({ updatedSocialLinks } as any));
           }
 
           return updatedLink;

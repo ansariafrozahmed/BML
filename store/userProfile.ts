@@ -15,13 +15,13 @@ const userProfile = createSlice({
     colorPicker: null,
   } as any,
   reducers: {
-    updateUserProfile(state, action) {
+    updateUserProfile(state: any, action: any) {
       return { ...state, ...action.payload }; // Updates the entire profile
     },
-    updateBannerImage(state, action) {
+    updateBannerImage(state: any, action: any) {
       state.banner_image = action.payload; // Updates only the banner image
     },
-    updateSocialLink(state, action) {
+    updateSocialLink(state: any, action: any) {
       const updatedLinks = action.payload.updatedSocialLinks;
 
       // Initialize social_links as an empty array if null
@@ -45,7 +45,7 @@ const userProfile = createSlice({
       });
     },
     // New reducer to update account details
-    updateAccountDetails(state, action) {
+    updateAccountDetails(state: any, action: any) {
       const { first_name, last_name, bio, contact_details, email } =
         action.payload;
 
@@ -61,7 +61,7 @@ const userProfile = createSlice({
         state.accountDetails.contact_details = contact_details;
       }
     },
-    updateColorPicker(state, action) {
+    updateColorPicker(state: any, action: any) {
       state.colorPicker = action.payload; // Updates only the color picker
     },
   },
@@ -72,7 +72,7 @@ export const {
   updateBannerImage,
   updateSocialLink,
   updateAccountDetails,
-  updateColorPicker
+  updateColorPicker,
 } = userProfile.actions;
 
 export default userProfile.reducer;

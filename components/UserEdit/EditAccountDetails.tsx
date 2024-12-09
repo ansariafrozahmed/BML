@@ -82,7 +82,7 @@ const EditAccountDetails = ({ userData }: any) => {
           last_name: formData.last_name,
           bio: formData.bio,
           contact_details: formData?.contact_details || [],
-        })
+        } as any)
       );
     }, 200); // Delay of 200ms (or adjust as needed)
   };

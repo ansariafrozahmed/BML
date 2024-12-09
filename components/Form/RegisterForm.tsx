@@ -180,7 +180,7 @@ const RegisterForm = () => {
           <p className="text-sm font-light text-dark">
             Register to create your profile
           </p>
-          <p className="text-sm font-light text-dark">
+          <p className="text-sm font-normal text-dark">
             लक्षात ठेवा, तुमच्या बाप्पाचं नाव हेच तुमचं युजर आयडी आहे.
           </p>
         </div>
@@ -190,6 +190,7 @@ const RegisterForm = () => {
             name="register_form"
             initialValues={{ remember: true }}
             onFinish={onFinish}
+            layout="vertical"
             onFinishFailed={onFinishFailed}
             size="large"
           >
@@ -230,6 +231,7 @@ const RegisterForm = () => {
 
             <Form.Item<FieldType>
               name="username"
+              label={"Userid"}
               className="-mt-2"
               rules={[
                 {
