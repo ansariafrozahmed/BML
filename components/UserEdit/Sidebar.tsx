@@ -19,12 +19,7 @@ const Sidebar = ({ userData, userSession }: any) => {
   const [previewMode, setPreview] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-
-  const handleExitEditMode = () => {
-    // Remove "edit" from the URL
-    const newPath = pathname.replace("/edit", "");
-    router.push(newPath);
-  };
+  
   const validateData =
     (userProfile?.accountDetails?.first_name ||
       userProfile?.accountDetails?.last_name ||
@@ -36,8 +31,10 @@ const Sidebar = ({ userData, userSession }: any) => {
   const activate =
     userProfile?.banner_image ||
     userProfile?.social_links?.length > 0 ||
-    validateData;
+    validateData ||
+    userProfile?.colorPicker;
 
+  console.log(activate, "userProfile?.colorPicker");
   // Toggle sidebar visibility
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -71,6 +68,10 @@ const Sidebar = ({ userData, userSession }: any) => {
         );
       }
 
+      if (userProfile.colorPicker) {
+        formData.append("colorPicker", JSON.stringify(userProfile.colorPicker));
+      }
+
       // Send data to backend using axios with FormData
       const response = await axios.post(
         `${process.env.BACKEND}/api/updateBulkProfile`,
@@ -95,6 +96,11 @@ const Sidebar = ({ userData, userSession }: any) => {
     }
   };
 
+  const handleExitEditMode = () => {
+    // Remove "edit" from the URL
+    const newPath = pathname.replace("/edit", "");
+    router.push(newPath);
+  };
   return (
     <>
       {/* Background Mask */}
@@ -142,7 +148,7 @@ const Sidebar = ({ userData, userSession }: any) => {
               disabled={!activate}
               loading={loading}
               onClick={handleSaveProfile}
-              className="cursor-pointer transition-all bg-selectedCOLOR text-white px-6 py-2 rounded-lg border-selectedCOLOR border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+              className="cursor-pointer transition-all bg-primary text-white px-6 py-2 rounded-lg border-primary border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
             >
               Publish
             </Button>

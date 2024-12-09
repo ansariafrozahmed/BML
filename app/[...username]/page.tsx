@@ -31,6 +31,9 @@ const fetchUserData = async (username: string) => {
     }
 
     const userData = await response.json();
+
+    console.log(userData);
+
     return userData;
   } catch (error) {
     console.error(error);

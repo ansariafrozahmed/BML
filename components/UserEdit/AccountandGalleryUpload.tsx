@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import GalleryUploadModal from "./GalleryUploadModal";
 import { Pencil } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const AccountandGalleryUpload = ({
   isLoggedIn,
@@ -16,10 +17,11 @@ const AccountandGalleryUpload = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false); // Track dismissal of the card
   const [currentPath, setCurrentPath] = useState<string>(""); // Track current pathname
+  const path = usePathname();
 
   useEffect(() => {
     // Only runs on the client side
-    setCurrentPath(window.location.pathname);
+    setCurrentPath(path);
   }, []);
 
   // Function to toggle the modal
@@ -36,7 +38,7 @@ const AccountandGalleryUpload = ({
     return (
       <div
         onClick={() => setIsDismissed(false)}
-        className="fixed bottom-5 right-5 bg-primary p-2.5 text-white rounded-full cursor-pointer hover:scale-90 transition-all eas duration-200 z-[999]"
+        className="fixed bottom-5 right-5 bg-user_primary p-2.5 text-white rounded-full cursor-pointer hover:scale-90 transition-all eas duration-200 z-[999]"
       >
         <Pencil size={20} />
       </div>
@@ -45,11 +47,11 @@ const AccountandGalleryUpload = ({
   return (
     <>
       {/* Main floating action button */}
-      <div className="fixed flex-col lg:flex-row bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-orange-500 text-white rounded-xl p-4 shadow-lg border border-orange-400 flex items-center gap-4 ">
+      <div className="fixed flex-col lg:flex-row bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-user_primary text-white rounded-xl p-4 shadow-lg border border-user_primary flex items-center gap-4 ">
         {/* Dismiss Button */}
         <button
           onClick={handleDismiss}
-          className="absolute -top-3 right-0 text-white bg-orange-600 hover:bg-orange-700 rounded-full min-h-8 min-w-8 flex items-center justify-center shadow-sm"
+          className="absolute -top-3 right-0 text-white bg-user_dark hover:bg-user_primary rounded-full min-h-8 min-w-8 flex items-center justify-center shadow-sm"
         >
           ✖
         </button>
@@ -66,7 +68,7 @@ const AccountandGalleryUpload = ({
         <div className="flex gap-2">
           <button
             onClick={isLoggedIn ? toggleModal : undefined}
-            className="ml-auto bg-white text-orange-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-orange-100 hover:shadow-lg transition-all duration-300 ease-in-out"
+            className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
           >
             {isLoggedIn ? (
               "Upload Memory"
@@ -75,7 +77,7 @@ const AccountandGalleryUpload = ({
             )}
           </button>
           {!isEdit && isLoggedIn && (
-            <button className="ml-auto bg-white text-orange-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-orange-100 hover:shadow-lg transition-all duration-300 ease-in-out">
+            <button className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">
               <Link href={`${currentPath}/edit`}>Edit Profile</Link>
             </button>
           )}

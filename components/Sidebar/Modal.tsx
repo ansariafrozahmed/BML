@@ -35,7 +35,7 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
 
   return (
     <AntdModal
-      visible={isOpen}
+      open={isOpen}
       title={isLoggedOut ? "Logged Out" : "Confirm Logout"}
       onCancel={!isLoading && !isLoggedOut ? onClose : undefined} // Disable closing during logout or logged-out state
       footer={
@@ -55,7 +55,6 @@ const Modal = ({ isOpen, onClose }: ModalProps) => {
         ]
       }
       zIndex={99999}
-      bodyStyle={{ padding: "20px" }}
       destroyOnClose
     >
       {isLoggedOut ? (

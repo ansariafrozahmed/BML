@@ -15,6 +15,8 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { showMessage } from "@/lib/reuse";
 
 interface GalleryUploadModalProps {
   active: boolean;
@@ -35,6 +37,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
     new Date().getFullYear()
   );
   const [imageTitles, setImageTitles] = useState<any[]>([]);
+  const router = useRouter();
 
   // Handle Image Upload Changes
   const handleImageUploadChange = (info: any) => {
@@ -52,13 +55,6 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
     const updatedTitles = [...imageTitles];
     updatedTitles[index] = value;
     setImageTitles(updatedTitles);
-  };
-
-  // Handle video title and URL change
-  const handleVideoChange = (index: number, key: string, value: string) => {
-    const updatedEntries = [...videoEntries];
-    updatedEntries[index][key] = value;
-    setVideoEntries(updatedEntries);
   };
 
   // Add a new video entry (title, URL)
@@ -95,10 +91,40 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
           },
         }
       );
-      // console.log(response.data); // Handle success response
+      console.log(response.data); // Handle success response
+      handleChange();
+      router.refresh();
+      showMessage("Files Uploaded Successfully", "success");
     } catch (error) {
       console.error("Error uploading files and videos:", error); // Handle error
+      showMessage("Error Uploading Files and Videos", "error");
     }
+  };
+
+  // Check if a URL is a valid YouTube embed link
+  const isValidEmbedUrl = (url: string): boolean => {
+    const embedUrlRegex =
+      /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]+$/;
+    return embedUrlRegex.test(url);
+  };
+
+  // Convert regular YouTube URLs to embed format
+  const convertToEmbedUrl = (url: string): string | null => {
+    const watchRegex = /https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/;
+    const shortRegex = /https:\/\/youtu\.be\/([a-zA-Z0-9_-]+)/;
+
+    const match = url.match(watchRegex) || url.match(shortRegex);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+  };
+
+  // Handle video URL change
+  const handleVideoUrlChange = (index: number, url: string) => {
+    const updatedEntries = [...videoEntries];
+    const embedUrl = convertToEmbedUrl(url) || url; // Try to convert to embed URL if possible
+
+    // Update only if it's valid or allow user to edit
+    updatedEntries[index].url = embedUrl;
+    setVideoEntries(updatedEntries);
   };
 
   return (
@@ -142,22 +168,23 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
                 </Col>
               </Row>
             </Form>
-
-            <Upload
-              multiple
-              fileList={imageFileList}
-              onChange={handleImageUploadChange}
-              beforeUpload={() => false} // Prevent auto upload
-              listType="picture" // Show preview as a grid
-              accept="image/*"
-            >
-              {imageFileList.length < 5 && (
-                <div className="flex items-center gap-2 bg-gray-50 border-dashed p-2">
-                  <UploadOutlined />
-                  <div>Select Images</div>
-                </div>
-              )}
-            </Upload>
+            <div className="mb-4">
+              <Upload
+                multiple
+                fileList={imageFileList}
+                onChange={handleImageUploadChange}
+                beforeUpload={() => false} // Prevent auto upload
+                listType="picture" // Show preview as a grid
+                accept="image/*"
+              >
+                {imageFileList.length < 5 && (
+                  <div className="flex items-center gap-2 bg-gray-50 border-dashed p-2 cursor-pointer">
+                    <UploadOutlined />
+                    <div>Select Images</div>
+                  </div>
+                )}
+              </Upload>
+            </div>
 
             {imageFileList.length > 0 && (
               <>
@@ -199,31 +226,45 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
           <TabPane tab="Videos" key="2">
             {/* Video Entry Input Fields */}
             <div>
+              <Form.Item label="Select Year">
+                <Select
+                  value={selectedYear}
+                  onChange={handleYearChange}
+                  placeholder="Select Year"
+                >
+                  {Array.from(
+                    { length: new Date().getFullYear() - 2022 + 1 },
+                    (_, index) => 2022 + index
+                  ).map((year) => (
+                    <Select.Option key={year} value={year.toString()}>
+                      {year}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
               {videoEntries.map((video, index) => (
-                <Row gutter={16} key={index}>
-                  <Col span={12}>
-                    <Form.Item label={`Video Title`}>
-                      <Input
-                        value={video.title}
-                        onChange={(e) =>
-                          handleVideoChange(index, "title", e.target.value)
-                        }
-                        placeholder="Enter video title"
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item label={`Video URL`}>
-                      <Input
-                        value={video.url}
-                        onChange={(e) =>
-                          handleVideoChange(index, "url", e.target.value)
-                        }
-                        placeholder="Enter video URL"
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
+                <>
+                  <Form.Item
+                    label={`Video URL`}
+                    validateStatus={
+                      !video.url || isValidEmbedUrl(video.url) ? "" : "error"
+                    }
+                    help={
+                      !video.url || isValidEmbedUrl(video.url)
+                        ? ""
+                        : "Enter a valid YouTube embed URL"
+                    }
+                    hasFeedback
+                  >
+                    <Input
+                      value={video.url}
+                      onChange={(e) =>
+                        handleVideoUrlChange(index, e.target.value)
+                      }
+                      placeholder="Enter video embed URL"
+                    />
+                  </Form.Item>
+                </>
               ))}
             </div>
             <Space>
@@ -241,12 +282,12 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
         <div className="flex justify-end border-t pt-5 gap-4">
           <button
             onClick={handleChange}
-            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
+            className=" text-user_primary px-4 py-2 rounded-lg  transition-all"
           >
             Cancel
           </button>
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            className="bg-user_primary text-white px-4 py-2 rounded-lg  transition-all"
             onClick={handleSubmit}
           >
             Submit

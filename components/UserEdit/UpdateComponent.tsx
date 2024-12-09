@@ -3,6 +3,7 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import EditBanner from "./EditBanner";
 import EditSocialLinks from "./EdiSocailLinks";
 import EditAccountDetails from "./EditAccountDetails";
+import ColorTheme from "./ColorTheme";
 // import EditSocialLinks from "./EditSocialLinks"; // Uncomment when the component is ready
 
 const UpdateComponent = ({ social_links, banner_image, token, userData }: any) => {
@@ -23,6 +24,11 @@ const UpdateComponent = ({ social_links, banner_image, token, userData }: any) =
       label: "Account Details",
       component: <EditAccountDetails userData={userData} />, // Replace with <EditSocialLinks />
     },
+    {
+      key: "customizeTheme",
+      label: "Color Theme",
+      component: <ColorTheme userData={userData} />, // Replace with <EditSocialLinks />
+    },
   ];
 
   return (
@@ -35,11 +41,11 @@ const UpdateComponent = ({ social_links, banner_image, token, userData }: any) =
         {sections.map((section) => (
           <div
             key={section.key}
-            className="py-1 cursor-pointer"
+            className="py-2 cursor-pointer"
             onClick={() => toggleEdit(section.key)}
           >
             <div className="flex items-center justify-between">
-              <h4 className="text-sm font-semibold">{section.label}</h4>
+              <h4 className="text-sm font-medium text-gray-600">{section.label}</h4>
               <ChevronRight size={18} />
             </div>
           </div>

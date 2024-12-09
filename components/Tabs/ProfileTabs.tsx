@@ -6,7 +6,7 @@ import { RootState } from "@/store";
 
 const renderContactDetails = (userData: any) => (
   <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
-    <h2 className="text-xl font-semibold tracking-wider text-primary">
+    <h2 className="text-xl font-semibold tracking-wider text-user_primary">
       Contact Details
     </h2>
     <div className="space-y-4">
@@ -124,11 +124,10 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${
-              activeTab === tab.id
-                ? "border-primary text-primary"
-                : "text-dark border-white hover:text-primary"
-            }`}
+            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${activeTab === tab.id
+              ? "border-user_primary text-user_primary"
+              : "text-user_dark border-white hover:text-user_primary"
+              }`}
           >
             {tab.label}
           </button>

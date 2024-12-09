@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import ProviderComp from "@/components/provider";
+
 import {
   defaultDescription,
   defaultTitle,
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
     canonical: `${frontendURL}`,
   },
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
