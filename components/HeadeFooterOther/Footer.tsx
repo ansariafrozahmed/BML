@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import FixedWhatsapp from "../Features/FixedWhatsapp";
+import FixedSocialMedia from "../Features/FixedSocialMedia";
 
 const Footer = () => {
   return (
@@ -98,6 +99,7 @@ const Footer = () => {
       </p>
       {/* ---------- */}
       <FixedWhatsapp />
+      <FixedSocialMedia />
     </div>
   );
 };
