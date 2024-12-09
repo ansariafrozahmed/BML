@@ -1,7 +1,32 @@
 import Sidebar from "@/components/UserEdit/Sidebar";
 import React from "react";
-import { fetchUserData } from "./page";
+// import { fetchUserData } from "./page";
 import ValidateUser from "@/lib/validateUser";
+
+const fetchUserData = async (username: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.BACKEND}/api/getUserData/${username}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      // throw new Error("Failed to fetch user data.");
+      const errorResult = await response.json();
+      return false;
+    }
+
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const RootLayout = async ({ children, params }: any) => {
   const data = await params;
@@ -16,13 +41,11 @@ const RootLayout = async ({ children, params }: any) => {
     logged: isUserMatch,
   };
 
-  console.log(data, 'in layout')
-
   return (
     <div className="flex">
       {/* Sidebar */}
 
-      {userSession.logged && data?.username?.[1] === 'edit' && (
+      {userSession.logged && data?.username?.[1] === "edit" && (
         <Sidebar userData={userData} userSession={userSession} />
       )}
 

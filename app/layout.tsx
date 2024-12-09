@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/HeadeFooterOther/Header";
-import Footer from "@/components/HeadeFooterOther/Footer";
-import AnnouncementBarV1 from "@/components/HeadeFooterOther/AnnouncementBarV1";
 import NextTopLoader from "nextjs-toploader";
-import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
-import FooterWrapper from "@/components/HeadeFooterOther/FooterWrapper";
 import ProviderComp from "@/components/provider";
 import {
   defaultDescription,
@@ -50,9 +45,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
-        {/* <Header /> */}
         <ProviderComp>{children}</ProviderComp>
-        {/* <Footer /> */}
       </body>
     </html>
   );

@@ -93,7 +93,7 @@ const EditSocialLinks = ({ social_links }: any) => {
               key: link.key,
               url: link.url, // Keep the updated URL or fallback to previous ones
             }));
-            console.log(updatedSocialLinks, 'updatedSocialLinks')
+            // console.log(updatedSocialLinks, 'updatedSocialLinks')
 
             // Dispatch the complete social links state (all fields)
             dispatch(updateSocialLink({ updatedSocialLinks }));

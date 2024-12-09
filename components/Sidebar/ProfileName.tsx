@@ -2,15 +2,25 @@
 import React, { useState } from "react";
 import { LogOut } from "lucide-react"; // Import Lucide icons
 import Modal from "./Modal"; // Import the Modal Component
+import { usePathname, useRouter } from "next/navigation";
+import { Tooltip } from "antd";
 
 const ProfileName = ({ userData }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Function to open the modal
   const openModal = () => setIsModalOpen(true);
 
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
+
+  const handleExitEditMode = () => {
+    // Remove "edit" from the URL
+    const newPath = pathname.replace("/edit", "");
+    router.push(newPath);
+  };
 
   return (
     <div className="border-b px-4 py-2 flex items-center justify-between">
@@ -24,9 +34,11 @@ const ProfileName = ({ userData }: any) => {
 
       {/* Logout Icon */}
       <div className="flex items-center">
-        <button onClick={openModal}>
-          <LogOut size={16} />
-        </button>
+        <Tooltip title="Exit edit mode" placement="right">
+          <button onClick={handleExitEditMode}>
+            <LogOut size={16} />
+          </button>
+        </Tooltip>
       </div>
 
       {/* Modal Component */}
