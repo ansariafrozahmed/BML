@@ -8,6 +8,7 @@ import SocialMediaLinks from "../HeadeFooterOther/SocialMediaLinks";
 import EditBanner from "../UserEdit/EditBanner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import AccountandGalleryUpload from "../UserEdit/AccountandGalleryUpload";
 
 interface ContactDetail {
   label: string;
@@ -40,11 +41,11 @@ const Layout01: React.FC<Layout01Props> = ({
   userData,
   username,
   isEdit,
+  isLoggedIn
 }) => {
   const userProfile = useSelector((state: RootState) => state.userProfile);
 
   // Check if isEdit is true or 'true' string
-  const isEditMode = isEdit === true || isEdit === "true";
 
   // Fallback to userData if userProfile is missing certain data (e.g., banner_image)
   let bannerImage =
@@ -52,12 +53,12 @@ const Layout01: React.FC<Layout01Props> = ({
     (userData.banner_image && `${process.env.BACKEND}/upload/banner/${userData.banner_image}`) || null;
 
   // Handle the case where the banner image might be a Blob
-  if (isEditMode && bannerImage instanceof Blob) {
+  if (isEdit === 'edit' && bannerImage instanceof Blob) {
     bannerImage = URL.createObjectURL(bannerImage); // Convert Blob to URL for preview
   }
 
   return (
-    <div className="">
+    <div className={`${isEdit === 'edit' ? 'md:mt-0 mt-[48px]' : ''}`}>
       <div className={`group h-[250px] lg:h-[350px] relative `}>
         <Image
           src={
@@ -92,7 +93,7 @@ const Layout01: React.FC<Layout01Props> = ({
         </div>
       </div>
       {/* ----------- */}
-      <div className="templateContainer flex flex-col lg:flex-row gap-16 w-full">
+      <div className="templateContainer flex flex-col lg:flex-row md:gap-16 w-full">
         <div className="w-full lg:w-[70%]">
           <ProfileTabs userData={userData} />
         </div>
@@ -104,13 +105,15 @@ const Layout01: React.FC<Layout01Props> = ({
             </h2>
             <div>
               <p className="text-sm tracking-wider text-gray-700 leading-relaxed">
-                {userData?.bio}
+                {userProfile?.accountDetails?.bio?.trim() || userData?.bio}
               </p>
             </div>
           </div>
           <Shareprofile username={username} />
         </div>
       </div>
+      <AccountandGalleryUpload isLoggedIn={isLoggedIn?.logged} token={isLoggedIn?.token} isEdit={isEdit === 'edit'} />
+
     </div>
   );
 };

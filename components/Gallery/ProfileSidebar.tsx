@@ -3,7 +3,7 @@ import React from "react";
 
 const ProfileSidebar = () => {
   return (
-    <div className="p-5 mt-5 space-y-3 bg-white rounded-lg shadow-md">
+    <div className="p-5 mt-3 md:mt-5 space-y-3 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-semibold tracking-wider text-primary">
         Profile Overview
       </h2>

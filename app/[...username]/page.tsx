@@ -3,7 +3,6 @@ import Layout01 from "@/components/Layout/Layout01";
 import {
   defaultDescription,
   defaultTitle,
-  frontendURL,
   openGraphImage,
 } from "@/lib/constants";
 import ValidateUser from "@/lib/validateUser";
@@ -268,10 +267,10 @@ export default async function ProfilePage({
 }) {
   const data = await params;
 
-  console.log(data, 'data asas')
   // Access the query parameter 'isedit' from searchParams object
-  const isEdit = searchParams?.edit || null; // If 'isedit' exists in searchParams, access it
+  const isEdit = data?.username?.[1] || null; // If 'isedit' exists in searchParams, access it
 
+  console.log(isEdit, 'isEdit')
   // Fetch user data
   const userData = await fetchUserData(data?.username?.[0]);
   const isLoggedIn = await ValidateUser();
@@ -282,13 +281,12 @@ export default async function ProfilePage({
   }
 
   // Check if the logged-in user matches the profile being accessed
-  const isUserMatch = isLoggedIn?.username === data?.[0];
-
-  // Enhance the `isLoggedIn` object to include the match status
-  const userSession = {
+  const isUserMatch = isLoggedIn?.username === data?.username?.[0];
+  const userSession = isLoggedIn?.status ? {
     ...isLoggedIn,
     logged: isUserMatch,
-  };
+  } : { ...isLoggedIn };
+
 
   // Handle different user statuses
   switch (userData.status) {
