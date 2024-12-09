@@ -1,5 +1,6 @@
 import { Check, CircleCheck } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const NewFeature = () => {
@@ -75,7 +76,7 @@ const NewFeature = () => {
 
               {/* CTA Button */}
               <button className="px-7 py-4 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
-                Create your profile
+                <Link href={"/register"}>Create your profile</Link>
               </button>
             </div>
           </div>
@@ -152,7 +153,7 @@ const NewFeature = () => {
 
               {/* CTA Button */}
               <button className="px-7 py-4 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
-                Create your profile
+                <Link href={"/register"}>Create your profile</Link>
               </button>
             </div>
           </div>
@@ -229,7 +230,7 @@ const NewFeature = () => {
 
               {/* CTA Button */}
               <button className="px-7 py-4 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
-                Create your profile
+                <Link href={"/register"}>Create your profile</Link>
               </button>
             </div>
           </div>

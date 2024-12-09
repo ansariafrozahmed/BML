@@ -1,6 +1,7 @@
 "use client";
 import Footer from "@/components/HeadeFooterOther/Footer";
 import Header from "@/components/HeadeFooterOther/Header";
+import { faqs } from "@/lib/constants";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -11,68 +12,68 @@ const FAQSection = () => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const faqs = [
-    {
-      question: "What is your return policy?",
-      answer:
-        "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
-    },
-    {
-      question: "Do you offer international shipping?",
-      answer:
-        "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
-    },
-    {
-      question: "How can I track my order?",
-      answer:
-        "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
-    },
-    {
-      question: "What payment methods do you accept?",
-      answer:
-        "We accept all major credit cards, PayPal, and other digital payment methods.",
-    },
-    {
-      question: "What is your return policy?",
-      answer:
-        "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
-    },
-    {
-      question: "Do you offer international shipping?",
-      answer:
-        "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
-    },
-    {
-      question: "How can I track my order?",
-      answer:
-        "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
-    },
-    {
-      question: "What payment methods do you accept?",
-      answer:
-        "We accept all major credit cards, PayPal, and other digital payment methods.",
-    },
-    {
-      question: "What is your return policy?",
-      answer:
-        "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
-    },
-    {
-      question: "Do you offer international shipping?",
-      answer:
-        "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
-    },
-    {
-      question: "How can I track my order?",
-      answer:
-        "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
-    },
-    {
-      question: "What payment methods do you accept?",
-      answer:
-        "We accept all major credit cards, PayPal, and other digital payment methods.",
-    },
-  ];
+  // const faqs = [
+  //   {
+  //     question: "What is your return policy?",
+  //     answer:
+  //       "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
+  //   },
+  //   {
+  //     question: "Do you offer international shipping?",
+  //     answer:
+  //       "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
+  //   },
+  //   {
+  //     question: "How can I track my order?",
+  //     answer:
+  //       "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
+  //   },
+  //   {
+  //     question: "What payment methods do you accept?",
+  //     answer:
+  //       "We accept all major credit cards, PayPal, and other digital payment methods.",
+  //   },
+  //   {
+  //     question: "What is your return policy?",
+  //     answer:
+  //       "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
+  //   },
+  //   {
+  //     question: "Do you offer international shipping?",
+  //     answer:
+  //       "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
+  //   },
+  //   {
+  //     question: "How can I track my order?",
+  //     answer:
+  //       "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
+  //   },
+  //   {
+  //     question: "What payment methods do you accept?",
+  //     answer:
+  //       "We accept all major credit cards, PayPal, and other digital payment methods.",
+  //   },
+  //   {
+  //     question: "What is your return policy?",
+  //     answer:
+  //       "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
+  //   },
+  //   {
+  //     question: "Do you offer international shipping?",
+  //     answer:
+  //       "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
+  //   },
+  //   {
+  //     question: "How can I track my order?",
+  //     answer:
+  //       "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
+  //   },
+  //   {
+  //     question: "What payment methods do you accept?",
+  //     answer:
+  //       "We accept all major credit cards, PayPal, and other digital payment methods.",
+  //   },
+  // ];
   return (
     <>
       <Header />

@@ -41,7 +41,7 @@ const About = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto px-4 md:px-6 lg:px-52 py-6 md:py-8 lg:py-12 space-y-14">
+      <div className="max-w-4xl mx-auto px-4  py-6 md:py-8 lg:py-12 space-y-14">
         <div className="space-y-4">
           <h1 className="text-primary text-2xl lg:text-3xl tracking-wide">
             आमच्याविषयी थोडसं,

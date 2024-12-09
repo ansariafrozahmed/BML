@@ -8,6 +8,7 @@ import {
   frontendURL,
   openGraphImage,
 } from "@/lib/constants";
+import FixedSocialMedia from "@/components/Features/FixedSocialMedia";
 
 export const metadata: Metadata = {
   title: defaultTitle,
@@ -45,7 +46,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
-        <ProviderComp>{children}</ProviderComp>
+        <ProviderComp>
+          {children}
+          <FixedSocialMedia />
+        </ProviderComp>
       </body>
     </html>
   );

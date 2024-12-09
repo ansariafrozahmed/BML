@@ -175,10 +175,13 @@ const RegisterForm = () => {
             className="w-[60px] h-full lg:w-[80px] object-contain"
           />
         </Link>
-        <div className="space-y-0.5">
-          <h2 className="text-base font-medium text-templateText">Welcome</h2>
-          <p className="text-xs text-templateText">
+        <div className="space-y-1">
+          <h2 className="text-lg font-medium text-primary">Welcome</h2>
+          <p className="text-sm font-light text-dark">
             Register to create your profile
+          </p>
+          <p className="text-sm font-light text-dark">
+            लक्षात ठेवा, तुमच्या बाप्पाचं नाव हेच तुमचं युजर आयडी आहे.
           </p>
         </div>
         <div className="">
