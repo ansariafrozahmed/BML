@@ -11,6 +11,7 @@ import { updateUserProfile } from "@/store/userProfile";
 import { usePathname, useRouter } from "next/navigation";
 import { showMessage } from "@/lib/reuse";
 import Link from "next/link";
+import { setGalleryData } from "@/store/gallerySlice";
 
 const Sidebar = ({ userData, userSession }: any) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar starts closed
@@ -19,6 +20,8 @@ const Sidebar = ({ userData, userSession }: any) => {
   const [previewMode, setPreview] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const dispatch = useDispatch();
+
 
   const validateData =
     (userProfile?.accountDetails?.first_name ||
@@ -148,7 +151,7 @@ const Sidebar = ({ userData, userSession }: any) => {
               disabled={!activate}
               loading={loading}
               onClick={handleSaveProfile}
-              className="cursor-pointer transition-all bg-primary text-white px-6 py-2 rounded-lg border-primary border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+              className="cursor-pointer transition-all bg-user_primary text-white px-6 py-2 rounded-lg border-user_primary border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
             >
               Publish
             </Button>
