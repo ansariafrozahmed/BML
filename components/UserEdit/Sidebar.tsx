@@ -19,7 +19,7 @@ const Sidebar = ({ userData, userSession }: any) => {
   const [previewMode, setPreview] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  
+
   const validateData =
     (userProfile?.accountDetails?.first_name ||
       userProfile?.accountDetails?.last_name ||
@@ -170,8 +170,8 @@ const Sidebar = ({ userData, userSession }: any) => {
               isSidebarOpen
                 ? "bg-white"
                 : previewMode
-                ? " bg-blue-500 text-white w-full rounded-none" // Styles for preview mode
-                : " bg-orange-500 text-white" // Styles for edit mode
+                ? " bg-user_primary text-white w-full rounded-none" // Styles for preview mode
+                : " bg-user_primary text-white" // Styles for edit mode
             }`}
             onClick={toggleSidebar}
           >

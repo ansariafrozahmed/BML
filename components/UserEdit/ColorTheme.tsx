@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
 
 const ColorTheme = ({ userData }: any) => {
-  const [primaryColor, setPrimaryColor] = useState("#ff5722"); // Default primary color
-  const [darkColor, setDarkColor] = useState("#212121"); // Default dark color
+  const [primaryColor, setPrimaryColor] = useState(userData?.colors?.user_primary || "#ff5722"); // Default primary color
+  const [darkColor, setDarkColor] = useState(userData?.colors?.user_dark || "#212121"); // Default dark color
   const { colorPicker } = useSelector((state: RootState) => state.userProfile);
   const dispatch = useDispatch();
 
