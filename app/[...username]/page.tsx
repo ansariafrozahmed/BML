@@ -32,8 +32,6 @@ const fetchUserData = async (username: string) => {
 
     const userData = await response.json();
 
-    console.log(userData);
-
     return userData;
   } catch (error) {
     console.error(error);
@@ -52,10 +50,13 @@ const ProfilePending = () => (
       backgroundSize: "cover",
       backgroundPosition: "center",
     }}
-    className="h-screen w-screen flex items-center justify-center relative"
+    className="min-h-screen w-full flex items-center justify-center relative overflow-hidden"
   >
+    {/* Overlay */}
     <div className="absolute inset-0 bg-black/50 backdrop-blur-md"></div>
-    <div className="z-10 text-center text-white px-4">
+
+    {/* Content */}
+    <div className="z-10 text-center text-white px-4 max-w-screen-md mx-auto">
       <h1 className="text-3xl md:text-4xl capitalize font-bold mb-4">
         Profile approval is pending
       </h1>

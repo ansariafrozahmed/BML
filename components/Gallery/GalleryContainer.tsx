@@ -162,15 +162,12 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                     </p>
                   </>
                 ) : (
-                  <>
-                    <iframe
-                      src={(item as GalleryItem).url}
-                      className="aspect-[4/2.8] w-full"
-                      allowFullScreen
-                      title={`Video ${index}`}
-                    />
-                    <p className="text-center text-base">Video {index + 1}</p>
-                  </>
+                  <iframe
+                    src={(item as GalleryItem).url}
+                    className="aspect-[4/2.8] w-full"
+                    allowFullScreen
+                    title={`Video ${index}`}
+                  />
                 )}
               </div>
             ))}

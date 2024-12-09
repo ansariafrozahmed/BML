@@ -112,7 +112,7 @@ const Layout01: React.FC<Layout01Props> = ({
               </p>
             </div>
           </div>
-          <Shareprofile username={username} />
+          <Shareprofile username={userData?.username} />
         </div>
       </div>
       <AccountandGalleryUpload
