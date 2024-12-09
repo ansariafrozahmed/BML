@@ -15,8 +15,10 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { showMessage } from "@/lib/reuse";
+import { setGalleryData } from "@/store/gallerySlice";
+import { useDispatch } from "react-redux";
 
 interface GalleryUploadModalProps {
   active: boolean;
@@ -38,6 +40,31 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
   );
   const [imageTitles, setImageTitles] = useState<any[]>([]);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const params = useParams();
+
+  const fetchGalleryData = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND}/api/getGalleryByUsername?username=${params?.username?.[0]}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch gallery data.");
+      }
+
+      const result: any = await response.json();
+      dispatch(setGalleryData(result));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // Handle Image Upload Changes
   const handleImageUploadChange = (info: any) => {
@@ -95,6 +122,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
       handleChange();
       router.refresh();
       showMessage("Files Uploaded Successfully", "success");
+      fetchGalleryData();
     } catch (error) {
       console.error("Error uploading files and videos:", error); // Handle error
       showMessage("Error Uploading Files and Videos", "error");
@@ -290,7 +318,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
             className="bg-user_primary text-white px-4 py-2 rounded-lg  transition-all"
             onClick={handleSubmit}
           >
-            Submit
+            Upload
           </button>
         </div>
       </div>

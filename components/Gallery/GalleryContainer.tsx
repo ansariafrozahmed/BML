@@ -1,8 +1,11 @@
 "use client";
 
+import { RootState } from "@/store";
+import { setGalleryData } from "@/store/gallerySlice";
 import { ArrowLeft, Pencil } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import EditGallery from "../UserEdit/EdiSocailLinks";
 
 type GalleryItem = {
@@ -23,8 +26,12 @@ interface GalleryContainerProps {
 
 const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
   const [galleryError, setGalleryError] = useState(false);
-  const [galleryData, setGalleryData] = useState<GalleryData | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const { data: galleryData } = useSelector(
+    (state: RootState) => state.gallerySlice
+  );
+  const dispatch = useDispatch();
+
   const [selectedType, setSelectedType] = useState<"images" | "videos" | null>(
     null
   );
@@ -46,7 +53,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
       }
 
       const result: GalleryData = await response.json();
-      setGalleryData(result);
+      dispatch(setGalleryData(result));
     } catch (error) {
       console.error(error);
       setGalleryError(true);

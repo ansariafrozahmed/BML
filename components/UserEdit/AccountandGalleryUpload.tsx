@@ -14,6 +14,7 @@ const AccountandGalleryUpload = ({
   isEdit: boolean;
   token: string;
 }) => {
+  console.log(isLoggedIn, 'isLoggedIn')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false); // Track dismissal of the card
   const [currentPath, setCurrentPath] = useState<string>(""); // Track current pathname
