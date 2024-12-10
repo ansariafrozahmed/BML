@@ -12,6 +12,7 @@ import {
   Space,
   Divider,
 } from "antd";
+
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import axios from "axios";
