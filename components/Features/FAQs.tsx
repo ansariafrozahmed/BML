@@ -38,7 +38,7 @@ const FAQSection = () => {
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex justify-between items-center px-4 py-4 text-left text-gray-800 font-medium focus:outline-none"
+                    className="w-full flex justify-between items-center px-4 py-4 text-left text-gray-800 tracking-wide focus:outline-none"
                   >
                     <div dangerouslySetInnerHTML={{ __html: faq.question }} />
                     <span
@@ -50,10 +50,10 @@ const FAQSection = () => {
                     </span>
                   </button>
                   {openFaq === index && (
-                    // <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
-                    <div className="px-4 py-3 text-gray-600 border-t border-gray-200">
-                      {faq.answer}
-                    </div>
+                    <div
+                      className="px-4 py-3 text-gray-600 border-t border-gray-200"
+                      dangerouslySetInnerHTML={{ __html: faq.answer }}
+                    />
                   )}
                 </div>
               ))}
