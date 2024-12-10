@@ -15,6 +15,7 @@ import debounce from "lodash.debounce";
 import OtpVerifyModal from "./OtpVerifyModal";
 import { useRouter } from "next/navigation";
 
+// Form 
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -204,14 +205,14 @@ const RegisterForm = () => {
                 label="First Name"
                 value={firstName}
                 onChange={(value) => setFirstName(value)}
-             
+
               />
               <TextField
                 autoComplete=""
                 label="Last Name"
                 value={lastName}
                 onChange={(value) => setLastName(value)}
-              
+
               />
             </div>
             <TextField
@@ -229,8 +230,8 @@ const RegisterForm = () => {
                 usernameStatus === "available"
                   ? "Username is available! ✅"
                   : usernameStatus === "error"
-                  ? "An error occurred while checking username."
-                  : "Username must be unique and valid."
+                    ? "An error occurred while checking username."
+                    : "Username must be unique and valid."
               }
             />
             <TextField
