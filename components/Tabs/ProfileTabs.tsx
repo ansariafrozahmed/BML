@@ -4,11 +4,21 @@ import GalleryContainer from "../Gallery/GalleryContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
+const renderBio = (userData: any) => {
+  return (
+    <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
+      <p className="text-sm tracking-wider text-gray-700 leading-relaxed">
+        {userData?.accountDetails?.bio?.trim() || userData?.bio}
+      </p>
+    </div>
+  );
+};
+
 const renderContactDetails = (userData: any) => (
   <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
-    <h2 className="text-xl font-semibold tracking-wider text-user_primary">
+    {/* <h2 className="text-xl font-semibold tracking-wider text-user_primary">
       Contact Details
-    </h2>
+    </h2> */}
     <div className="space-y-4">
       <div>
         {userData?.first_name && userData?.first_name && (
@@ -92,11 +102,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
   const tabs = [
     {
       id: 1,
-      label: "About",
-      content: renderContactDetails(validateData || userData),
+      label: "माझ्या बाप्पा विषयी थोडसं,",
+      content: renderBio(validateData || userData),
     },
     {
       id: 2,
+      label: "Contact Details",
+      content: renderContactDetails(validateData || userData),
+    },
+    {
+      id: 3,
       label: "Gallery",
       content: <GalleryContainer username={userData?.username} />,
     },
@@ -124,10 +139,11 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${activeTab === tab.id
-              ? "border-user_primary text-user_primary"
-              : "text-user_dark border-white hover:text-user_primary"
-              }`}
+            className={`border-b-2 py-3 tracking-wider text-sm font-normal transition ${
+              activeTab === tab.id
+                ? "border-user_primary text-user_primary"
+                : "text-user_dark border-white hover:text-user_primary"
+            }`}
           >
             {tab.label}
           </button>

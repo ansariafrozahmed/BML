@@ -205,10 +205,10 @@ export async function generateMetadata({
 
     return {
       title: data.username || defaultTitle,
-      description: data.bio || defaultDescription,
+      description: defaultDescription,
       openGraph: {
         title: data.username || defaultTitle,
-        description: data.bio || defaultDescription,
+        description: "माझा बाप्पा किती गोड दिसतो!",
         url: `${process.env.FRONTEND}/blog/${data.username}`,
         type: "website",
         images: [
@@ -223,7 +223,7 @@ export async function generateMetadata({
       twitter: {
         card: "summary_large_image",
         title: data.username || defaultTitle,
-        description: data.bio || defaultDescription,
+        description: "माझा बाप्पा किती गोड दिसतो!",
         images: [qrCodeUrl || "/og.webp"],
       },
       alternates: {

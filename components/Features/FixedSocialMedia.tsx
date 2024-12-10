@@ -3,7 +3,7 @@ import React from "react";
 
 const FixedSocialMedia = () => {
   return (
-    <div className="fixed bottom-1/2 space-y-2 right-0 z-[999]">
+    <div className="fixed bottom-1/2 space-y-2 right-0 z-[900]">
       <Tooltip title="Our facebook handle" placement="left">
         <a
           href="https://www.instagram.com/bappamajhalaadka?igsh=MXhzd3NmOGV3ODhwaw=="

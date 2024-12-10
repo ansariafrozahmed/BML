@@ -6,49 +6,9 @@ export const openGraphImage = "/og.webp";
 
 export const faqs = [
   {
-    question: "What is Bappa Majha Laadka?",
+    question:
+      "थोडक्यात माझ्या बाप्पा बद्दल कसे लिहावे<br/>How to write about my Bappa in short<br/>खालील प्रश्नांची उत्तरे द्या आणि त्यांची व्यवस्थित मांडणी करा.<br/>Answer the following questions and arrange them properly.",
     answer:
-      "Bappa Majha Laadka is a platform where users can create profiles to showcase their Ganpati images and share their festive memories with the community.",
-  },
-  {
-    question: "How can I create a profile?",
-    answer:
-      "Simply register on our website by providing basic details, and you can start creating your profile right away.",
-  },
-
-  {
-    question: "What kind of images can I upload?",
-    answer:
-      "You can upload images of your Ganpati decorations, celebrations, and other related moments. Please ensure they align with our content guidelines.",
-  },
-  {
-    question: "How can I share my profile with others?",
-    answer:
-      "Once your profile is created, you can share the link with your friends, family, and the community via social media or messaging platforms.",
-  },
-  {
-    question: "Can I edit my profile after creating it?",
-    answer:
-      "Yes, you can update your profile and add or remove images anytime through your dashboard.",
-  },
-  {
-    question: "Is my data secure?",
-    answer:
-      "We prioritize user privacy and data security. Your personal information and uploaded images are handled securely as per our privacy policy.",
-  },
-  {
-    question: "Who can see my profile?",
-    answer:
-      "Your profile is publicly accessible, so anyone with the link can view it.",
-  },
-  {
-    question: "What if I encounter an issue while using the website?",
-    answer:
-      "If you face any issues, you can contact our support team via WhatsApp us at +91 12345 67890.",
-  },
-
-  {
-    question: "Can I delete my profile?",
-    answer: "No, you can delete your profile.",
+      "Bappa Majha Laadka is a platform where users can create profiles to showcase their Ganpati images and share their festive memories with the community. Below are some questions to guide you in writing about your Bappa:\n\n1. आपण गणपती बाप्पाची स्थापना किती वर्षांपासून करत आहात?\n(How many years have you been installing Ganpati Bappa at home?)\n\n2. आपल्या घरातील गणपती बाप्पाच्या स्थापनेची प्रक्रिया कशी असते? काही विशेष विधी आहेत का?\n(What is the process of installing Ganpati Bappa at your home? Are there any special rituals?)\n\n3. गणपती बाप्पाच्या मूर्तीची निवड कशी करता? कोणत्याही विशिष्ट शैलीचे किंवा मूर्तीकाराचे गणपती घ्यायचे असतात का?\n(How do you choose the Ganpati idol? Do you prefer a specific style or artisan for the idol?)\n\n4. गणपती बाप्पाच्या स्थापनेच्या वेळी कोणते मंत्र किंवा प्रार्थना म्हणता?\n(Which mantras or prayers do you chant during the installation?)\n\n5. बाप्पासाठी केलेली सजावट कशी असते? कोणत्या विशिष्ट थीमवर सजावट करता?\n(What kind of decorations do you do for Bappa? Do you follow a specific theme?)\n\n6. गणपती विसर्जनासाठी कोणते विधी पाळता आणि काही विशेष परंपरा आहेत का?\n(What rituals do you follow for Ganpati Visarjan, and are there any special traditions?)\n\n**Tips for naming your Bappa's profile:**\n- Use unique combinations, such as including your family name, village name, or other personal touches. Examples:\n  - shindecharaja\n  - rajashindecha\n  - shindesraja\n  - shindeparivarcharaja\n  - shindeclassic\n\nKeep the name simple, memorable, and easy to share, as it will serve as your user ID.",
   },
 ];

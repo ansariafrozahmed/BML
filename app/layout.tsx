@@ -10,6 +10,7 @@ import {
   openGraphImage,
 } from "@/lib/constants";
 import CustomLightBox from "@/components/Gallery/CustomLightBox";
+import EntrancePopUp from "@/components/Features/EntrancePopUp";
 
 export const metadata: Metadata = {
   title: defaultTitle,
@@ -49,6 +50,7 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         <ProviderComp>
+          <EntrancePopUp />
           {children}
           {/* <CustomLightBox /> */}
         </ProviderComp>
