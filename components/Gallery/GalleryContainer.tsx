@@ -35,6 +35,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
   const { data: galleryData } = useSelector(
     (state: RootState) => state.gallerySlice
   );
+
   const dispatch = useDispatch();
 
   const [selectedType, setSelectedType] = useState<"images" | "videos" | null>(
@@ -81,7 +82,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
           <div
             key={year}
             onClick={() => setSelectedYear(year)}
-            className="text-center cursor-pointer lg:w-[100px]"
+            className="text-center cursor-pointer lg:w-[110px]"
           >
             <Image
               className="h-full w-full object-contain"
@@ -90,7 +91,9 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
               height={200}
               width={200}
             />
-            <h3 className="text-center text-sm text-dark">{year}</h3>
+            <h3 className="text-center text-sm text-user_primary">
+              गणेशोत्सव {year}
+            </h3>
           </div>
         ))}
     </div>

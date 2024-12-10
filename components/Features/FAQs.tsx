@@ -12,68 +12,6 @@ const FAQSection = () => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  // const faqs = [
-  //   {
-  //     question: "What is your return policy?",
-  //     answer:
-  //       "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
-  //   },
-  //   {
-  //     question: "Do you offer international shipping?",
-  //     answer:
-  //       "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
-  //   },
-  //   {
-  //     question: "How can I track my order?",
-  //     answer:
-  //       "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
-  //   },
-  //   {
-  //     question: "What payment methods do you accept?",
-  //     answer:
-  //       "We accept all major credit cards, PayPal, and other digital payment methods.",
-  //   },
-  //   {
-  //     question: "What is your return policy?",
-  //     answer:
-  //       "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
-  //   },
-  //   {
-  //     question: "Do you offer international shipping?",
-  //     answer:
-  //       "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
-  //   },
-  //   {
-  //     question: "How can I track my order?",
-  //     answer:
-  //       "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
-  //   },
-  //   {
-  //     question: "What payment methods do you accept?",
-  //     answer:
-  //       "We accept all major credit cards, PayPal, and other digital payment methods.",
-  //   },
-  //   {
-  //     question: "What is your return policy?",
-  //     answer:
-  //       "We offer a 30-day return policy on all items. Please ensure the product is in its original condition for a full refund.",
-  //   },
-  //   {
-  //     question: "Do you offer international shipping?",
-  //     answer:
-  //       "Yes, we ship worldwide! Shipping fees and delivery times may vary depending on your location.",
-  //   },
-  //   {
-  //     question: "How can I track my order?",
-  //     answer:
-  //       "Once your order is shipped, you will receive an email with the tracking number and link to track your order.",
-  //   },
-  //   {
-  //     question: "What payment methods do you accept?",
-  //     answer:
-  //       "We accept all major credit cards, PayPal, and other digital payment methods.",
-  //   },
-  // ];
   return (
     <>
       <Header />
@@ -100,9 +38,9 @@ const FAQSection = () => {
                 >
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex justify-between items-center px-4 py-4 text-left text-gray-800 font-medium focus:outline-none"
+                    className="w-full flex justify-between items-center px-4 py-4 text-left text-gray-800 tracking-wide focus:outline-none"
                   >
-                    <span>{faq.question}</span>
+                    <div dangerouslySetInnerHTML={{ __html: faq.question }} />
                     <span
                       className={`transform transition-transform duration-200 ${
                         openFaq === index ? "rotate-180" : ""
@@ -112,9 +50,10 @@ const FAQSection = () => {
                     </span>
                   </button>
                   {openFaq === index && (
-                    <div className="px-4 py-3 text-gray-600 border-t border-gray-200">
-                      {faq.answer}
-                    </div>
+                    <div
+                      className="px-4 py-3 text-gray-600 border-t border-gray-200"
+                      dangerouslySetInnerHTML={{ __html: faq.answer }}
+                    />
                   )}
                 </div>
               ))}

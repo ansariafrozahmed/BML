@@ -7,6 +7,16 @@ import { Edit } from "lucide-react";
 import { Modal } from "@shopify/polaris";
 import { useParams, useRouter } from "next/navigation";
 
+const renderBio = (userData: any) => {
+  return (
+    <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
+      <p className="text-sm tracking-wider text-gray-700 leading-relaxed">
+        {userData?.accountDetails?.bio?.trim() || userData?.bio}
+      </p>
+    </div>
+  );
+};
+
 interface ProfileTabsProps {
   userData: {
     banner_image: string;
@@ -111,11 +121,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
   const tabs = [
     {
       id: 1,
-      label: "About",
-      content: renderContactDetails(validateData || userData),
+      label: "माझ्या बाप्पा विषयी थोडसं,",
+      content: renderBio(validateData || userData),
     },
     {
       id: 2,
+      label: "Contact Details",
+      content: renderContactDetails(validateData || userData),
+    },
+    {
+      id: 3,
       label: "Gallery",
       content: <GalleryContainer username={userData?.username} />,
     },
@@ -144,7 +159,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${
+            className={`border-b-2 py-3 tracking-wider text-sm font-normal transition ${
               activeTab === tab.id
                 ? "border-user_primary text-user_primary"
                 : "text-user_dark border-white hover:text-user_primary"
