@@ -13,6 +13,8 @@
     "@types/js-cookie": "^3.0.6",
     "@types/lodash.debounce": "^4.0.9",
     "@types/qrcode": "^1.5.5",
+    "@shopify/polaris": "^13.8.0",
+    "@shopify/polaris-icons": "latest",
     "antd": "^5.22.2",
     "axios": "^1.7.9",
     "embla-carousel-autoplay": "^8.5.1",

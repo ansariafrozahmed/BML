@@ -1,28 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileName from "../Sidebar/ProfileName";
-import { PencilIcon, PlusIcon, XIcon } from "lucide-react";
 import UpdateComponent from "./UpdateComponent";
 import { Button } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import axios from "axios";
-import { updateUserProfile } from "@/store/userProfile";
 import { usePathname, useRouter } from "next/navigation";
 import { showMessage } from "@/lib/reuse";
-import Link from "next/link";
-import { setGalleryData } from "@/store/gallerySlice";
 
-const Sidebar = ({ userData, userSession }: any) => {
+const Sidebar = ({ userData, userSession, mode }: any) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar starts closed
   const userProfile = useSelector((state: RootState) => state.userProfile);
   const [loading, setLoading] = useState(false);
   const [previewMode, setPreview] = useState(false);
   const router = useRouter();
-  const pathname = usePathname();
-  const dispatch = useDispatch();
-
-
+  
+  useEffect(() => {
+    if (mode) {
+      setIsSidebarOpen(true);
+    }
+  }, []);
+  
   const validateData =
     (userProfile?.accountDetails?.first_name ||
       userProfile?.accountDetails?.last_name ||
@@ -37,7 +36,6 @@ const Sidebar = ({ userData, userSession }: any) => {
     validateData ||
     userProfile?.colorPicker;
 
-  console.log(activate, "userProfile?.colorPicker");
   // Toggle sidebar visibility
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -99,11 +97,6 @@ const Sidebar = ({ userData, userSession }: any) => {
     }
   };
 
-  const handleExitEditMode = () => {
-    // Remove "edit" from the URL
-    const newPath = pathname.replace("/edit", "");
-    router.push(newPath);
-  };
   return (
     <>
       {/* Background Mask */}
@@ -121,9 +114,10 @@ const Sidebar = ({ userData, userSession }: any) => {
         } lg:sticky lg:translate-x-0 md:w-[30%] w-[80%]`}
       >
         {/* Sidebar Content */}
-        <div>
+        <div className="h-screen overflow-x-hidden overflow-y-auto sc">
           <ProfileName userData={userData} />
-          <div className="overflow-x-hidden overflow-y-auto">
+
+          <div className="">
             <UpdateComponent
               userData={userData}
               token={userSession?.token}
@@ -158,44 +152,44 @@ const Sidebar = ({ userData, userSession }: any) => {
           </div>
         </div>
       </div>
-
-      <div className="bg-white fixed top-0 z-[888] flex justify-between w-full shadow-2xl">
-        <div></div>
-        <div className={previewMode ? "flex-1" : ""}>
-          <span
-            onClick={handleExitEditMode}
-            className="lg:hidden mr-5 tracking-wide"
-          >
-            Exit edit mode
-          </span>
-          <button
-            className={`transition-all md:hidden duration-300 ease-in-out p-3 ${
-              isSidebarOpen
-                ? "bg-white"
-                : previewMode
-                ? " bg-user_primary text-white w-full rounded-none" // Styles for preview mode
-                : " bg-user_primary text-white" // Styles for edit mode
-            }`}
-            onClick={toggleSidebar}
-          >
-            {isSidebarOpen ? (
-              ""
-            ) : previewMode ? (
-              <div onClick={() => setPreview(false)}>
-                <h2 className="text-sm font-bold">Preview Mode</h2>
-                <p className="text-xs">Back to edit mode to save changes</p>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <PencilIcon size={16} />
-                <p>Edit</p>
-              </div>
-            )}
-          </button>
-        </div>
-      </div>
     </>
   );
 };
 
 export default Sidebar;
+
+// <div className="bg-white fixed top-0 z-[888] flex justify-between w-full shadow-2xl">
+// <div></div>
+// <div className={previewMode ? "flex-1" : ""}>
+//   {/* <span
+//     onClick={handleExitEditMode}
+//     className="lg:hidden mr-5 tracking-wide"
+//   >
+//     Exit edit mode
+//   </span> */}
+//   <button
+//     className={`transition-all md:hidden duration-300 ease-in-out p-3 ${
+//       isSidebarOpen
+//         ? "bg-white"
+//         : previewMode
+//         ? " bg-user_primary text-white w-full rounded-none" // Styles for preview mode
+//         : " bg-user_primary text-white" // Styles for edit mode
+//     }`}
+//     onClick={toggleSidebar}
+//   >
+//     {isSidebarOpen ? (
+//       ""
+//     ) : previewMode ? (
+//       <div onClick={() => setPreview(false)}>
+//         <h2 className="text-sm font-bold">Preview Mode</h2>
+//         <p className="text-xs">Back to edit mode to save changes</p>
+//       </div>
+//     ) : (
+//       <div className="flex items-center gap-2">
+//         <PencilIcon size={16} />
+//         <p>Edit</p>
+//       </div>
+//     )}
+//   </button>
+// </div>
+// </div>

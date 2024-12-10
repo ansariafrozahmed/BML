@@ -52,7 +52,11 @@ const RootLayout = async ({ children, params }: any) => {
 
       <ColorPallete colorPallete={userData?.colors || ColorPalette01} />
       {userSession.logged && data?.username?.[1] === "edit" && (
-        <Sidebar userData={userData} userSession={userSession} />
+        <Sidebar
+          userData={userData}
+          userSession={userSession}
+          mode={data?.username?.[2]}
+        />
       )}
 
       {/* Main Content */}

@@ -1,33 +1,97 @@
 "use client";
-import { Button, Form, FormProps, Input, Modal, Space } from "antd";
-import Image from "next/image";
-import React, { useState } from "react";
-import Link from "next/link";
-import { LoaderCircle, LockKeyhole, Mail, UserRound } from "lucide-react";
-import { useForm } from "antd/es/form/Form";
-import { useRouter } from "next/navigation";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
-import { error } from "console";
 
-type FieldType = {
-  first_name?: string;
-  username?: string;
-  last_name?: string;
-  email?: string;
-  password?: string;
-};
+import React, { useState, useCallback } from "react";
+import {
+  TextField,
+  Button,
+  FormLayout,
+  Frame,
+  Toast,
+  Link,
+  Text,
+} from "@shopify/polaris";
+import Image from "next/image";
+import debounce from "lodash.debounce";
+import OtpVerifyModal from "./OtpVerifyModal";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
-  const [form] = useForm();
-  const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [openOtpVerifyModal, setOpenOtpVerifyModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [emailVerified, setEmailVerified] = useState(false);
-  const [email, setEmail] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [checked, setChecked] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState<
+    string | null
+  >(null);
+  const [usernameError, setUsernameError] = useState<string | null>(null);
+  const [usernameStatus, setUsernameStatus] = useState<
+    "available" | "taken" | "error" | null
+  >(null);
+
+  console.log(usernameStatus, "usernameStatus");
+  // Debounced function to check if the username exists
+  const checkUsernameExistence = useCallback(
+    debounce(async (username: string) => {
+      if (username) {
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND}/api/validate-username`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username }),
+            }
+          );
+
+          const result = await response.json();
+
+          if (response.ok && result.isValid) {
+            setUsernameStatus("available");
+          } else if (!response.ok || !result.isValid) {
+            setUsernameStatus("taken");
+          }
+        } catch (error) {
+          setUsernameStatus("error");
+          console.error("Error checking username:", error);
+        }
+      } else {
+        setUsernameStatus(null); // Clear status when input is empty
+      }
+    }, 500),
+    []
+  );
+
+  // Handle username changes
+  const handleUsernameChange = (value: string) => {
+    setUsername(value);
+    setUsernameError(null); // Clear validation errors
+    setUsernameStatus(null); // Clear status on change
+
+    if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+      setUsernameError(
+        "Username can only contain letters, numbers, and underscores."
+      );
+      return;
+    }
+    if (/^\s|\s$/.test(value)) {
+      setUsernameError("Username cannot start or end with a space.");
+      return;
+    }
+
+    if (value.trim().length > 0) {
+      checkUsernameExistence(value);
+    }
+  };
 
   const verifyEmail = async () => {
     try {
@@ -45,53 +109,43 @@ const RegisterForm = () => {
 
       if (!response.ok) {
         const data = await response.json();
-        toast(`${data.error}`);
+        setToastMessage(`${data.error}`);
+        setSendingOtp(false);
       } else {
         setOpenOtpVerifyModal(true);
-        setSendingOtp(false);
       }
     } catch (error) {
       console.error("Error");
-    } finally {
       setSendingOtp(false);
     }
   };
 
-  const handleEmailChange = (e: any) => {
-    const value = e.target.value;
-    setEmail(value);
+  const handleSubmit = async () => {
+    if (!firstName) return setToastMessage("First Name is required.");
+    if (!lastName) return setToastMessage("Last Name is required.");
+    if (!username) return setToastMessage("Username is required.");
+    if (usernameError || usernameStatus === "taken")
+      return setToastMessage("Please choose a valid and unique username.");
+    if (!email || emailError) return setToastMessage("Email is invalid.");
+    if (!password) return setToastMessage("Password is required.");
+    if (passwordError) return setToastMessage("Password is invalid.");
+    if (password !== confirmPassword)
+      return setToastMessage("Passwords do not match.");
 
-    // Validate email using a simple regex pattern or Form validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsButtonDisabled(!emailRegex.test(value));
-  };
-
-  const validateUsername = (username: string) => {
-    // The regex checks for lowercase letters and numbers only.
-    return /^[a-z0-9]+$/.test(username);
-  };
-
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (!validateUsername(value)) {
-      // You can set error state here or trigger UI feedback if needed
-      // console.log(
-      //   "Invalid username! Must contain only lowercase letters and numbers."
-      // );
-    }
-  };
-
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     setLoading(true);
 
-    const joinedAt = new Date().toISOString();
-    const requestBody = {
-      first_name: values.first_name,
-      last_name: values.last_name,
-      username: values.username,
-      email: values.email,
-      password: values.password,
-      joinedAt,
+    await verifyEmail();
+  };
+
+  const route = useRouter();
+
+  const saveRegistration = async () => {
+    const requestData = {
+      first_name: firstName,
+      username,
+      last_name: lastName,
+      email,
+      password,
     };
 
     try {
@@ -100,320 +154,153 @@ const RegisterForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify(requestData),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        // Handle specific error message if available
-        const errorMessage =
-          data?.error || "An error occurred during registration.";
-        toast(errorMessage);
+        const errorResult = await response.json();
+        setToastMessage(errorResult.error);
         return;
       }
 
-      toast("Registered successfully");
-      form.resetFields();
-      setTimeout(() => {
-        router.push("/login");
-      }, 1000);
-      // Redirect to login page or perform further actions
-    } catch (error) {
-      console.error("Registration failed:", error);
-      toast("Failed to register. Please try again later.");
+      const result = await response.json();
+      setToastMessage(result.message);
+      route.push(`/login`);
+    } catch (error: any) {
+      console.error("Internal Server Error");
+      setToastMessage(
+        error instanceof Error ? error.message : "An unexpected error occurred"
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
-  ) => {};
-
-  const handleOtpSubmit = async (value: any) => {
-    const requestBody = {
-      otp: value.otp,
-      email,
-    };
-
-    try {
-      const response = await fetch(
-        `${process.env.BACKEND}/api/verify_otp_user`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        toast(`${data.message}`);
-      } else {
-        setEmailVerified(true);
-        setOpenOtpVerifyModal(false);
-        toast(`${data.message}`);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <>
-      <ToastContainer />
-      <div className="bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] w-[350px] space-y-3 p-6 rounded-md">
-        <Link href={"/"} className="block">
+    <Frame>
+      {toastMessage && (
+        <Toast
+          content={toastMessage}
+          onDismiss={() => setToastMessage(null)}
+          duration={5000}
+        />
+      )}
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white shadow-lg p-6 rounded-md w-96 space-y-4">
           <Image
-            src={`/logo.webp`}
-            alt={"Logo"}
-            height={100}
-            width={200}
-            className="w-[60px] h-full lg:w-[80px] object-contain"
+            src="/logo.webp"
+            alt="Logo"
+            height={50}
+            width={100}
+            className="object-contain"
           />
-        </Link>
-        <div className="space-y-1">
-          <h2 className="text-lg font-medium text-primary">Welcome</h2>
-          <p className="text-sm font-light text-dark">
-            Register to create your profile
-          </p>
-          <p className="text-sm font-normal text-dark">
-            लक्षात ठेवा, तुमच्या बाप्पाचं नाव हेच तुमचं युजर आयडी आहे.
-          </p>
-        </div>
-        <div className="">
-          <Form
-            form={form}
-            name="register_form"
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            layout="vertical"
-            onFinishFailed={onFinishFailed}
-            size="large"
-          >
-            <Space>
-              <Form.Item<FieldType>
-                name="first_name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your name!",
-                    type: "string",
-                  },
-                ]}
-              >
-                <Input
-                  prefix={<UserRound size={14} className="mr-1" />}
-                  placeholder="First Name"
-                  className="border-gray-500 text-sm"
-                />
-              </Form.Item>
-              <Form.Item<FieldType>
-                name="last_name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your name!",
-                    type: "string",
-                  },
-                ]}
-              >
-                <Input
-                  prefix={<UserRound size={14} className="mr-1" />}
-                  placeholder="Last Name"
-                  className="border-gray-500 text-sm"
-                />
-              </Form.Item>
-            </Space>
-
-            <Form.Item<FieldType>
-              name="username"
-              label={"Userid"}
-              className="-mt-2"
-              rules={[
-                {
-                  required: true,
-                  type: "string",
-                },
-                {
-                  validator: (_, value) => {
-                    if (!/^[a-z0-9]+$/.test(value)) {
-                      return Promise.reject(
-                        new Error(
-                          "Username must contain only lowercase letters and numbers"
-                        )
-                      );
-                    }
-                    return Promise.resolve();
-                  },
-                },
-              ]}
-            >
-              <Input
-                prefix={<UserRound size={14} className="mr-1" />}
-                placeholder="For Example : shindecharaja"
-                className="border-gray-500 text-sm"
-                onChange={handleUsernameChange}
+          <h2 className="text-lg font-semibold text-gray-800">
+            Create an Account
+          </h2>
+          <FormLayout>
+            <div className="flex gap-2">
+              <TextField
+                autoComplete=""
+                label="First Name"
+                value={firstName}
+                onChange={(value) => setFirstName(value)}
+             
               />
-            </Form.Item>
-
-            <Form.Item
-              name="email"
-              className="-mt-2"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                  type: "email",
-                },
-              ]}
-            >
-              <div className="flex items-center gap-2">
-                <Input
-                  disabled={emailVerified}
-                  value={`${email}`}
-                  prefix={<Mail size={14} className="mr-1" />}
-                  placeholder="Email"
-                  onChange={handleEmailChange}
-                  className="border-gray-500 text-sm"
-                />
-                {emailVerified ? (
-                  <div
-                    className={`flex bg-green-500 items-center py-[10px] justify-center rounded-lg leading-none !text-xs tracking-wide w-28 text-white`}
-                  >
-                    Verified
-                  </div>
-                ) : (
-                  <>
-                    {!isButtonDisabled && (
-                      <div
-                        onClick={() => {
-                          !sendingOtp && verifyEmail();
-                        }}
-                        className={`flex cursor-pointer hover:bg-primary/90 items-center py-[10px] justify-center rounded-lg leading-none !text-xs tracking-wide w-28 text-white ${
-                          isButtonDisabled ? "bg-gray-400" : "bg-primary"
-                        }`}
-                      >
-                        {sendingOtp ? (
-                          <LoaderCircle size={15} className="animate-spin" />
-                        ) : (
-                          "GET OTP"
-                        )}
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </Form.Item>
-
-            <Form.Item
-              className="-mt-2"
-              name="password"
-              rules={[
-                {
-                  pattern: /^.{3,}$/,
-                  message: "Password must be at least 3 characters long",
-                },
-                { required: true, message: "Please input your Password!" },
-              ]}
-            >
-              <Input.Password
-                prefix={<LockKeyhole size={14} className="mr-1" />}
-                type="password"
-                className="border-gray-500 text-sm"
-                placeholder="Password"
+              <TextField
+                autoComplete=""
+                label="Last Name"
+                value={lastName}
+                onChange={(value) => setLastName(value)}
+              
               />
-            </Form.Item>
-
-            <div className="flex items-center gap-2 text-xs pb-2">
-              <input
-                type="checkbox"
-                onChange={(e) => setChecked(e.target.checked)}
-                className=""
-              />
-              <label>By accepting you agree to our polcies</label>
             </div>
+            <TextField
+              autoComplete=""
+              label="Username"
+              value={username}
+              onChange={handleUsernameChange}
+              error={
+                usernameError ||
+                (usernameStatus === "taken"
+                  ? "Username is already taken."
+                  : undefined)
+              }
+              helpText={
+                usernameStatus === "available"
+                  ? "Username is available! ✅"
+                  : usernameStatus === "error"
+                  ? "An error occurred while checking username."
+                  : "Username must be unique and valid."
+              }
+            />
+            <TextField
+              autoComplete=""
+              label="Email"
+              value={email}
+              onChange={(value) => {
+                setEmail(value);
+                if (
+                  !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)
+                ) {
+                  setEmailError("Please enter a valid email address.");
+                } else {
+                  setEmailError(null);
+                }
+              }}
+              error={emailError as any}
+            />
+            <TextField
+              autoComplete=""
+              label="Password"
+              value={password}
+              onChange={(value) => {
+                setPassword(value);
+                setPasswordError(
+                  value.length < 8 ? "Password is too short." : null
+                );
+              }}
+              type="password"
+              error={passwordError as any}
+            />
+            <TextField
+              autoComplete=""
+              label="Confirm Password"
+              value={confirmPassword}
+              onChange={(value) => {
+                setConfirmPassword(value);
+                setConfirmPasswordError(
+                  value !== password ? "Passwords do not match." : null
+                );
+              }}
+              type="password"
+              error={confirmPasswordError as any}
+            />
+            <Button
+              onClick={handleSubmit}
+              variant="primary"
+              loading={sendingOtp}
+              fullWidth
+            >
+              Register
+            </Button>
+            <p className="text-center text-xs text-gray-600 mt-2">
+              Already have an account?{" "}
+              <Link url="/login" monochrome>
+                Login here
+              </Link>
+            </p>
+          </FormLayout>
 
-            <div>
-              <Form.Item>
-                <button
-                  type="submit"
-                  disabled={loading || !emailVerified || !checked}
-                  className={`flex items-center  capitalize justify-center w-full gap-2 border border-dark bg-dark  py-2.5 rounded-md text-sm tracking-widest text-white font-medium ${
-                    loading || !emailVerified || !checked
-                      ? "cursor-not-allowed opacity-50"
-                      : "cursor-pointer hover:opacity-90"
-                  }`}
-                >
-                  {loading && (
-                    <LoaderCircle className="animate-spin" size={15} />
-                  )}
-                  {loading ? "Registering..." : "Register"}
-                </button>
-              </Form.Item>
-              <p className="text-center -mt-4 text-templateText text-xs">
-                Already <span className="text-primary">Bappa Majha Laadka</span>{" "}
-                user ?{" "}
-                <Link href={"/login"} className="text-primary underline">
-                  Login now
-                </Link>
-              </p>
-            </div>
-          </Form>
+          <OtpVerifyModal
+            active={openOtpVerifyModal}
+            email={email}
+            setToastMessage={setToastMessage}
+            setOpenOtpVerifyModal={setOpenOtpVerifyModal}
+            saveRegistration={saveRegistration}
+          />
         </div>
       </div>
-
-      {/* ----------- */}
-
-      <Modal
-        open={openOtpVerifyModal}
-        footer={null}
-        width={350}
-        // onCancel={() => setOpenOtpVerifyModal(false)}
-        centered
-        className="otp-modal"
-      >
-        <div className="text-center p-2">
-          <h2 className="text-lg font-semibold mb-2">Verify OTP</h2>
-          <p className="text-sm text-gray-600 mb-4">
-            Enter the 4-digit OTP sent to your email{" "}
-            <span className="text-primary">{email}</span>
-          </p>
-          <Form onFinish={handleOtpSubmit} className="space-y-0">
-            <Form.Item
-              name="otp"
-              rules={[
-                { required: true, message: "Please enter the OTP!" },
-                { len: 4, message: "OTP must be exactly 4 digits!" },
-              ]}
-            >
-              <Input.OTP
-                length={4}
-                className="w-full text-center text-lg tracking-widest p-2 rounded-md border-gray-300 focus:ring focus:ring-primary focus:border-primary"
-              />
-            </Form.Item>
-            <button
-              type="submit"
-              className="w-full bg-primary text-white rounded-md py-2 font-medium hover:bg-primary-dark"
-            >
-              Verify OTP
-            </button>
-          </Form>
-          {/* <p className="text-sm text-gray-600 mt-3">
-            Didn't receive the OTP?{" "}
-            <span
-              className="text-primary font-semibold cursor-pointer hover:underline"
-              onClick={() => console.log("Resend OTP")}
-            >
-              Resend
-            </span>
-          </p> */}
-        </div>
-      </Modal>
-    </>
+    </Frame>
   );
 };
 

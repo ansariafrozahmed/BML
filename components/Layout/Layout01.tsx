@@ -61,7 +61,7 @@ const Layout01: React.FC<Layout01Props> = ({
   }
 
   return (
-    <div className={`pb-24 ${isEdit === "edit" ? "md:mt-0 mt-[48px]" : ""}`}>
+    <div className={``}>
       <div className={`group h-[250px] lg:h-[350px] relative `}>
         <Image
           src={

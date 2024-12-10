@@ -96,18 +96,25 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
     // Append year
     formData.append("year", selectedYear);
 
+    // Prepare image titles, using file names as fallback
+    const preparedImageTitles = imageFileList.map((file, index) => {
+      const title = imageTitles[index];
+      return title && title.trim() ? title : file.originFileObj.name; // Use title if valid, otherwise fallback to file name
+    });
+
     // Append each file in the imageFileList
-    imageFileList.forEach((file, index) => {
+    imageFileList.forEach((file) => {
       formData.append("files", file.originFileObj); // Append original file object
     });
 
-    // Append image titles (convert to string for easier processing on the server)
-    formData.append("image_titles", JSON.stringify(imageTitles));
+    // Append the prepared image titles (convert to JSON string)
+    formData.append("image_titles", JSON.stringify(preparedImageTitles));
 
     // Append videos (if any)
     if (videoEntries.length > 0) {
       formData.append("videos", JSON.stringify(videoEntries)); // Convert video entries to string and append
     }
+
 
     try {
       const response = await axios.post(
@@ -189,7 +196,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
                         (_, index) => 2022 + index
                       ).map((year) => (
                         <Select.Option key={year} value={year.toString()}>
-                          {year}
+                          गणेशोत्सव {year}
                         </Select.Option>
                       ))}
                     </Select>

@@ -1,33 +1,39 @@
 "use client";
-import { Form, FormProps, Input } from "antd";
-import Image from "next/image";
-import React, { useState } from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { useForm } from "antd/es/form/Form";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-import { LoaderCircle } from "lucide-react";
 
-type FieldType = {
-  password?: string;
-  identifier?: string;
-};
+import React, { useState } from "react";
+import {
+  FormLayout,
+  TextField,
+  Button,
+  Link,
+  Toast,
+  Frame,
+} from "@shopify/polaris";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const LoginForm = () => {
-  const [form] = useForm();
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    const requestData = {
-      identifier: values.identifier,
-      password: values.password,
-    };
+  const handleIdentifierChange = (value: string) => {
+    setIdentifier(value);
+  };
 
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+  };
+
+  const handleSubmit = async () => {
     setLoading(true);
+
+    const requestData = {
+      identifier,
+      password,
+    };
 
     try {
       const response = await fetch(`${process.env.BACKEND}/api/user_login`, {
@@ -40,17 +46,17 @@ const LoginForm = () => {
 
       if (!response.ok) {
         const errorResult = await response.json();
-        toast(errorResult.error);
+        setToastMessage(errorResult.error);
         return;
       }
 
       const result = await response.json();
-      toast(result.message);
+      setToastMessage(result.message);
       document.cookie = `BMLTK=${result.token}; path=/; SameSite=None; Secure`;
       router.push(`${process.env.FRONTEND}/${result.username}`);
     } catch (error: unknown) {
       console.error("Internal Server Error");
-      toast(
+      setToastMessage(
         error instanceof Error ? error.message : "An unexpected error occurred"
       );
     } finally {
@@ -58,107 +64,55 @@ const LoginForm = () => {
     }
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
-  };
-
   return (
-    <>
-      <ToastContainer />
-      <div className="bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] w-[350px] space-y-2 p-6 rounded-md">
-        <Link href={"/"} className="block">
-          <Image
-            src={`/logo.webp`}
-            alt={"Logo"}
-            height={100}
-            width={200}
-            className="w-[60px] h-full lg:w-[80px] object-contain"
-          />
-        </Link>
-        <div className="space-y-0.5">
-          <h2 className="text-base font-medium text-templateText">Welcome</h2>
-          <p className="text-xs text-templateText">
-            Login to access your profile
-          </p>
-        </div>
-        <div className="pt-4">
-          <Form
-            form={form}
-            name="login_form"
-            // initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            size="large"
-          >
-            <Form.Item<FieldType>
-              name="identifier"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter username or email!",
-                  type: "string",
-                },
-              ]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Email or Username"
-                className="border-gray-500 text-sm"
-              />
-            </Form.Item>
-
-            {/* <div className="-mt-4 mb-4 text-right">
-              <Link
-                href={"/forgot-password"}
-                className="text-xs w-full underline tracking-wide font-medium cursor-pointer hover:text-templateText text-templatePrimary"
-              >
-                Forgot your password ?
-              </Link>
-            </div> */}
-
-            <Form.Item<FieldType>
-              className="-mt-2"
-              name="password"
-              rules={[
-                { required: true, message: "Please input your Password!" },
-              ]}
-            >
-              <Input.Password
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                className="border-gray-500  text-sm"
-                placeholder="Password"
-              />
-            </Form.Item>
-
-            <div>
-              <Form.Item>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`flex items-center  capitalize justify-center w-full gap-2 border border-dark bg-dark hover:opacity-90 py-2.5 rounded-md text-sm tracking-widest text-white font-medium ${
-                    loading ? "cursor-not-allowed" : "cursor-pointer"
-                  }`}
-                >
-                  {loading && (
-                    <LoaderCircle className="animate-spin" size={15} />
-                  )}
-                  {loading ? "Logging..." : "Log In"}
-                </button>
-              </Form.Item>
-              <p className="text-center -mt-4 text-templateText capitalize text-xs">
-                New to <span>Bappa Majha Laadka</span> ?{" "}
-                <Link href={"/register"} className="text-primary underline">
-                  Create an account
-                </Link>
-              </p>
-            </div>
-          </Form>
-        </div>
+    <div className="bg-white shadow w-[350px] space-y-4 p-6 rounded-md mx-auto">
+      <Link url="/">
+        <Image
+          src="/logo.webp"
+          alt="Logo"
+          height={80}
+          width={160}
+          className="mx-auto object-contain"
+        />
+      </Link>
+      <div className="space-y-1">
+        <h2 className="text-base font-medium text-gray-800">Welcome</h2>
+        <p className="text-sm text-gray-600">Login to access your profile</p>
       </div>
-    </>
+      <FormLayout>
+        <TextField
+          label="Email or Username"
+          value={identifier}
+          onChange={(value) => handleIdentifierChange(value)}
+          placeholder="Enter your email or username"
+          autoComplete="username"
+          type="text"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(value) => handlePasswordChange(value)}
+          placeholder="Enter your password"
+          autoComplete="current-password"
+        />
+        <Button
+          onClick={handleSubmit}
+          variant="primary"
+          loading={loading}
+          fullWidth
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Log In"}
+        </Button>
+        <p className="text-center text-xs text-gray-600 mt-2">
+          New to <span>Bappa Majha Laadka</span>?{" "}
+          <Link url="/register" monochrome>
+            Create an account
+          </Link>
+        </p>
+      </FormLayout>
+    </div>
   );
 };
 

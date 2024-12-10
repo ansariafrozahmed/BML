@@ -46,16 +46,8 @@ const Loginpage = async () => {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: 'url("/408.webp")',
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center right",
-      }}
-      className="bg-gray-100 h-screen"
-    >
-      <div className="templateContainer h-full flex items-center justify-center">
+    <div className="bg-gray-100 h-screen flex items-center justify-center">
+      <div>
         <LoginForm />
       </div>
     </div>

@@ -1,6 +1,11 @@
 "use client";
 
 import { RootState } from "@/store";
+import {
+  setActive,
+  setImages,
+  setSelectedIndex,
+} from "@/store/gallerSlideShow";
 import { setGalleryData } from "@/store/gallerySlice";
 import { ArrowLeft, Pencil } from "lucide-react";
 import Image from "next/image";
@@ -158,7 +163,20 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                           : ""
                       }
                       alt={`Gallery image ${index}`}
-                      className=" aspect-[4/2.8] rounded-[2px] w-full object-cover"
+                      className="aspect-[4/2.8] rounded-[2px] w-full object-cover"
+                      onClick={() => {
+                        // Set all items with title and URL in the slideshow
+                        dispatch(
+                          setImages(
+                            items.map((i) => ({
+                              title: (i as GalleryItem).title || "Untitled", // Fallback to "Untitled" if no title
+                              path: (i as GalleryItem).url, // Image URL
+                            }))
+                          )
+                        );
+                        dispatch(setSelectedIndex(index)); // Set the selected index
+                        dispatch(setActive(true)); // Activate the lightbox
+                      }}
                     />
                     <p className="text-center capitalize tracking-wide text-gray-700 text-xs lg:text-base">
                       {(item as GalleryItem).title || "Image description"}

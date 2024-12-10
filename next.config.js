@@ -1,21 +1,10 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {
-      rules: {
-        "*.svg": {
-          loaders: ["@svgr/webpack"],
-          as: "*.js",
-        },
-      },
-    },
-  },
+const nextConfig = {
   env: {
     BACKEND: process.env.BACKEND,
     FRONTEND: process.env.FRONTEND,
   },
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -31,10 +20,10 @@ const nextConfig: NextConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|svg|webp)$/,
-      use: ["file-loader"], // Make sure you have file-loader or url-loader configured
+      use: ["file-loader"], // Ensure 'file-loader' is installed
     });
     return config;
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

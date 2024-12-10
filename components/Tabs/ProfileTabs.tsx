@@ -3,62 +3,9 @@ import React, { useState } from "react";
 import GalleryContainer from "../Gallery/GalleryContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-
-const renderContactDetails = (userData: any) => (
-  <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
-    <h2 className="text-xl font-semibold tracking-wider text-user_primary">
-      Contact Details
-    </h2>
-    <div className="space-y-4">
-      <div>
-        {userData?.first_name && userData?.first_name && (
-          <>
-            <div className="flex items-center gap-4">
-              <span className="font-medium text-gray-600 w-32 text-base">
-                Full Name
-              </span>
-              <span className="text-gray-800 text-base">
-                {userData?.first_name || ""} {userData?.last_name || ""}
-              </span>
-            </div>
-            <hr />
-          </>
-        )}
-      </div>
-      <div>
-        {userData?.email && (
-          <>
-            <div className="flex items-center gap-4">
-              <span className="font-medium text-gray-600 w-32 text-base">
-                Email
-              </span>
-              <span className="text-gray-800 text-base">{userData?.email}</span>
-            </div>
-            <hr />
-          </>
-        )}
-      </div>
-      {userData?.contact_details?.length > 0 &&
-        userData?.contact_details?.map((item: any, index: number) => (
-          <div key={index}>
-            <div className="flex items-center gap-4">
-              {item?.label && (
-                <span className="font-medium text-gray-600 w-32 text-base">
-                  {item.label}
-                </span>
-              )}
-              {item?.value && (
-                <span className="text-gray-800 text-base">
-                  {item.value || "NA"}
-                </span>
-              )}
-            </div>
-            <hr />
-          </div>
-        ))}
-    </div>
-  </div>
-);
+import { Edit } from "lucide-react";
+import { Modal } from "@shopify/polaris";
+import { useParams, useRouter } from "next/navigation";
 
 interface ProfileTabsProps {
   userData: {
@@ -81,6 +28,10 @@ interface ProfileTabsProps {
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
   const userProfile = useSelector((state: RootState) => state.userProfile);
+  const router = useRouter();
+  const params = useParams();
+  const username = params.username?.[0]; // Extract mode from the URL
+
   const validateData =
     (userProfile?.accountDetails?.first_name ||
       userProfile?.accountDetails?.last_name ||
@@ -88,6 +39,74 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
       userProfile?.accountDetails?.bio ||
       userProfile?.accountDetails?.contact_details?.length > 0) &&
     userProfile?.accountDetails;
+
+  const renderContactDetails = (userData: any) => (
+    <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
+      <div className="flex gap-2 justify-between items-center">
+        <h2 className="text-xl font-semibold tracking-wider text-user_primary">
+          Contact Details
+        </h2>
+        <div
+          className="flex gap-1 items-center cursor-pointer"
+          onClick={() => {
+            router.push(`/${username}/edit/accountDetails/${Math.random() * 100}`)
+          }}
+        >
+          <Edit size={16} /> <p>Edit</p>
+        </div>
+      </div>
+      <div className="space-y-4">
+        <div>
+          {userData?.first_name && userData?.first_name && (
+            <>
+              <div className="flex items-center gap-4">
+                <span className="font-medium text-gray-600 w-32 text-base">
+                  Full Name
+                </span>
+                <span className="text-gray-800 text-base">
+                  {userData?.first_name || ""} {userData?.last_name || ""}
+                </span>
+              </div>
+              <hr />
+            </>
+          )}
+        </div>
+        <div>
+          {userData?.email && (
+            <>
+              <div className="flex items-center gap-4">
+                <span className="font-medium text-gray-600 w-32 text-base">
+                  Email
+                </span>
+                <span className="text-gray-800 text-base">
+                  {userData?.email}
+                </span>
+              </div>
+              <hr />
+            </>
+          )}
+        </div>
+        {userData?.contact_details?.length > 0 &&
+          userData?.contact_details?.map((item: any, index: number) => (
+            <div key={index}>
+              <div className="flex items-center gap-4">
+                {item?.label && (
+                  <span className="font-medium text-gray-600 w-32 text-base">
+                    {item.label}
+                  </span>
+                )}
+                {item?.value && (
+                  <span className="text-gray-800 text-base">
+                    {item.value || "NA"}
+                  </span>
+                )}
+              </div>
+              <hr />
+            </div>
+          ))}
+      </div>
+    </div>
+  );
 
   const tabs = [
     {
@@ -118,16 +137,18 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
 
   return (
     <>
+     
       {/* Tabs */}
       <div className="flex border-b gap-5 items-center border-gray-200 pt-2">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${activeTab === tab.id
-              ? "border-user_primary text-user_primary"
-              : "text-user_dark border-white hover:text-user_primary"
-              }`}
+            className={`border-b-2 py-3 tracking-wider text-sm font-medium transition ${
+              activeTab === tab.id
+                ? "border-user_primary text-user_primary"
+                : "text-user_dark border-white hover:text-user_primary"
+            }`}
           >
             {tab.label}
           </button>

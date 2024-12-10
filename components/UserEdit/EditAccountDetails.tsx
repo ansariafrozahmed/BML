@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Input, Button, Form } from "antd";
+import { TextField } from "@shopify/polaris";
 import { useDispatch } from "react-redux";
 import { updateAccountDetails } from "@/store/userProfile";
 
@@ -10,10 +10,8 @@ const EditAccountDetails = ({ userData }: any) => {
 
   // Function to check if the contact details have 'Phone' and 'Whatsapp Number'
   const ensurePhoneAndWhatsapp = () => {
-    // Initialize contact_details as an empty array if it's null or undefined
     let updatedContactDetails: any = formData.contact_details || [];
 
-    // Check for 'Phone' and 'Whatsapp Number' and add them if missing
     if (
       !updatedContactDetails.some((contact: any) => contact.label === "Phone")
     ) {
@@ -27,11 +25,9 @@ const EditAccountDetails = ({ userData }: any) => {
       updatedContactDetails.push({ label: "Whatsapp Number", value: "" });
     }
 
-    // Return updated contact details
     return updatedContactDetails;
   };
 
-  // Handler for form field changes
   const handleFieldChange = (field: string, value: any) => {
     setFormData({
       ...formData,
@@ -39,42 +35,33 @@ const EditAccountDetails = ({ userData }: any) => {
     });
   };
 
-  // Ensure 'Phone' and 'Whatsapp Number' are included in the contact details
   const contactFields = ensurePhoneAndWhatsapp();
 
-  // Validate and update specific field in the contact details array based on value
   const handleContactFieldChange = (value: string, label: string) => {
     let sanitizedValue = value;
 
-    // Allow only digits and truncate to 10 characters for "Phone" and "Whatsapp Number"
     if (label === "Phone" || label === "Whatsapp Number") {
-      sanitizedValue = value.replace(/\D/g, "").slice(0, 10); // Sanitize to digits only
+      sanitizedValue = value.replace(/\D/g, "").slice(0, 10); // Allow digits only, truncate to 10 characters
     }
 
     const updatedContactDetails = (formData?.contact_details || []).map(
       (contact: any) => {
         if (contact.label === label) {
-          return { ...contact, value: sanitizedValue }; // Update the value of the matching label
+          return { ...contact, value: sanitizedValue };
         }
-        return contact; // Keep other contacts unchanged
+        return contact;
       }
     );
 
-    // console.log(updatedContactDetails, 'updatedContactDetails')
-    // Update the formData state with the new contact details
     handleFieldChange("contact_details", updatedContactDetails);
-
-    // Trigger dispatch with a delay after contact field change
     dispatchWithDelay({ ...formData, contact_details: updatedContactDetails });
   };
 
-  // Function to dispatch updated form data with a delay
   const dispatchWithDelay = (formData: any) => {
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current); // Clear any existing timeout
+      clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = setTimeout(() => {
-      // Dispatch the update to the Redux store with the latest formData
       dispatch(
         updateAccountDetails({
           first_name: formData.first_name,
@@ -84,57 +71,54 @@ const EditAccountDetails = ({ userData }: any) => {
           contact_details: formData?.contact_details || [],
         } as any)
       );
-    }, 200); // Delay of 200ms (or adjust as needed)
+    }, 200);
   };
 
-  // Handle debounced change of form fields
   const handleDebouncedChange = (field: string, value: any) => {
     handleFieldChange(field, value);
-    dispatchWithDelay({ ...formData, [field]: value }); // Trigger dispatch with a delay
+    dispatchWithDelay({ ...formData, [field]: value });
   };
 
   return (
     <div className="mt-5 mb-44">
-      <Form layout="vertical" scrollToFirstError>
+      <div className="space-y-3">
         {/* First Name Field */}
-        <Form.Item label="First Name">
-          <Input
-            value={formData.first_name}
-            onChange={(e) =>
-              handleDebouncedChange("first_name", e.target.value)
-            }
-          />
-        </Form.Item>
+        <TextField
+          autoComplete=""
+          label="First Name"
+          value={formData.first_name}
+          onChange={(value) => handleDebouncedChange("first_name", value)}
+        />
 
         {/* Last Name Field */}
-        <Form.Item label="Last Name">
-          <Input
-            value={formData.last_name}
-            onChange={(e) => handleDebouncedChange("last_name", e.target.value)}
-          />
-        </Form.Item>
+        <TextField
+          autoComplete=""
+          label="Last Name"
+          value={formData.last_name}
+          onChange={(value) => handleDebouncedChange("last_name", value)}
+        />
 
         {/* Contact Details Fields */}
         {contactFields.map((contact: any) => (
-          <Form.Item label={contact.label} key={contact.label}>
-            <Input
-              value={contact.value}
-              maxLength={10} // Set max length to 10 characters
-              onChange={(e) =>
-                handleContactFieldChange(e.target.value, contact.label)
-              }
-            />
-          </Form.Item>
+          <TextField
+            autoComplete=""
+            key={contact.label}
+            label={contact.label}
+            value={contact.value}
+            maxLength={10}
+            onChange={(value) => handleContactFieldChange(value, contact.label)}
+          />
         ))}
 
         {/* Bio Field */}
-        <Form.Item label="Bio">
-          <Input.TextArea
-            value={formData.bio}
-            onChange={(e) => handleDebouncedChange("bio", e.target.value)}
-          />
-        </Form.Item>
-      </Form>
+        <TextField
+          autoComplete=""
+          label="Bio"
+          multiline
+          value={formData.bio}
+          onChange={(value) => handleDebouncedChange("bio", value)}
+        />
+      </div>
     </div>
   );
 };
