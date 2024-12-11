@@ -18,8 +18,7 @@ const ProfileName = ({ userData }: any) => {
 
   const handleExitEditMode = () => {
     // Remove "edit" from the URL
-    const newPath = pathname.replace("/edit", "");
-    router.push(newPath);
+    router.push(`/${userData?.username}`);
   };
 
   return (

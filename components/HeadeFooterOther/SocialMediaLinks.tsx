@@ -70,9 +70,8 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ socialMedia }) => {
     };
   });
 
-
   return (
-    <div className="flex text-white items-center justify-start gap-2">
+    <div className="flex text-white items-center justify-start gap-1 lg:gap-2">
       {combinedData?.map(
         ({ key, url, iconPath }) =>
           url && (
@@ -81,12 +80,12 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ socialMedia }) => {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="h-[25px] lg:h-[30px] w-auto"
+              className="h-[22px] lg:h-[30px] w-auto"
             >
               <Image
                 src={iconPath}
                 alt={`${key} Icon`}
-                className="h-full w-auto  rounded-lg overflow-hidden object-contain"
+                className="h-full w-auto rounded lg:rounded-lg overflow-hidden object-contain"
                 height={30}
                 width={30}
               />

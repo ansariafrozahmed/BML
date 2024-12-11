@@ -10,21 +10,21 @@ const Footer = () => {
     <div className="bg-gray-100 text-dark">
       <div className="templateContainer grid grid-cols-1 md:grid-cols-4 py-4 md:py-6 lg:py-10 gap-8">
         <div className="space-y-5">
-          <div className="w-full">
+          <div className="w-full text-center">
             <Image
               src="/logo.webp"
               alt=""
-              className="w-24 lg:w-32 object-contain"
-              height={100}
+              className="w-[60%] lg:w-[90%] object-contain"
+              height={200}
               width={250}
               priority
             />
           </div>
-          <p className="text-base w-full font-normal text-gray-700">
+          {/* <p className="text-base w-full font-normal text-gray-700">
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form, by injected
             humour, or randomised words which don't look even slightly
-          </p>
+          </p> */}
         </div>
         <div className="space-y-5">
           <h2 className="text-xl lg:text-2xl text-primary tracking-wide font-normal">
@@ -32,7 +32,7 @@ const Footer = () => {
           </h2>
           <div className="h-[2px] rounded-full w-24 bg-primaryGreen"></div>
           <div className="flex flex-col gap-4 text-primaryDark text-xs tracking-widest font-medium uppercase">
-            <Link href={"/"}>FAQs</Link>
+            <Link href={"/faqs"}>FAQs</Link>
             <Link href={"/terms-and-conditions"}>Terms & Conditions</Link>
             <Link href={"/privacy-policy"}>Privacy Policy</Link>
             <Link href={"/refund-policy"}>Refund Policy</Link>
@@ -63,8 +63,11 @@ const Footer = () => {
                 className="h-6"
                 alt=""
               />
-              <a className="hover:text-primaryGreen" href="tel:1234567890">
-                +91 12345 67890
+              <a
+                className="hover:text-primaryGreen"
+                href="https://wa.me/+917021187655"
+              >
+                +91 70211 87655
               </a>
             </div>
             <div className="flex items-center gap-2">
@@ -73,8 +76,8 @@ const Footer = () => {
                 className="h-6"
                 alt=""
               />
-              <a className="hover:text-primaryGreen" href="tel:1234567890">
-                +91 12345 67890
+              <a className="hover:text-primaryGreen" href="tel:+918652885995">
+                +91 86528 85995
               </a>
             </div>
             <div className="flex items-center gap-2">

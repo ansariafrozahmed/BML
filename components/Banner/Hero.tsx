@@ -1,28 +1,31 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
   return (
-    <>
+    <div className="bg-white">
       <div className="w-full h-auto">
-        <Image
-          src={"/banner.webp"}
-          alt=""
-          height={1000}
-          width={1500}
-          className="w-full"
-          priority={true}
-          sizes="100vw"
-        />
+        <Link href={"/register"}>
+          <Image
+            src={"/latestbanner.webp"}
+            alt=""
+            height={1200}
+            width={1600}
+            className="w-full"
+            priority={true}
+            sizes="100vw"
+          />
+        </Link>
       </div>
-      <div className="templateContainer py-10">
+      <div className="templateContainer py-5 lg:py-8">
         <h1 className="text-[22px] lg:text-5xl tracking-wide font-medium text-primary leading-snug lg:leading-tight text-center">
           परंपरेने साजरा करूया आनंदोत्सव,
           <br />
           डिजिटली वायरल करूया गणेशोत्सव!
         </h1>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -10,12 +10,14 @@ import {
   Link,
   Text,
 } from "@shopify/polaris";
+import Nextlink from "next/link";
+
 import Image from "next/image";
 import debounce from "lodash.debounce";
 import OtpVerifyModal from "./OtpVerifyModal";
 import { useRouter } from "next/navigation";
 
-// Form 
+// Form
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -187,14 +189,16 @@ const RegisterForm = () => {
         />
       )}
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="bg-white shadow-lg p-6 rounded-md w-96 space-y-4">
-          <Image
-            src="/logo.webp"
-            alt="Logo"
-            height={50}
-            width={100}
-            className="object-contain"
-          />
+        <div className="bg-white shadow-lg p-6 rounded-md w-96 space-y-2">
+          <Nextlink href="/">
+            <Image
+              src="/logo.webp"
+              alt="Logo"
+              height={50}
+              width={100}
+              className="object-contain"
+            />
+          </Nextlink>
           <h2 className="text-lg font-semibold text-gray-800">
             Create an Account
           </h2>
@@ -205,20 +209,19 @@ const RegisterForm = () => {
                 label="First Name"
                 value={firstName}
                 onChange={(value) => setFirstName(value)}
-
               />
               <TextField
                 autoComplete=""
                 label="Last Name"
                 value={lastName}
                 onChange={(value) => setLastName(value)}
-
               />
             </div>
             <TextField
               autoComplete=""
-              label="Username"
+              label="आपल्या बाप्पाचं नाव आपल्या Username म्हणून वापरा."
               value={username}
+              placeholder="for example : sindecharaja"
               onChange={handleUsernameChange}
               error={
                 usernameError ||
@@ -230,8 +233,8 @@ const RegisterForm = () => {
                 usernameStatus === "available"
                   ? "Username is available! ✅"
                   : usernameStatus === "error"
-                    ? "An error occurred while checking username."
-                    : "Username must be unique and valid."
+                  ? "An error occurred while checking username."
+                  : "Username must be unique and valid."
               }
             />
             <TextField

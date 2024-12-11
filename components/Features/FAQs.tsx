@@ -17,7 +17,7 @@ const FAQSection = () => {
       <Header />
       <div>
         <div className="templateContainer flex flex-col lg:flex-row items-start gap-10 w-full space-y-5 py-6 lg:py-12">
-          <div className="w-[45%] sticky hidden lg:block top-20 ">
+          <div className="w-[45%] sticky hidden lg:block top-10 ">
             <Image
               height={600}
               width={600}
@@ -40,7 +40,10 @@ const FAQSection = () => {
                     onClick={() => toggleFaq(index)}
                     className="w-full flex justify-between items-center px-4 py-4 text-left text-gray-800 tracking-wide focus:outline-none"
                   >
-                    <div dangerouslySetInnerHTML={{ __html: faq.question }} />
+                    <div
+                      className="leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: faq.question }}
+                    />
                     <span
                       className={`transform transition-transform duration-200 ${
                         openFaq === index ? "rotate-180" : ""
@@ -51,7 +54,7 @@ const FAQSection = () => {
                   </button>
                   {openFaq === index && (
                     <div
-                      className="px-4 py-3 text-gray-600 border-t border-gray-200"
+                      className="px-4 py-3 text-gray-700 leading-relaxed border-t border-gray-200"
                       dangerouslySetInnerHTML={{ __html: faq.answer }}
                     />
                   )}

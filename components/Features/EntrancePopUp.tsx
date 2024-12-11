@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import "./Style.css"; // Import the CSS for animations
+import { X } from "lucide-react";
 
 const EntrancePopUp = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,7 +15,7 @@ const EntrancePopUp = () => {
   // Fetch popup data from the backend
   const fetchPopup = async () => {
     try {
-      const response = await fetch(`${process.env.BACKEND}/api/getPopup`, {
+      const response = await fetch(`${process.env.BACKEND}/api/home_popup`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -23,10 +24,10 @@ const EntrancePopUp = () => {
 
       if (!response.ok) {
         throw new Error("Failed to fetch popup data");
+      } else {
+        const data = await response.json();
+        setPopupData(data);
       }
-
-      const data = await response.json();
-      setPopupData(data);
     } catch (error) {
       console.error("Error fetching popup data:", error);
       setPopupData({ status: false } as any);
@@ -62,17 +63,21 @@ const EntrancePopUp = () => {
 
   return isVisible ? (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999]"
+      className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-[999]"
       onClick={handleClose} // Close popup when clicking outside
     >
+      <X
+        onClick={handleClose}
+        className="fixed right-5 top-5 text-white cursor-pointer"
+      />
       <div
-        className="bg-white popup shadow-lg h-auto lg:h-[550px] w-[95%] lg:w-[550px] overflow-hidden"
+        className="bg-transparent popup  h-auto lg:h-[550px] w-[90%] lg:w-[550px] overflow-hidden"
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
       >
         <Image
-          src={popupData.image}
+          src={`${process.env.BACKEND}/upload/home_popup/${popupData?.image}`}
           alt="Popup Image"
-          className="w-full h-auto object-contain"
+          className="w-full h-full object-contain"
           height={1000}
           width={1000}
           sizes="100vw"

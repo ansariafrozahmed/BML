@@ -4,7 +4,7 @@ const AnnouncementBarV1: React.FC = () => {
   return (
     <div className=" text-white bg-dark">
       <div className="templateContainer py-2">
-        <h2 className="text-center tracking-wider text-xs leading-normal">
+        <h2 className="text-center tracking-wider text-[12px] lg:text-xs leading-normal">
           📢 Before 15th Feburary, 2025 free for 6 month 📢
         </h2>
       </div>

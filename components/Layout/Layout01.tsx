@@ -9,6 +9,10 @@ import EditBanner from "../UserEdit/EditBanner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import AccountandGalleryUpload from "../UserEdit/AccountandGalleryUpload";
+import { ArrowLeft, Edit, Eye } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import ViewsCounter from "../Tabs/ViewsCounter";
 
 interface ContactDetail {
   label: string;
@@ -45,7 +49,7 @@ const Layout01: React.FC<Layout01Props> = ({
   isLoggedIn,
 }) => {
   const userProfile = useSelector((state: RootState) => state.userProfile);
-
+  const router = useRouter();
   // Check if isEdit is true or 'true' string
 
   // Fallback to userData if userProfile is missing certain data (e.g., banner_image)
@@ -61,48 +65,87 @@ const Layout01: React.FC<Layout01Props> = ({
   }
 
   return (
-    <div className={``}>
-      <div className={`group h-[250px] lg:h-[350px] relative `}>
-        <Image
-          src={
-            bannerImage
-              ? bannerImage // If it's a Blob, use the URL created from Blob
-              : "https://nichemedia.co.nz/wp-content/uploads/2023/03/placeholder-banner.png"
-          }
-          alt={userData?.username}
-          height={500}
-          priority
-          width={1500}
-          className="h-full w-full object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-        {/* {isLoggedIn.logged && (
-          <div className="group-hover:bg-black/40 transition-all ease duration-100 absolute inset-0 "></div>
-        )} */}
-        <div className="absolute inset-0 templateContainer flex items-end justify-start pb-10">
-          <div className="space-y-2">
-            <h1 className="text-3xl lg:text-5xl font-light text-white">
-              {userData?.username}
-            </h1>
-            <SocialMediaLinks
-              socialMedia={
-                (userProfile?.social_links?.length > 0 &&
-                  userProfile?.social_links) ||
-                (userData?.social_links as any)
-              }
-            />
+    <>
+      <div className={`pb-10 lg:pb-16`}>
+        <div className={`group h-[250px] lg:h-[350px] relative `}>
+          <Image
+            src={
+              bannerImage
+                ? bannerImage // If it's a Blob, use the URL created from Blob
+                : "https://nichemedia.co.nz/wp-content/uploads/2023/03/placeholder-banner.png"
+            }
+            alt={userData?.username}
+            height={500}
+            priority
+            width={1500}
+            className="h-full w-full object-cover object-center"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+          {isLoggedIn.logged && (
+            <>
+              <div className="cursor-pointer top-5 left-5 text-white absolute z-[999]">
+                <Link href={"/"} className="flex gap-1 items-center">
+                  <ArrowLeft size={16} /> <p>Return to homepage</p>
+                </Link>
+              </div>
+            </>
+          )}
+          {isLoggedIn.logged && (
+            <>
+              <div className="bg-black/40 lg:group-hover:bg-black/40 transition-all ease duration-100 absolute inset-0 "></div>
+              <div className="cursor-pointer top-5 right-5 text-white absolute z-[999]">
+                <Link
+                  href={`/${userData?.username}/edit/banner/${
+                    Math.random() * 100
+                  }`}
+                  className="flex gap-1 items-center"
+                >
+                  <Edit size={16} /> <p>Edit</p>
+                </Link>
+              </div>
+            </>
+          )}
+          <div className="absolute inset-0 templateContainer flex items-end justify-between pb-7 lg:pb-10">
+            <div className="space-y-3">
+              <h1 className="text-[26px] leading-none lg:text-5xl font-light text-white">
+                {userData?.username}
+              </h1>
+              <div className="flex items-center gap-2">
+                <SocialMediaLinks
+                  socialMedia={
+                    (userProfile?.social_links?.length > 0 &&
+                      userProfile?.social_links) ||
+                    (userData?.social_links as any)
+                  }
+                />
+                {isLoggedIn.logged && (
+                  <>
+                    <div className="cursor-pointer text-white z-[999]">
+                      <Link
+                        href={`/${userData?.username}/edit/socialLinks/${
+                          Math.random() * 100
+                        }`}
+                        className="flex gap-1 items-center"
+                      >
+                        <Edit size={16} /> <p>Edit</p>
+                      </Link>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+            <ViewsCounter />
           </div>
         </div>
-      </div>
-      {/* ----------- */}
-      <div className="templateContainer flex flex-col  lg:flex-row md:gap-16 w-full">
-        <div className="w-full lg:w-[70%]">
-          <ProfileTabs userData={userData} />
-        </div>
-        <div className="w-full lg:w-[30%] space-y-5 lg:sticky top-0 h-full">
-          <ProfileSidebar userData={userData} />
-          {/* <div className="p-5 space-y-2 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
+        {/* ----------- */}
+        <div className="templateContainer flex flex-col  lg:flex-row md:gap-16 w-full">
+          <div className="w-full lg:w-[70%]">
+            <ProfileTabs userData={userData} isLoggedIn={isLoggedIn?.logged} />
+          </div>
+          <div className="w-full lg:w-[30%] space-y-5 lg:sticky top-0 h-full">
+            <ProfileSidebar userData={userData} />
+            {/* <div className="p-5 space-y-2 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
             <h2 className="text-xl font-semibold tracking-wider text-user_primary">
               Bio
             </h2>
@@ -112,7 +155,8 @@ const Layout01: React.FC<Layout01Props> = ({
               </p>
             </div>
           </div> */}
-          <Shareprofile username={userData?.username} />
+            <Shareprofile username={userData?.username} />
+          </div>
         </div>
       </div>
       <AccountandGalleryUpload
@@ -120,7 +164,7 @@ const Layout01: React.FC<Layout01Props> = ({
         token={isLoggedIn?.token}
         isEdit={isEdit === "edit"}
       />
-    </div>
+    </>
   );
 };
 

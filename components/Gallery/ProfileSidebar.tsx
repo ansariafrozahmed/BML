@@ -29,7 +29,7 @@ const ProfileSidebar: React.FC<ProfileTabsProps> = ({ userData }) => {
       </h2>
       {/* <div className="h-[2px] w-20 bg-user_primary"></div> */}
       <div>
-        <div className="flex justify-between py-3 items-center">
+        {/* <div className="flex justify-between py-3 items-center">
           <span className="text-sm tracking-wider font-medium text-user_dark">
             Profile Views
           </span>
@@ -38,7 +38,7 @@ const ProfileSidebar: React.FC<ProfileTabsProps> = ({ userData }) => {
             <Eye size={18} className="text-user_primary" />
           </span>
         </div>
-        <hr />
+        <hr /> */}
         <div className="flex justify-between py-3 items-center">
           <span className="text-sm tracking-wider font-medium text-user_dark">
             Joined On

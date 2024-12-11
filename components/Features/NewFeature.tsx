@@ -6,7 +6,7 @@ import React from "react";
 const NewFeature = () => {
   return (
     <>
-      <div>
+      <div className="bg-white">
         <div className="flex templateContainer relative py-8 lg:py-16 flex-col-reverse lg:flex-row items-center w-full gap-12  justify-center ">
           <div className="relative order-2 lg:order-2  w-full lg:w-[40%]">
             {/* Analytics Graph */}
@@ -160,7 +160,7 @@ const NewFeature = () => {
         </div>
       </div>
       {/* ----------------- */}
-      <div className="">
+      <div className="bg-white">
         <div className="flex templateContainer relative py-8 lg:py-16 flex-col-reverse lg:flex-row items-center w-full gap-12  justify-center ">
           <div className="relative order-2 lg:order-2  w-full lg:w-[40%]">
             {/* Analytics Graph */}

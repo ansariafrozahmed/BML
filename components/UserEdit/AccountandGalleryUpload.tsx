@@ -14,7 +14,7 @@ const AccountandGalleryUpload = ({
   isEdit: boolean;
   token: string;
 }) => {
-  console.log(isLoggedIn, 'isLoggedIn')
+  console.log(isLoggedIn, "isLoggedIn");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false); // Track dismissal of the card
   const [currentPath, setCurrentPath] = useState<string>(""); // Track current pathname
@@ -48,7 +48,7 @@ const AccountandGalleryUpload = ({
   return (
     <>
       {/* Main floating action button */}
-      <div className="fixed flex-col lg:flex-row bottom-4 md:right-0 z-[999] animate-bounce mx-4 bg-user_primary text-white rounded-xl p-4 shadow-lg border border-user_primary flex items-center gap-4 ">
+      <div className="fixed  w-auto lg:w-[480px] grid grid-cols-2 lg:grid-cols-[65%,35%] items-center bottom-4 md:right-0 z-[999]  mx-4 bg-user_primary text-white rounded-xl p-3 shadow-lg border border-user_primary ">
         {/* Dismiss Button */}
         {isLoggedIn && (
           <button
@@ -60,9 +60,9 @@ const AccountandGalleryUpload = ({
         )}
 
         {/* Floating Card Content */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-left">
           {/* <h3 className="text-xl font-bold">Ganpati Bappa Morya! 🙏</h3> */}
-          <p className="text-base leading-tight text-white/90 mt-1">
+          <p className="text-xs font-light leading-snug- text-white/90 mt-1">
             {isLoggedIn
               ? "You're all set! Share your Ganpati Bappa memories now! 🌟"
               : "Join our community and share your Ganpati Bappa memories! 🌟"}
@@ -71,7 +71,7 @@ const AccountandGalleryUpload = ({
         <div className="flex gap-2">
           <button
             onClick={isLoggedIn ? toggleModal : undefined}
-            className="ml-auto bg-white text-user_primary font-semibold px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
+            className="ml-auto bg-white text-user_primary font-semibold px-4 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
           >
             {isLoggedIn ? (
               "Upload Memory"

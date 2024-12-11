@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import '@shopify/polaris/build/esm/styles.css';
+import "@shopify/polaris/build/esm/styles.css";
 import NextTopLoader from "nextjs-toploader";
 import ProviderComp from "@/components/provider";
 
@@ -51,7 +51,6 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         <ProviderComp>
-          <EntrancePopUp />
           {children}
           <CustomLightBox />
         </ProviderComp>
