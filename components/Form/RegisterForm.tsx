@@ -15,7 +15,7 @@ import debounce from "lodash.debounce";
 import OtpVerifyModal from "./OtpVerifyModal";
 import { useRouter } from "next/navigation";
 
-// Form 
+// Form
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -55,9 +55,9 @@ const RegisterForm = () => {
               body: JSON.stringify({ username }),
             }
           );
-  
+
           const result = await response.json();
-  
+
           if (response.ok && result.isValid) {
             setUsernameStatus("available");
           } else if (!response.ok || !result.isValid) {
@@ -78,21 +78,20 @@ const RegisterForm = () => {
         }
       } else {
         setUsernameStatus(null); // Clear status when input is empty
-        setUsernameError(null);  // Clear error when input is empty
+        setUsernameError(null); // Clear error when input is empty
       }
     }, 500),
     []
   );
-  
-  
+
   const handleUsernameChange = (value: string) => {
     const lowerCaseValue = value.toLowerCase(); // Convert value to lowercase for uniformity
     setUsername(lowerCaseValue); // Store only the lowercase version
     setUsernameError(null); // Clear validation errors
     setUsernameStatus(null); // Clear status on change
-  
-    console.log(lowerCaseValue, 'lowerCaseValue')
-  
+
+    console.log(lowerCaseValue, "lowerCaseValue");
+
     // Regex explanation:
     // ^[a-z0-9_]+$ : Only allows lowercase letters (a-z), numbers (0-9), and underscores (_).
     // It does not allow any other special characters or spaces.
@@ -102,7 +101,7 @@ const RegisterForm = () => {
       );
       return;
     }
-  
+
     if (lowerCaseValue.trim().length > 0) {
       checkUsernameExistence(lowerCaseValue);
     }
@@ -157,6 +156,7 @@ const RegisterForm = () => {
       last_name: lastName,
       email,
       password,
+      joinedAt: new Date().toISOString(), // Add current timestamp
     };
 
     try {
