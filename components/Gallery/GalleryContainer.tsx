@@ -7,7 +7,15 @@ import {
   setSelectedIndex,
 } from "@/store/gallerSlideShow";
 import { setGalleryData } from "@/store/gallerySlice";
-import { ArrowLeft, Pencil } from "lucide-react";
+import { Popover } from "antd";
+import {
+  ArrowLeft,
+  Delete,
+  Edit,
+  EllipsisVertical,
+  Pencil,
+  Trash,
+} from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -154,7 +162,27 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                 className="p-1.5 lg:p-3 border rounded bg-white space-y-2 shadow-lg"
               >
                 {selectedType === "images" ? (
-                  <>
+                  <div className="relative">
+                    <Popover
+                      content={
+                        <div className="w-32 text-sm ">
+                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md">
+                            <Edit size={15} /> Rename
+                          </div>
+                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md">
+                            <Trash size={15} />
+                            Delete
+                          </div>
+                        </div>
+                      }
+                      placement="bottom"
+                      trigger={"click"}
+                    >
+                      <div className="absolute cursor-pointer top-1 right-1 bg-white text-dark rounded-full p-1">
+                        <EllipsisVertical size={17} />
+                      </div>
+                    </Popover>
+
                     <Image
                       height={600}
                       width={600}
@@ -184,7 +212,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                     <p className="text-center capitalize tracking-wide text-gray-700 text-xs lg:text-base">
                       {(item as GalleryItem).title || "Image description"}
                     </p>
-                  </>
+                  </div>
                 ) : (
                   <iframe
                     src={(item as GalleryItem).url}
