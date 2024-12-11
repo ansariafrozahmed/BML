@@ -8,14 +8,24 @@ import { Modal } from "@shopify/polaris";
 import { useParams, useRouter } from "next/navigation";
 
 const renderBio = (userData: any) => {
+  const bioHtml = userData?.accountDetails?.bio?.trim() || userData?.bio;
+
   return (
     <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
-      <p className="text-sm tracking-wider text-gray-700 leading-relaxed">
-        {userData?.accountDetails?.bio?.trim() || userData?.bio}
-      </p>
+      {bioHtml ? (
+        <div
+          className="text-sm tracking-wider text-gray-700 leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: bioHtml }}
+        />
+      ) : (
+        <p className="text-sm tracking-wider text-gray-700 leading-relaxed">
+          No bio available.
+        </p>
+      )}
     </div>
   );
 };
+
 
 interface ProfileTabsProps {
   userData: {
@@ -59,7 +69,9 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
         <div
           className="flex gap-1 items-center cursor-pointer"
           onClick={() => {
-            router.push(`/${username}/edit/accountDetails/${Math.random() * 100}`)
+            router.push(
+              `/${username}/edit/accountDetails/${Math.random() * 100}`
+            );
           }}
         >
           <Edit size={16} /> <p>Edit</p>
@@ -152,7 +164,6 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData }) => {
 
   return (
     <>
-     
       {/* Tabs */}
       <div className="flex border-b gap-5 items-center border-gray-200 pt-2">
         {tabs.map((tab) => (

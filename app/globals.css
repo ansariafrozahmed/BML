@@ -122,3 +122,13 @@ body {
 .ant-modal .ant-modal-close {
   display: none;
 }
+
+.fr-second-toolbar {
+  display: none !important;
+}
+
+.fr-box,
+.fr-basic {
+  border: 1px solid #A9A9A9 !important;
+  cursor: text !important;
+}

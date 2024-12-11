@@ -46,10 +46,8 @@ const Loginpage = async () => {
   }
 
   return (
-    <div className="bg-gray-100 h-screen flex items-center justify-center">
-      <div>
+    <div className="bg-gray-100 ">
         <LoginForm />
-      </div>
     </div>
   );
 };
