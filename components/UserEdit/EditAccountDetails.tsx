@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Suspense } from "react";
 import { TextField } from "@shopify/polaris";
 import { useDispatch } from "react-redux";
 import { updateAccountDetails } from "@/store/userProfile";
+import RichTextEditor from "./RichTextEditor";
 
 const EditAccountDetails = ({ userData }: any) => {
   const dispatch = useDispatch();
@@ -111,13 +112,16 @@ const EditAccountDetails = ({ userData }: any) => {
         ))}
 
         {/* Bio Field */}
-        <TextField
+        {/* <TextField
           autoComplete=""
           label="Bio"
           multiline
           value={formData.bio}
           onChange={(value) => handleDebouncedChange("bio", value)}
-        />
+        /> */}
+        <Suspense fallback="laoding">
+          <RichTextEditor bio={formData.bio} handleDebouncedChange={handleDebouncedChange}/>
+        </Suspense>
       </div>
     </div>
   );

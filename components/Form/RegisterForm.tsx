@@ -25,7 +25,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [usernameLoading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [openOtpVerifyModal, setOpenOtpVerifyModal] = useState(false);
@@ -39,11 +39,13 @@ const RegisterForm = () => {
     "available" | "taken" | "error" | null
   >(null);
 
-  console.log(usernameStatus, "usernameStatus");
+  const route = useRouter();
+
   // Debounced function to check if the username exists
   const checkUsernameExistence = useCallback(
     debounce(async (username: string) => {
       if (username) {
+        setLoading(true);
         try {
           const response = await fetch(
             `${process.env.BACKEND}/api/validate-username`,
@@ -62,37 +64,48 @@ const RegisterForm = () => {
             setUsernameStatus("available");
           } else if (!response.ok || !result.isValid) {
             setUsernameStatus("taken");
+            // Display backend error message if available
+            if (result.message) {
+              setUsernameError(result.message); // Assuming backend provides a 'message' field
+            } else {
+              setUsernameError("Username is already taken.");
+            }
           }
         } catch (error) {
           setUsernameStatus("error");
+          setUsernameError("An error occurred while checking the username.");
           console.error("Error checking username:", error);
+        } finally {
+          setLoading(false);
         }
       } else {
         setUsernameStatus(null); // Clear status when input is empty
+        setUsernameError(null); // Clear error when input is empty
       }
     }, 500),
     []
   );
 
-  // Handle username changes
   const handleUsernameChange = (value: string) => {
-    setUsername(value);
+    const lowerCaseValue = value.toLowerCase(); // Convert value to lowercase for uniformity
+    setUsername(lowerCaseValue); // Store only the lowercase version
     setUsernameError(null); // Clear validation errors
     setUsernameStatus(null); // Clear status on change
 
-    if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+    console.log(lowerCaseValue, "lowerCaseValue");
+
+    // Regex explanation:
+    // ^[a-z0-9_]+$ : Only allows lowercase letters (a-z), numbers (0-9), and underscores (_).
+    // It does not allow any other special characters or spaces.
+    if (!/^[a-z0-9_]+$/.test(lowerCaseValue)) {
       setUsernameError(
-        "Username can only contain letters, numbers, and underscores."
+        "Username can only contain lowercase letters, numbers, and underscores. No spaces or special characters are allowed."
       );
       return;
     }
-    if (/^\s|\s$/.test(value)) {
-      setUsernameError("Username cannot start or end with a space.");
-      return;
-    }
 
-    if (value.trim().length > 0) {
-      checkUsernameExistence(value);
+    if (lowerCaseValue.trim().length > 0) {
+      checkUsernameExistence(lowerCaseValue);
     }
   };
 
@@ -135,12 +148,8 @@ const RegisterForm = () => {
     if (password !== confirmPassword)
       return setToastMessage("Passwords do not match.");
 
-    setLoading(true);
-
     await verifyEmail();
   };
-
-  const route = useRouter();
 
   const saveRegistration = async () => {
     const requestData = {
@@ -149,6 +158,7 @@ const RegisterForm = () => {
       last_name: lastName,
       email,
       password,
+      joinedAt: new Date().toISOString(), // Add current timestamp
     };
 
     try {
@@ -174,8 +184,6 @@ const RegisterForm = () => {
       setToastMessage(
         error instanceof Error ? error.message : "An unexpected error occurred"
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -220,6 +228,7 @@ const RegisterForm = () => {
             <TextField
               autoComplete=""
               label="आपल्या बाप्पाचं नाव आपल्या Username म्हणून वापरा."
+              loading={usernameLoading}
               value={username}
               placeholder="for example : sindecharaja"
               onChange={handleUsernameChange}
@@ -230,11 +239,15 @@ const RegisterForm = () => {
                   : undefined)
               }
               helpText={
-                usernameStatus === "available"
-                  ? "Username is available! ✅"
-                  : usernameStatus === "error"
-                  ? "An error occurred while checking username."
-                  : "Username must be unique and valid."
+                usernameStatus === "available" ? (
+                  <Text variant="bodySm" as="h3" tone="success">
+                    Username is available! ✅
+                  </Text>
+                ) : usernameStatus === "error" ? (
+                  "An error occurred while checking username."
+                ) : (
+                  "Username must be unique and valid."
+                )
               }
             />
             <TextField
