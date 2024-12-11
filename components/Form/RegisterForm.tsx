@@ -17,7 +17,7 @@ import debounce from "lodash.debounce";
 import OtpVerifyModal from "./OtpVerifyModal";
 import { useRouter } from "next/navigation";
 
-// Form
+// Form R
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
