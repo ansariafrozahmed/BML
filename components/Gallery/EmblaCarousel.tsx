@@ -69,7 +69,7 @@ const EmblaCarousel: React.FC<PropType> = ({
                   <Image
                     height={800}
                     width={800}
-                    src={`${process.env.BACKEND}/upload/gallery/${slide.path}`}
+                    src={`${process.env.GALLERYURL}/${slide.path}`}
                     alt={`Gallery image ${index + 1}`}
                     className="lg:h-[450px] h-[450px] md:w-[350px] w-[350px] z-[999] object-contain"
                     onLoadingComplete={() => {

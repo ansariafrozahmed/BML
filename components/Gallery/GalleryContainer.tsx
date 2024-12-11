@@ -67,6 +67,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
       }
 
       const result: GalleryData = await response.json();
+      console.log(result, 'result')
       dispatch(setGalleryData(result));
     } catch (error) {
       console.error(error);
@@ -162,7 +163,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                 className="p-1.5 lg:p-3 border rounded bg-white space-y-2 shadow-lg"
               >
                 {selectedType === "images" ? (
-                  <div className="relative">
+                  <div className="relative space-y-2">
                     <Popover
                       content={
                         <div className="w-32 text-sm ">
@@ -188,9 +189,8 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                       width={600}
                       src={
                         (item as GalleryItem).url
-                          ? `${process.env.BACKEND}/upload/gallery/${
-                              (item as GalleryItem).url
-                            }`
+                          ? `${process.env.GALLERYURL}/${(item as GalleryItem).url
+                          }`
                           : ""
                       }
                       alt={`Gallery image ${index}`}
@@ -209,7 +209,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                         dispatch(setActive(true)); // Activate the lightbox
                       }}
                     />
-                    <p className="text-center capitalize tracking-wide text-gray-700 text-xs lg:text-base">
+                    <p className="text-center capitalize tracking-wide text-gray-700 text-xs lg:text-base text-ellipsis whitespace-normal break-words">
                       {(item as GalleryItem).title || "Image description"}
                     </p>
                   </div>

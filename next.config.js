@@ -4,6 +4,7 @@ const nextConfig = {
   env: {
     BACKEND: process.env.BACKEND,
     FRONTEND: process.env.FRONTEND,
+    GALLERYURL: process.env.GALLERYURL,
   },
   images: {
     remotePatterns: [

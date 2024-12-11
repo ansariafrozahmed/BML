@@ -43,7 +43,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
   const params = useParams();
-
+  const [loading, setLoading] = useState(false)
   const fetchGalleryData = async () => {
     try {
       const response = await fetch(
@@ -92,7 +92,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
 
   const handleSubmit = async () => {
     const formData = new FormData();
-
+    setLoading(true);
     // Append year
     formData.append("year", selectedYear);
 
@@ -134,6 +134,9 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
     } catch (error) {
       console.error("Error uploading files and videos:", error); // Handle error
       showMessage("Error Uploading Files and Videos", "error");
+    } finally {
+      setLoading(false);
+
     }
   };
 
@@ -322,12 +325,13 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
           >
             Cancel
           </button>
-          <button
+          <Button
+            loading={loading}
             className="bg-user_primary text-white px-4 py-2 rounded-lg  transition-all"
             onClick={handleSubmit}
           >
             Upload
-          </button>
+          </Button>
         </div>
       </div>
     </Modal>
