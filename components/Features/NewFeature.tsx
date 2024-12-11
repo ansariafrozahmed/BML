@@ -4,63 +4,135 @@ import Link from "next/link";
 import React from "react";
 
 const NewFeature = () => {
+  const features = [
+    {
+      title: "आपल्या गणपती बाप्पा साठी खास प्रोफाइल तयार करा.",
+      description:
+        "आता आपल्या गणपती बाप्पासाठी एक अद्वितीय आणि आकर्षक प्रोफाइल तयार करण्याची संधी. गणेशोत्सवाला एक डिजिटल रूप द्या.",
+      list: [
+        "सोपी प्रोफाइल तयार करण्याची प्रक्रिया",
+        "आपल्या गणपतीचे नाव, मूर्तीची छायाचित्रे आणि माहिती जोडण्याची सुविधा",
+        "सर्व गोष्टी एका ठिकाणी व्यवस्थित सादर करा",
+      ],
+      image: "/images/create-profile.jpg",
+    },
+    {
+      title: "फोटो, व्हिडिओ, आणि सोशल मीडिया लिंक जोडण्याची सुविधा.",
+      description:
+        "गणपती उत्सवाचे सुंदर क्षण आपल्या प्रोफाइलवर साठवा. आपल्या सोशल मीडिया प्रोफाइल्सची लिंक देखील सहज शेअर करा.",
+      list: [
+        "उत्सवाचे खास फोटो आणि व्हिडिओ अपलोड करा",
+        "फेसबुक, इंस्टाग्राम, आणि इतर लिंक जोडण्याची सुविधा",
+        "आकर्षक सादरीकरणासाठी विविध प्रकारे दृश्य सादर करा",
+      ],
+      image: "/images/media-upload.jpg",
+    },
+    {
+      title: "प्रत्येक गणपती बाप्पाला एक अनोखा URL आणि QR कोड.",
+      description:
+        "आपल्या बाप्पाच्या प्रोफाइलसाठी एक खास लिंक आणि QR कोड तयार करा, ज्यामुळे लोकांना आपली प्रोफाइल पाहणे सोपे होईल.",
+      list: [
+        "प्रत्येक प्रोफाइलसाठी अनोखा URL उपलब्ध",
+        "सोपी QR कोड स्कॅनिंगद्वारे थेट प्रोफाइलवर पोहोचा",
+        "प्रोफाइल शेअर करण्यासाठी अत्यंत सोयीस्कर",
+      ],
+      image: "/images/unique-url-qr.jpg",
+    },
+    {
+      title: "वर्षानुसार फोटो व व्हिडिओसाठी वेगवेगळ्या फोल्डरची सोय.",
+      description:
+        "प्रत्येक वर्षाचे फोटो आणि व्हिडिओ वेगवेगळ्या फोल्डरमध्ये साठवण्याची सुविधा, ज्यामुळे जुन्या आठवणी सहज सापडतील.",
+      list: [
+        "वर्षानुसार डेटा व्यवस्थापन",
+        "सर्व आठवणी एका व्यवस्थित स्वरूपात संग्रहित करा",
+        "आपल्या फोल्डरमध्ये सुलभ शोध प्रणाली",
+      ],
+      image: "/images/yearly-folders.jpg",
+    },
+    {
+      title:
+        "प्रोफाइलच्या माध्यमातून आपल्या गणपती बाप्पाची महती आणि माहिती लिहिण्याची संधी.",
+      description:
+        "आपल्या गणपतीबद्दलची माहिती, विशेषता, कथा आणि इतर तपशील लिहून आपल्या प्रोफाइलला अजून अधिक माहितीपूर्ण बनवा.",
+      list: [
+        "गणपतीच्या मूळ व धार्मिक कथा सामायिक करा",
+        "आपल्या बाप्पाच्या विशेष परंपरा मांडण्याची सुविधा",
+        "प्रोफाइलसाठी अनोखे टेक्स्ट फील्ड्स",
+      ],
+      image: "/images/write-info.jpg",
+    },
+    {
+      title:
+        "प्रोफाइल शेअर करून कुटुंबीय, मित्र, आणि ओळखीच्या लोकांपर्यंत पोहोचण्याची सुविधा.",
+      description:
+        "आपल्या गणपतीच्या प्रोफाइलला जगभरातील मित्र आणि कुटुंबीयांपर्यंत सहज पोहोचवा.",
+      list: [
+        "सोशल मीडिया प्लॅटफॉर्म्सवर सहज शेअर करा",
+        "किंवा थेट URL किंवा QR कोडद्वारे पाठवा",
+        "संपर्क साधण्यासाठी जलद व सोयीस्कर पद्धती",
+      ],
+      image: "/images/share-profile.jpg",
+    },
+    {
+      title:
+        "जाणून घ्या आपल्या गणपतीबाप्पाच्या प्रोफाइलला किती लोकांनी पाहिले ! ",
+      description:
+        "आपल्या प्रोफाइलवर आलेल्या पाहुण्यांची संख्या जाणून घ्या आणि त्यांच्या उत्साहाचा अनुभव घ्या.",
+      list: [
+        "प्रोफाइलवरील पाहुण्यांचे तपशीलवार आकडेवारी",
+        "लोकांना प्रेरित करण्यासाठी एक अनोखा मार्ग",
+        "वाढलेली लोकप्रियता मोजण्यासाठी उपयुक्त",
+      ],
+      image: "/images/profile-views.jpg",
+    },
+  ];
+
   return (
     <>
-      <div className="bg-white">
-        <div className="flex templateContainer relative py-8 lg:py-16 flex-col-reverse lg:flex-row items-center w-full gap-12  justify-center ">
-          <div className="relative order-2 lg:order-2  w-full lg:w-[40%]">
-            {/* Analytics Graph */}
-
-            {/* Main Image */}
-            <div className="relative z-10">
-              <div
-                data-aos="zoom-in"
-                className="overflow-hidden rounded-3xl relative"
-              >
-                {/* Background Element */}
-
-                {/* Foreground Image */}
-                <Image
-                  height={600}
-                  width={600}
-                  src="/mockup1.png"
-                  alt="Analytics Dashboard Preview"
-                  className="object-cover max-w-[550px] mx-auto w-full h-full relative z-10"
-                />
+      {features.map((item, index) => (
+        <div
+          key={index}
+          className={`${
+            index % 2 === 0 ? "bg-white" : "bg-gray-100"
+          } py-8 lg:py-16`}
+        >
+          <div
+            className={`flex templateContainer relative flex-col-reverse lg:flex-row items-center w-full gap-12 justify-center ${
+              index % 2 !== 0 ? "lg:flex-row-reverse" : ""
+            }`}
+          >
+            <div className="relative w-full lg:w-[40%]">
+              <div className="relative z-10">
+                <div
+                  data-aos="zoom-in"
+                  className="overflow-hidden rounded-3xl relative"
+                >
+                  <Image
+                    height={600}
+                    width={600}
+                    src={"/mockup1.png"}
+                    alt={item.title}
+                    className="object-cover max-w-[550px] mx-auto w-full h-full relative z-10"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            data-aos="fade-up"
-            className="order-1 lg:order-1 w-full lg:w-[60%]"
-          >
-            <div className="space-y-6">
-              {/* Heading */}
-              {/* <div className="h-[2px] w-28 lg:w-40 bg-primary rounded-full"></div> */}
+
+            <div data-aos="fade-up" className="w-full lg:w-[60%] space-y-6">
               <span className="bg-amber-100 px-4 py-2 rounded-lg text-primary">
-                Feature 01
+                Feature 0{index + 1}
               </span>
               <h2 className="text-[25px] md:text-[36px] leading-none font-medium lg:tracking-wide text-dark">
-                Get Started in 3 Easy Steps
+                {item.title}
               </h2>
 
-              {/* Description */}
               <p className="text-base w-full font-normal lg:w-[90%] text-gray-700">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly
+                {item.description}
               </p>
 
-              {/* Feature List */}
-              <ul className=" grid grid-cols-2 gap-4">
-                {[
-                  "Friendly Design",
-                  "Friendly Design",
-                  "Friendly Design",
-                  "Friendly Design",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
+              <ul className="grid grid-cols-2 gap-4">
+                {item.list.map((listItem, i) => (
+                  <li key={i} className="flex items-center gap-3">
                     <CircleCheck
                       fill="green"
                       stroke="white"
@@ -68,174 +140,21 @@ const NewFeature = () => {
                       size={30}
                     />
                     <span className="text-base w-full font-normal lg:w-[90%] text-gray-700">
-                      {item}
+                      {listItem}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              {/* CTA Button */}
-              <button className="px-7 py-4 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
-                <Link href={"/register"}>Create your profile</Link>
-              </button>
+              <Link className="block" href={"/register"}>
+                <button className="px-7 py-4 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
+                  Create your profile
+                </button>
+              </Link>
             </div>
           </div>
         </div>
-      </div>
-      {/* ----------------- */}
-      <div className="bg-gray-100">
-        <div className="flex templateContainer relative py-8 lg:py-16 flex-col-reverse lg:flex-row-reverse items-center w-full gap-12  justify-center ">
-          <div className="relative order-2 lg:order-2  w-full lg:w-[40%]">
-            {/* Analytics Graph */}
-
-            {/* Main Image */}
-            <div className="relative z-10">
-              <div
-                data-aos="zoom-in"
-                className="overflow-hidden rounded-3xl relative"
-              >
-                {/* Background Element */}
-
-                {/* Foreground Image */}
-                <Image
-                  height={600}
-                  width={600}
-                  src="/mockup1.png"
-                  alt="Analytics Dashboard Preview"
-                  className="object-cover max-w-[550px] mx-auto w-full h-full relative z-10"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            data-aos="fade-up"
-            className="order-1 lg:order-1 w-full lg:w-[60%]"
-          >
-            <div className="space-y-6">
-              {/* Heading */}
-              {/* <div className="h-[2px] w-28 lg:w-40 bg-primary rounded-full"></div> */}
-              <span className="bg-amber-100 px-4 py-2 rounded-lg text-primary">
-                Feature 01
-              </span>
-              <h2 className="text-[25px] md:text-[36px] leading-none font-medium lg:tracking-wide text-dark">
-                Get Started in 3 Easy Steps
-              </h2>
-
-              {/* Description */}
-              <p className="text-base w-full font-normal lg:w-[90%] text-gray-700">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly
-              </p>
-
-              {/* Feature List */}
-              <ul className=" grid grid-cols-2 gap-4">
-                {[
-                  "Friendly Design",
-                  "Friendly Design",
-                  "Friendly Design",
-                  "Friendly Design",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <CircleCheck
-                      fill="green"
-                      stroke="white"
-                      strokeWidth={1.5}
-                      size={30}
-                    />
-                    <span className="text-base w-full font-normal lg:w-[90%] text-gray-700">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA Button */}
-              <button className="px-7 py-4 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
-                <Link href={"/register"}>Create your profile</Link>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* ----------------- */}
-      <div className="bg-white">
-        <div className="flex templateContainer relative py-8 lg:py-16 flex-col-reverse lg:flex-row items-center w-full gap-12  justify-center ">
-          <div className="relative order-2 lg:order-2  w-full lg:w-[40%]">
-            {/* Analytics Graph */}
-
-            {/* Main Image */}
-            <div className="relative z-10">
-              <div
-                data-aos="zoom-in"
-                className="overflow-hidden rounded-3xl relative"
-              >
-                {/* Background Element */}
-
-                {/* Foreground Image */}
-                <Image
-                  height={600}
-                  width={600}
-                  src="/mockup1.png"
-                  alt="Analytics Dashboard Preview"
-                  className="object-cover max-w-[550px] mx-auto w-full h-full relative z-10"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            data-aos="fade-up"
-            className="order-1 lg:order-1 w-full lg:w-[60%]"
-          >
-            <div className="space-y-6">
-              {/* Heading */}
-              {/* <div className="h-[2px] w-28 lg:w-40 bg-primary rounded-full"></div> */}
-              <span className="bg-amber-100 px-4 py-2 rounded-lg text-primary">
-                Feature 01
-              </span>
-              <h2 className="text-[25px] md:text-[36px] leading-none font-medium lg:tracking-wide text-dark">
-                Get Started in 3 Easy Steps
-              </h2>
-
-              {/* Description */}
-              <p className="text-base w-full font-normal lg:w-[90%] text-gray-700">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly
-              </p>
-
-              {/* Feature List */}
-              <ul className=" grid grid-cols-2 gap-4">
-                {[
-                  "Friendly Design",
-                  "Friendly Design",
-                  "Friendly Design",
-                  "Friendly Design",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <CircleCheck
-                      fill="green"
-                      stroke="white"
-                      strokeWidth={1.5}
-                      size={30}
-                    />
-                    <span className="text-base w-full font-normal lg:w-[90%] text-gray-700">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA Button */}
-              <button className="px-7 py-4 hover:scale-105 transition-all ease-in-out duration-200 text-sm bg-dark text-white rounded-full leading-none tracking-wide font-normal">
-                <Link href={"/register"}>Create your profile</Link>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
     </>
   );
 };
