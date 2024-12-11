@@ -123,8 +123,7 @@ body {
   display: none;
 }
 
-.fr-wrapper div:has(> a)
-.fr-second-toolbar,  [data-f-id="pbf"]
+.fr-wrapper div:has(> a), .fr-second-toolbar,  [data-f-id="pbf"]
  {
   display: none !important;
 }
