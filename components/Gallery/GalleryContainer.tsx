@@ -7,7 +7,12 @@ import {
   setImages,
   setSelectedIndex,
 } from "@/store/gallerSlideShow";
-import { deleteItemById, setGalleryData, updateTitleById } from "@/store/gallerySlice";
+import {
+  deleteItemById,
+  setGalleryData,
+  updateTitleById,
+} from "@/store/gallerySlice";
+import { Modal } from "@shopify/polaris";
 import { Popover } from "antd";
 import axios from "axios";
 import {
@@ -25,7 +30,7 @@ import Swal from "sweetalert2";
 // import EditGallery from "../UserEdit/EdiSocailLinks";
 
 type GalleryItem = {
-  id: any,
+  id: any;
   title: string;
   url: string;
 };
@@ -44,6 +49,8 @@ interface GalleryContainerProps {
 const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
   const [galleryError, setGalleryError] = useState(false);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [videoUrl, setUrl] = useState("");
   const { data: galleryData } = useSelector(
     (state: RootState) => state.gallerySlice
   );
@@ -71,7 +78,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
       }
 
       const result: GalleryData = await response.json();
-      console.log(result, 'result')
+      console.log(result, "result");
       dispatch(setGalleryData(result as any));
     } catch (error) {
       console.error(error);
@@ -175,22 +182,26 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
         // Check if the user confirmed the action
         if (newTitle) {
           // Send a request to the backend to update the title
-          const response = await axios.post(`${process.env.BACKEND}/api/updateTitle`, {
-            id: item.id,
-            newTitle,
-          }, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${getCookie("BMLTK")}`,
+          const response = await axios.post(
+            `${process.env.BACKEND}/api/updateTitle`,
+            {
+              id: item.id,
+              newTitle,
             },
-          });
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${getCookie("BMLTK")}`,
+              },
+            }
+          );
 
           // Handle the response
           if (response.status === 200) {
-            showMessage('Title updated successfully', 'success')
-            dispatch(updateTitleById({ id: item.id, newTitle }))
+            showMessage("Title updated successfully", "success");
+            dispatch(updateTitleById({ id: item.id, newTitle }));
           } else {
-            showMessage('Title not updated successfully', 'error')
+            showMessage("Title not updated successfully", "error");
           }
         }
       } catch (error) {
@@ -198,10 +209,11 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
         Swal.fire("Error", "An unexpected error occurred.", "error");
       }
     };
+
     const handleDelete = async (item: { id: number; title: string }) => {
       Swal.fire({
         title: "Are you sure?",
-        text: `Do you want to delete the media: "${item.title}"?`,
+        text: `Do you want to delete the media ${item.title} ?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -209,16 +221,30 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
+          // Show the loading "Deleting..." message before the request
+          const loadingSwal: any = Swal.fire({
+            title: "Deleting...",
+            text: "Please wait while we delete the media.",
+            icon: "info",
+            showConfirmButton: false,
+            didOpen: () => {
+              Swal.showLoading(); // Show the loading spinner
+            },
+          });
+
           try {
             // Make the backend request to delete the item
-            const response = await fetch(`${process.env.BACKEND}/api/deleteMedia`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${getCookie("BMLTK")}`,
-              },
-              body: JSON.stringify({ id: item.id }),
-            });
+            const response = await fetch(
+              `${process.env.BACKEND}/api/deleteMedia`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${getCookie("BMLTK")}`,
+                },
+                body: JSON.stringify({ id: item.id }),
+              }
+            );
 
             if (!response.ok) {
               throw new Error("Failed to delete the media.");
@@ -227,15 +253,22 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
             // Dispatch the delete action to update Redux state
             dispatch(deleteItemById(item.id));
 
-            // Show success message
+            // Close the loading Swal and show the success message
+            loadingSwal.close();
             Swal.fire("Deleted!", "The media has been deleted.", "success");
           } catch (error) {
-            // Show error message
+            // Close the loading Swal and show the error message
+            loadingSwal.close();
             Swal.fire("Error!", "Failed to delete the media.", "error");
             console.error("Delete error:", error);
           }
         }
       });
+    };
+
+    const handleUrlIframe = (url: any) => {
+      setShowModal(true);
+      setUrl(url);
     };
 
     return (
@@ -259,10 +292,16 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                     <Popover
                       content={
                         <div className="w-32 text-sm ">
-                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md" onClick={() => handleRename(item)}>
+                          <div
+                            className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                            onClick={() => handleRename(item)}
+                          >
                             <Edit size={15} /> Rename
                           </div>
-                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md" onClick={() => handleDelete(item)}>
+                          <div
+                            className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                            onClick={() => handleDelete(item)}
+                          >
                             <Trash size={15} />
                             Delete
                           </div>
@@ -281,8 +320,9 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                       width={600}
                       src={
                         (item as GalleryItem).url
-                          ? `${process.env.GALLERYURL}/${(item as GalleryItem).url
-                          }`
+                          ? `${process.env.GALLERYURL}/${
+                              (item as GalleryItem).url
+                            }`
                           : ""
                       }
                       alt={`Gallery image ${index}`}
@@ -306,12 +346,49 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                     </p>
                   </div>
                 ) : (
-                  <iframe
-                    src={(item as GalleryItem).url}
-                    className="aspect-[4/2.8] w-full"
-                    allowFullScreen
-                    title={`Video ${index}`}
-                  />
+                  <div className="relative ">
+                    <div className="relative z-[999]">
+                      <Popover
+                        content={
+                          <div className="w-32 text-sm ">
+                            {/* <div
+                            className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                            onClick={() => handleRename(item)}
+                          >
+                            <Edit size={15} /> Rename
+                          </div> */}
+                            <div
+                              className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                              onClick={() => handleDelete(item)}
+                            >
+                              <Trash size={15} />
+                              Delete
+                            </div>
+                          </div>
+                        }
+                        placement="bottom"
+                        trigger={"click"}
+                      >
+                        <div className="absolute cursor-pointer top-0 right-1 bg-white text-dark rounded-full p-1">
+                          <EllipsisVertical size={17} />
+                        </div>
+                      </Popover>
+                    </div>
+
+                    <div className="relative">
+                      <iframe
+                        src={(item as GalleryItem).url}
+                        className="aspect-[4/2.8] w-full"
+                        allowFullScreen
+                        title={`Video ${index}`}
+                      />
+
+                      <div
+                        onClick={() => handleUrlIframe(item.url)}
+                        className="cursor-pointer absolute  h-full z-[99] w-full top-0"
+                      ></div>
+                    </div>
+                  </div>
                 )}
               </div>
             ))}
@@ -341,6 +418,24 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
 
       {/* ----------- */}
       {/* EDIT GALLERY */}
+
+      <Modal
+        open={showModal}
+        title="Video"
+        onClose={() => {
+          setShowModal(false);
+          setUrl("");
+        }}
+      >
+        <Modal.Section>
+          <iframe
+            src={videoUrl}
+            className="aspect-[4/2.8] w-full"
+            allowFullScreen
+            title={`Video`}
+          />
+        </Modal.Section>
+      </Modal>
     </div>
   );
 };
