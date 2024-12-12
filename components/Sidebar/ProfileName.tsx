@@ -25,20 +25,22 @@ const ProfileName = ({ userData }: any) => {
     <div className="border-b px-4 py-2 flex items-center justify-between">
       {/* Profile Name Section */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-800">
+        <h3 className="text-base font-semibold text-user_primary">
           {userData?.first_name} {userData?.last_name}
         </h3>
-        <h2 className="text-sm text-gray-700">{userData?.username}</h2>
+        <h2 className="text-xs text-dark">{userData?.username}</h2>
       </div>
 
       {/* Logout Icon */}
-      <div className="flex items-center">
-        <Tooltip title="Exit edit mode" placement="right">
-          <button onClick={handleExitEditMode}>
-            <LogOut size={16} />
-          </button>
-        </Tooltip>
-      </div>
+      <Tooltip title="Exit edit mode" placement="right">
+        <button
+          className="flex items-center bg-gray-100 px-2 rounded hover:bg-gray-400 hover:text-white transition-all ease-in-out duration-300 py-1 gap-1"
+          onClick={handleExitEditMode}
+        >
+          exit
+          <LogOut size={16} />
+        </button>
+      </Tooltip>
 
       {/* Modal Component */}
       <Modal isOpen={isModalOpen} onClose={closeModal} />

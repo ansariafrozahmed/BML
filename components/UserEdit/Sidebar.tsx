@@ -73,6 +73,8 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
         formData.append("colorPicker", JSON.stringify(userProfile.colorPicker));
       }
 
+      formData.append("updatedAt", new Date().toISOString());
+
       // Send data to backend using axios with FormData
       const response = await axios.post(
         `${process.env.BACKEND}/api/updateBulkProfile`,
@@ -131,7 +133,7 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
           {/* Footer with Action  */}
           <div></div>
           <div className="flex gap-2">
-            <Button
+            {/* <Button
               type="link"
               onClick={() => {
                 toggleSidebar();
@@ -140,7 +142,7 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
               className="md:hidden"
             >
               Preview
-            </Button>
+            </Button> */}
             <Button
               disabled={!activate}
               loading={loading}

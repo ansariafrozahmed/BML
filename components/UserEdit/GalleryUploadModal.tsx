@@ -185,7 +185,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
       centered
       maskStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
     >
-      <div>
+      <div className="p-4">
         <h2 className="text-lg font-bold mb-4">Upload Your Gallery Memory</h2>
         <p className="text-sm text-gray-600 mb-6">
           Share your favorite moments with Ganpati Bappa by uploading images or

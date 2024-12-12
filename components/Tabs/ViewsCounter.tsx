@@ -21,12 +21,12 @@ const ViewsCounter = () => {
 
   return (
     <div className="flex justify-start gap-2 text-white items-center">
-      <span className="text-sm tracking-wider font-semi">views</span>
+      <span className="text-xs tracking-wider">views</span>
       <span className="flex items-center gap-1">
-        <span className="text-sm font-medium">
+        <span className="text-xs">
           {Math.floor(counter).toLocaleString()} {/* Format number */}
         </span>
-        <Eye size={18} strokeWidth={1.5} />
+        <Eye size={16} strokeWidth={1.5} />
       </span>
     </div>
   );

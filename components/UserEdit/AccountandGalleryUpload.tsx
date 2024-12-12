@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import GalleryUploadModal from "./GalleryUploadModal";
-import { Pencil } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const AccountandGalleryUpload = ({
@@ -41,7 +41,7 @@ const AccountandGalleryUpload = ({
         onClick={() => setIsDismissed(false)}
         className="fixed bottom-5 right-5 bg-user_primary p-2.5 text-white rounded-full cursor-pointer hover:scale-90 transition-all eas duration-200 z-[990]"
       >
-        <Pencil size={20} />
+        <Plus size={20} />
       </div>
     ); // Do not render the card if dismissed
 
