@@ -12,8 +12,8 @@ import {
   setGalleryData,
   updateTitleById,
 } from "@/store/gallerySlice";
-import { Modal } from "@shopify/polaris";
-import { Popover } from "antd";
+// import { Modal } from "@shopify/polaris";
+import { Modal, Popover } from "antd";
 import axios from "axios";
 import {
   ArrowLeft,
@@ -421,20 +421,19 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
 
       <Modal
         open={showModal}
-        title="Video"
-        onClose={() => {
+        onCancel={() => {
           setShowModal(false);
           setUrl("");
         }}
+        footer={null}
       >
-        <Modal.Section>
-          <iframe
-            src={videoUrl}
-            className="aspect-[4/2.8] w-full"
-            allowFullScreen
-            title={`Video`}
-          />
-        </Modal.Section>
+        {/* <Modal.Section> */}
+        <iframe
+          src={videoUrl}
+          className="aspect-[4/4]  w-full"
+          allowFullScreen
+          title={`Video`}
+        />
       </Modal>
     </div>
   );
