@@ -20,6 +20,8 @@ import { useParams, useRouter } from "next/navigation";
 import { showMessage } from "@/lib/reuse";
 import { setGalleryData } from "@/store/gallerySlice";
 import { useDispatch } from "react-redux";
+import { Trash2Icon } from "lucide-react";
+import { TextField } from "@shopify/polaris";
 
 interface GalleryUploadModalProps {
   active: boolean;
@@ -43,7 +45,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
   const params = useParams();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const fetchGalleryData = async () => {
     try {
       const response = await fetch(
@@ -90,21 +92,26 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
     setVideoEntries([...videoEntries, { title: "", url: "" }]);
   };
 
+  const removeVideoEntry = (index: any) => {
+    setVideoEntries(videoEntries.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async () => {
     const formData = new FormData();
     setLoading(true);
+
     // Append year
     formData.append("year", selectedYear);
 
     // Prepare image titles, using file names as fallback
     const preparedImageTitles = imageFileList.map((file, index) => {
       const title = imageTitles[index];
-      return title && title.trim() ? title : file.originFileObj.name; // Use title if valid, otherwise fallback to file name
+      return title && title.trim() ? title : file.originFileObj.name;
     });
 
     // Append each file in the imageFileList
     imageFileList.forEach((file) => {
-      formData.append("files", file.originFileObj); // Append original file object
+      formData.append("files", file.originFileObj);
     });
 
     // Append the prepared image titles (convert to JSON string)
@@ -112,9 +119,8 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
 
     // Append videos (if any)
     if (videoEntries.length > 0) {
-      formData.append("videos", JSON.stringify(videoEntries)); // Convert video entries to string and append
+      formData.append("videos", JSON.stringify(videoEntries));
     }
-
 
     try {
       const response = await axios.post(
@@ -131,12 +137,16 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
       router.refresh();
       showMessage("Files Uploaded Successfully", "success");
       fetchGalleryData();
-    } catch (error) {
-      console.error("Error uploading files and videos:", error); // Handle error
-      showMessage("Error Uploading Files and Videos", "error");
+    } catch (error: any) {
+      console.error("Error uploading files and videos:", error);
+
+      // Check if the error response contains a message
+      const errorMessage =
+        error.response?.data?.error || "Error Uploading Files and Videos"; // Fallback to a generic message
+
+      showMessage(errorMessage, "error"); // Show the error message
     } finally {
       setLoading(false);
-
     }
   };
 
@@ -281,32 +291,33 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
                   ))}
                 </Select>
               </Form.Item>
-              {videoEntries.map((video, index) => (
-                <>
-                  <Form.Item
-                    label={`Video URL`}
-                    validateStatus={
-                      !video.url || isValidEmbedUrl(video.url) ? "" : "error"
-                    }
-                    help={
-                      !video.url || isValidEmbedUrl(video.url)
-                        ? ""
-                        : "Enter a valid YouTube embed URL"
-                    }
-                    hasFeedback
-                  >
-                    <Input
+              <div className="space-y-2">
+                {videoEntries.map((video, index) => (
+                  <div className="flex w-full justify-between items-center">
+                    <TextField
+                      label="Video URL"
+                      autoComplete=""
                       value={video.url}
-                      onChange={(e) =>
-                        handleVideoUrlChange(index, e.target.value)
-                      }
+                      onChange={(value) => handleVideoUrlChange(index, value)}
                       placeholder="Enter video embed URL"
+                      error={
+                        !!video.url && !isValidEmbedUrl(video.url)
+                          ? "Enter a valid YouTube embed URL"
+                          : ""
+                      } // True if there's an invalid URL
                     />
-                  </Form.Item>
-                </>
-              ))}
+
+                    <Trash2Icon
+                      size={18}
+                      color="red"
+                      onClick={() => removeVideoEntry(index)}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-            <Space>
+            <Space className="py-5">
               <Button
                 onClick={addVideoEntry}
                 type="dashed"
