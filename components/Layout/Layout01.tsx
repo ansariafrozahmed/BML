@@ -53,16 +53,7 @@ const Layout01: React.FC<Layout01Props> = ({
   // Check if isEdit is true or 'true' string
 
   // Fallback to userData if userProfile is missing certain data (e.g., banner_image)
-  let bannerImage =
-    (userProfile?.banner_image?.url as any) ||
-    (userData.banner_image &&
-      `${process.env.BACKEND}/upload/banner/${userData.banner_image}`) ||
-    null;
-
-  // Handle the case where the banner image might be a Blob
-  if (isEdit === "edit" && bannerImage instanceof Blob) {
-    bannerImage = URL.createObjectURL(bannerImage); // Convert Blob to URL for preview
-  }
+  let bannerImage = `${process.env.BACKEND}/upload/banner/${userData.banner_image}`;
 
   return (
     <>
@@ -112,13 +103,7 @@ const Layout01: React.FC<Layout01Props> = ({
                 {userData?.username}
               </h1>
               <div className="flex items-center gap-2">
-                <SocialMediaLinks
-                  socialMedia={
-                    (userProfile?.social_links?.length > 0 &&
-                      userProfile?.social_links) ||
-                    (userData?.social_links as any)
-                  }
-                />
+                <SocialMediaLinks socialMedia={userData?.social_links as any} />
                 {isLoggedIn.logged && (
                   <>
                     <div className="cursor-pointer text-white z-[999]">

@@ -28,18 +28,9 @@ interface ProfileTabsProps {
 }
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
-  const userProfile = useSelector((state: RootState) => state.userProfile);
   const router = useRouter();
   const params = useParams();
   const username = params.username?.[0]; // Extract mode from the URL
-
-  const validateData =
-    (userProfile?.accountDetails?.first_name ||
-      userProfile?.accountDetails?.last_name ||
-      userProfile?.accountDetails?.email ||
-      userProfile?.accountDetails?.bio ||
-      userProfile?.accountDetails?.contact_details?.length > 0) &&
-    userProfile?.accountDetails;
 
   const renderBio = (userData: any) => {
     const router = useRouter();
@@ -50,7 +41,8 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
             className="flex gap-1 items-center justify-end cursor-pointer"
             onClick={() => {
               router.push(
-                `/${userData?.username}/edit/accountDetails/${Math.random() * 100
+                `/${userData?.username}/edit/accountDetails/${
+                  Math.random() * 100
                 }`
               );
             }}
@@ -61,13 +53,13 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
         <p
           className="text-sm tracking-wider text-gray-700 leading-relaxed"
           dangerouslySetInnerHTML={{
-            __html: userData?.accountDetails?.bio?.trim() || userData?.bio || "",
+            __html:
+              userData?.accountDetails?.bio?.trim() || userData?.bio || "",
           }}
         ></p>
       </div>
     );
   };
-
 
   const renderContactDetails = (userData: any) => (
     <div className="space-y-4 bg-white p-4 rounded-md shadow-md">
@@ -146,12 +138,12 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
     {
       id: 1,
       label: "माझ्या बाप्पा विषयी थोडसं,",
-      content: renderBio(validateData || userData),
+      content: renderBio(userData),
     },
     {
       id: 2,
       label: "Contact Details",
-      content: renderContactDetails(validateData || userData),
+      content: renderContactDetails(userData),
     },
     {
       id: 3,
@@ -183,10 +175,11 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`border-b-2 py-3 px-2 tracking-wider whitespace-nowrap text-sm font-normal transition ${activeTab === tab.id
+            className={`border-b-2 py-3 px-2 tracking-wider whitespace-nowrap text-sm font-normal transition ${
+              activeTab === tab.id
                 ? "border-user_primary text-user_primary"
                 : "text-user_dark border-white hover:text-user_primary"
-              }`}
+            }`}
           >
             {tab.label}
           </button>
@@ -198,8 +191,9 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={`tab-content ${activeTab === tab.id ? animationClass : "hidden-content"
-              }`}
+            className={`tab-content ${
+              activeTab === tab.id ? animationClass : "hidden-content"
+            }`}
           >
             {activeTab === tab.id && (
               <div className="text-sm py-2">{tab.content}</div>
