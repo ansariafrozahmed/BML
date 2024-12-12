@@ -11,6 +11,7 @@ import {
 } from "@shopify/polaris";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import ForgotPassword from "./ForgotPassword";
 
 const LoginForm = () => {
   const [identifier, setIdentifier] = useState("");
@@ -66,7 +67,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <Frame offset="120px">
+      <Frame>
         <div className="flex items-center h-screen">
           <div className="bg-white shadow w-[350px] space-y-4 p-6 rounded-md mx-auto">
             <Link url="/">
@@ -101,6 +102,7 @@ const LoginForm = () => {
                 placeholder="Enter your password"
                 autoComplete="current-password"
               />
+              <ForgotPassword />
               <Button
                 onClick={handleSubmit}
                 variant="primary"
