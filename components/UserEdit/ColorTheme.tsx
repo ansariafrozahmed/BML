@@ -3,6 +3,8 @@ import { updateColorPicker } from "@/store/userProfile";
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
+import { Layout } from "lucide-react";
+import LayoutDesign from "./LayoutDesign";
 
 const ColorTheme = ({ userData }: any) => {
   const [primaryColor, setPrimaryColor] = useState(
@@ -42,6 +44,7 @@ const ColorTheme = ({ userData }: any) => {
 
   return (
     <div className="mt-5 max-w-lg mx-auto">
+      <LayoutDesign />
       <h2 className="text-lg font-semibold text-gray-800 mb-6">
         Customize Your Theme
       </h2>
