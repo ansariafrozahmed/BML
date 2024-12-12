@@ -1,13 +1,15 @@
 "use client";
 
+import { getCookie, showMessage } from "@/lib/reuse";
 import { RootState } from "@/store";
 import {
   setActive,
   setImages,
   setSelectedIndex,
 } from "@/store/gallerSlideShow";
-import { setGalleryData } from "@/store/gallerySlice";
+import { deleteItemById, setGalleryData, updateTitleById } from "@/store/gallerySlice";
 import { Popover } from "antd";
+import axios from "axios";
 import {
   ArrowLeft,
   Delete,
@@ -19,9 +21,11 @@ import {
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 // import EditGallery from "../UserEdit/EdiSocailLinks";
 
 type GalleryItem = {
+  id: any,
   title: string;
   url: string;
 };
@@ -68,7 +72,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
 
       const result: GalleryData = await response.json();
       console.log(result, 'result')
-      dispatch(setGalleryData(result));
+      dispatch(setGalleryData(result as any));
     } catch (error) {
       console.error(error);
       setGalleryError(true);
@@ -146,6 +150,94 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
         ? galleryData[selectedYear].images
         : galleryData[selectedYear].videos;
 
+    const handleRename = async (item: any) => {
+      try {
+        // Show SweetAlert2 prompt with text input
+        const { value: newTitle } = await Swal.fire({
+          title: "Rename Item",
+          input: "text",
+          inputLabel: "New Title",
+          inputValue: item.title, // Pre-fill current title
+          showCancelButton: true,
+          confirmButtonText: "Save",
+          cancelButtonText: "Cancel",
+          inputValidator: (value) => {
+            if (!value) {
+              return "The title cannot be empty!";
+            }
+            if (value.trim() === item.title.trim()) {
+              return "Please enter a different title.";
+            }
+            return null;
+          },
+        });
+
+        // Check if the user confirmed the action
+        if (newTitle) {
+          // Send a request to the backend to update the title
+          const response = await axios.post(`${process.env.BACKEND}/api/updateTitle`, {
+            id: item.id,
+            newTitle,
+          }, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${getCookie("BMLTK")}`,
+            },
+          });
+
+          // Handle the response
+          if (response.status === 200) {
+            showMessage('Title updated successfully', 'success')
+            dispatch(updateTitleById({ id: item.id, newTitle }))
+          } else {
+            showMessage('Title not updated successfully', 'error')
+          }
+        }
+      } catch (error) {
+        console.error("Error during renaming:", error);
+        Swal.fire("Error", "An unexpected error occurred.", "error");
+      }
+    };
+    const handleDelete = async (item: { id: number; title: string }) => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: `Do you want to delete the media: "${item.title}"?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            // Make the backend request to delete the item
+            const response = await fetch(`${process.env.BACKEND}/api/deleteMedia`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getCookie("BMLTK")}`,
+              },
+              body: JSON.stringify({ id: item.id }),
+            });
+
+            if (!response.ok) {
+              throw new Error("Failed to delete the media.");
+            }
+
+            // Dispatch the delete action to update Redux state
+            dispatch(deleteItemById(item.id));
+
+            // Show success message
+            Swal.fire("Deleted!", "The media has been deleted.", "success");
+          } catch (error) {
+            // Show error message
+            Swal.fire("Error!", "Failed to delete the media.", "error");
+            console.error("Delete error:", error);
+          }
+        }
+      });
+    };
+
     return (
       <div>
         <button
@@ -167,10 +259,10 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                     <Popover
                       content={
                         <div className="w-32 text-sm ">
-                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md">
+                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md" onClick={() => handleRename(item)}>
                             <Edit size={15} /> Rename
                           </div>
-                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md">
+                          <div className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md" onClick={() => handleDelete(item)}>
                             <Trash size={15} />
                             Delete
                           </div>
