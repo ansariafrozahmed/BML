@@ -123,8 +123,9 @@ body {
   display: none;
 }
 
-.fr-wrapper div:has(> a), .fr-second-toolbar,  [data-f-id="pbf"]
- {
+.fr-wrapper div:has(> a),
+.fr-second-toolbar,
+[data-f-id="pbf"] {
   display: none !important;
 }
 
@@ -143,4 +144,29 @@ body {
 }
 .scroll-smooth {
   scroll-behavior: smooth;
+}
+
+.ant-modal .ant-modal-content {
+  position: relative;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 0;
+  border-radius: 0px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  pointer-events: auto;
+  padding: 5px;
+}
+
+.responsive-text {
+  font-size: 26px; /* Adjust the base font size */
+  line-height: 1.2; /* Adjust line height for proper spacing */
+  font-weight: 300; /* Light font */
+  color: white; /* Text color */
+  word-wrap: break-word; /* Break long words */
+  white-space: normal; /* Allow text to wrap to the next line */
+  width: 100%; /* Ensure the text fits within the container */
+  overflow-wrap: break-word; /* Ensure breaking for long words */
+  overflow: hidden; /* Prevent overflow */
+  display: block; /* Ensure block-level formatting */
 }

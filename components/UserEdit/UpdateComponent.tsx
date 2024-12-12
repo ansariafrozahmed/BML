@@ -103,7 +103,7 @@ const UpdateComponent = ({
           }`}
         >
           <div className="py-3 cursor-pointer">
-            <div
+            {/* <div
               className="flex items-center gap-1"
               onClick={() => {
                 toggleEdit(section.key);
@@ -112,7 +112,7 @@ const UpdateComponent = ({
             >
               <ChevronLeft size={18} className="text-gray-800" />
               <h4 className="text-xs font-medium">{section.label}</h4>
-            </div>
+            </div> */}
             {section.component}
           </div>
         </div>

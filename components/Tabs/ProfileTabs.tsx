@@ -4,7 +4,6 @@ import GalleryContainer from "../Gallery/GalleryContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { Edit } from "lucide-react";
-import { Modal } from "@shopify/polaris";
 import { useParams, useRouter } from "next/navigation";
 
 interface ProfileTabsProps {
@@ -41,9 +40,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
             className="flex gap-1 items-center justify-end cursor-pointer"
             onClick={() => {
               router.push(
-                `/${userData?.username}/edit/accountDetails/${
-                  Math.random() * 100
-                }`
+                `/${username}/edit/accountDetails/${Math.random() * 100}`
               );
             }}
           >
@@ -51,7 +48,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
           </div>
         )}
         <p
-          className="text-sm tracking-wider text-gray-700 leading-relaxed"
+          className="text-sm tracking-wider text-gray-700 leading-loose font-light"
           dangerouslySetInnerHTML={{
             __html:
               userData?.accountDetails?.bio?.trim() || userData?.bio || "",
@@ -69,7 +66,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
         </h2> */}
         {isLoggedIn && (
           <div
-            className="flex gap-1 items-center cursor-pointer"
+            className="flex gap-1 items-center justify-end w-full cursor-pointer"
             onClick={() => {
               router.push(
                 `/${username}/edit/accountDetails/${Math.random() * 100}`

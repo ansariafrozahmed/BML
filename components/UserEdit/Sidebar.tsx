@@ -15,13 +15,13 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
   const [loading, setLoading] = useState(false);
   const [previewMode, setPreview] = useState(false);
   const router = useRouter();
-  
+
   useEffect(() => {
     if (mode) {
       setIsSidebarOpen(true);
     }
   }, []);
-  
+
   const validateData =
     (userProfile?.accountDetails?.first_name ||
       userProfile?.accountDetails?.last_name ||
@@ -73,6 +73,8 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
         formData.append("colorPicker", JSON.stringify(userProfile.colorPicker));
       }
 
+      formData.append("updatedAt", new Date().toISOString());
+
       // Send data to backend using axios with FormData
       const response = await axios.post(
         `${process.env.BACKEND}/api/updateBulkProfile`,
@@ -102,7 +104,7 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
       {/* Background Mask */}
       {isSidebarOpen && (
         <div
-          className="fixed top-0 left-0 z-[998] h-screen w-full bg-black bg-opacity-50 md:hidden"
+          className="fixed top-0 left-0 z-[999] h-screen w-full bg-black bg-opacity-50 md:hidden"
           onClick={toggleSidebar} // Close sidebar when clicking on the mask
         />
       )}
@@ -111,7 +113,7 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
       <div
         className={`fixed top-0 left-0 z-[999] h-svh bg-white shadow-lg  transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:sticky lg:translate-x-0 md:w-[30%] w-[80%]`}
+        } lg:sticky lg:translate-x-0 md:w-[30%] w-[75%]`}
       >
         {/* Sidebar Content */}
         <div className="h-screen overflow-x-hidden overflow-y-auto sc">
@@ -131,7 +133,7 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
           {/* Footer with Action  */}
           <div></div>
           <div className="flex gap-2">
-            <Button
+            {/* <Button
               type="link"
               onClick={() => {
                 toggleSidebar();
@@ -140,14 +142,14 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
               className="md:hidden"
             >
               Preview
-            </Button>
+            </Button> */}
             <Button
               disabled={!activate}
               loading={loading}
               onClick={handleSaveProfile}
               className="cursor-pointer transition-all bg-user_primary text-white px-6 py-2 rounded-lg border-user_primary border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
             >
-              Publish
+              Update
             </Button>
           </div>
         </div>

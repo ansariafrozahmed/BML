@@ -5,8 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
 
 const ColorTheme = ({ userData }: any) => {
-  const [primaryColor, setPrimaryColor] = useState(userData?.colors?.user_primary || "#ff5722"); // Default primary color
-  const [darkColor, setDarkColor] = useState(userData?.colors?.user_dark || "#212121"); // Default dark color
+  const [primaryColor, setPrimaryColor] = useState(
+    userData?.colors?.user_primary || "#ff5722"
+  ); // Default primary color
+  const [darkColor, setDarkColor] = useState(
+    userData?.colors?.user_dark || "#212121"
+  ); // Default dark color
   const { colorPicker } = useSelector((state: RootState) => state.userProfile);
   const dispatch = useDispatch();
 
@@ -38,7 +42,7 @@ const ColorTheme = ({ userData }: any) => {
 
   return (
     <div className="mt-5 max-w-lg mx-auto">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+      <h2 className="text-lg font-semibold text-gray-800 mb-6">
         Customize Your Theme
       </h2>
 

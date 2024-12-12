@@ -12,8 +12,8 @@ import {
   setGalleryData,
   updateTitleById,
 } from "@/store/gallerySlice";
-import { Modal } from "@shopify/polaris";
-import { Popover } from "antd";
+// import { Modal } from "@shopify/polaris";
+import { Modal, Popover } from "antd";
 import axios from "axios";
 import {
   ArrowLeft,
@@ -310,7 +310,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
                       placement="bottom"
                       trigger={"click"}
                     >
-                      <div className="absolute cursor-pointer top-1 right-1 bg-white text-dark rounded-full p-1">
+                      <div className="absolute cursor-pointer top-1 right-1 bg-white shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] text-dark rounded-full p-1.5">
                         <EllipsisVertical size={17} />
                       </div>
                     </Popover>
@@ -421,20 +421,20 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
 
       <Modal
         open={showModal}
-        title="Video"
-        onClose={() => {
+        onCancel={() => {
           setShowModal(false);
           setUrl("");
         }}
+        className="!shadablegend"
+        footer={null}
       >
-        <Modal.Section>
-          <iframe
-            src={videoUrl}
-            className="aspect-[4/2.8] w-full"
-            allowFullScreen
-            title={`Video`}
-          />
-        </Modal.Section>
+        {/* <Modal.Section> */}
+        <iframe
+          src={videoUrl}
+          className="aspect-[4/4] lg:aspect-[4/3]  w-full"
+          allowFullScreen
+          title={`Video`}
+        />
       </Modal>
     </div>
   );

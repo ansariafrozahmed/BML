@@ -9,7 +9,7 @@ import EditBanner from "../UserEdit/EditBanner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import AccountandGalleryUpload from "../UserEdit/AccountandGalleryUpload";
-import { ArrowLeft, Edit, Eye } from "lucide-react";
+import { ArrowLeft, Edit, Eye, House, LayoutPanelLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ViewsCounter from "../Tabs/ViewsCounter";
@@ -57,7 +57,22 @@ const Layout01: React.FC<Layout01Props> = ({
 
   return (
     <>
-      <div className={`pb-10 lg:pb-16`}>
+      {isLoggedIn.logged && (
+        <div className="bg-white flex items-center justify-center px-4 py-2">
+          <Link
+            href={`/${userData?.username}/edit/customizeTheme/${
+              Math.random() * 100
+            }`}
+            className="flex gap-1 items-center"
+          >
+            <h2 className="text-user_primary flex items-center gap-1.5 hover:text-dark font-normal tracking-wider text-sm">
+              <LayoutPanelLeft size={16} />
+              Customize layout
+            </h2>
+          </Link>
+        </div>
+      )}
+      <div className={`pb-10 lg:pb-16 overflow-hidden`}>
         <div className={`group h-[250px] lg:h-[350px] relative `}>
           <Image
             src={
@@ -75,9 +90,9 @@ const Layout01: React.FC<Layout01Props> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           {isLoggedIn.logged && (
             <>
-              <div className="cursor-pointer top-5 left-5 text-white absolute z-[999]">
+              <div className="cursor-pointer top-4 left-4 text-white absolute z-[990]">
                 <Link href={"/"} className="flex gap-1 items-center">
-                  <ArrowLeft size={16} /> <p>Return to homepage</p>
+                  <House size={15} /> <p className="mt-0.5">Home</p>
                 </Link>
               </div>
             </>
@@ -85,7 +100,7 @@ const Layout01: React.FC<Layout01Props> = ({
           {isLoggedIn.logged && (
             <>
               <div className="bg-black/40 lg:group-hover:bg-black/40 transition-all ease duration-100 absolute inset-0 "></div>
-              <div className="cursor-pointer top-5 right-5 text-white absolute z-[999]">
+              <div className="cursor-pointer top-4 right-4 text-white absolute z-[990]">
                 <Link
                   href={`/${userData?.username}/edit/banner/${
                     Math.random() * 100
@@ -98,15 +113,16 @@ const Layout01: React.FC<Layout01Props> = ({
             </>
           )}
           <div className="absolute inset-0 templateContainer flex items-end justify-between pb-7 lg:pb-10">
-            <div className="space-y-3">
-              <h1 className="text-[26px] leading-none lg:text-5xl font-light text-white">
+            <div className="space-y-4">
+              <h1 className="text-[22px] tracking-wide leading-none text-wrap lg:text-[45px] font-normal text-white">
                 {userData?.username}
               </h1>
+
               <div className="flex items-center gap-2">
                 <SocialMediaLinks socialMedia={userData?.social_links as any} />
                 {isLoggedIn.logged && (
                   <>
-                    <div className="cursor-pointer text-white z-[999]">
+                    <div className="cursor-pointer text-white z-[990]">
                       <Link
                         href={`/${userData?.username}/edit/socialLinks/${
                           Math.random() * 100
@@ -119,8 +135,8 @@ const Layout01: React.FC<Layout01Props> = ({
                   </>
                 )}
               </div>
+              <ViewsCounter />
             </div>
-            <ViewsCounter />
           </div>
         </div>
         {/* ----------- */}
