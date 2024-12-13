@@ -7,7 +7,6 @@ import {
   FormLayout,
   Frame,
   Toast,
-  Link,
   Text,
 } from "@shopify/polaris";
 import Nextlink from "next/link";
@@ -16,6 +15,7 @@ import Image from "next/image";
 import debounce from "lodash.debounce";
 import OtpVerifyModal from "./OtpVerifyModal";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // Form R
 const RegisterForm = () => {
@@ -301,10 +301,7 @@ const RegisterForm = () => {
               Register
             </Button>
             <p className="text-center text-xs text-gray-600 mt-2">
-              Already have an account?{" "}
-              <Link url="/login" monochrome>
-                Login here
-              </Link>
+              Already have an account? <Link href="/login">Login here</Link>
             </p>
           </FormLayout>
 

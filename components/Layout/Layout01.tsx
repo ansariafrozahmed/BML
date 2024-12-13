@@ -72,7 +72,7 @@ const Layout01: React.FC<Layout01Props> = ({
           </Link>
         </div>
       )}
-      <div className={`pb-10 lg:pb-16 overflow-hidden`}>
+      <div className={`pb-28 overflow-hidden`}>
         <div className={`group h-[250px] lg:h-[350px] relative `}>
           <Image
             src={
@@ -146,17 +146,7 @@ const Layout01: React.FC<Layout01Props> = ({
           </div>
           <div className="w-full lg:w-[30%] space-y-5 lg:sticky top-0 h-full">
             <ProfileSidebar userData={userData} />
-            {/* <div className="p-5 space-y-2 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
-            <h2 className="text-xl font-semibold tracking-wider text-user_primary">
-              Bio
-            </h2>
-            <div>
-              <p className="text-sm tracking-wider text-gray-700 leading-relaxed">
-                {userProfile?.accountDetails?.bio?.trim() || userData?.bio}
-              </p>
-            </div>
-          </div> */}
-            <Shareprofile username={userData?.username} />
+            <Shareprofile layout={1} username={userData?.username} />
           </div>
         </div>
       </div>

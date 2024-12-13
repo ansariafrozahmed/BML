@@ -44,9 +44,13 @@ type GalleryData = {
 
 interface GalleryContainerProps {
   username: string;
+  layout: number;
 }
 
-const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
+const GalleryContainer: React.FC<GalleryContainerProps> = ({
+  username,
+  layout,
+}) => {
   const [galleryError, setGalleryError] = useState(false);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -423,7 +427,15 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({ username }) => {
   };
 
   return (
-    <div className="relative py-4 px-3 space-y-5 rounded-lg bg-white shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
+    <div
+      className={`relative  space-y-5 rounded-lg bg-white
+         ${
+           layout === 1
+             ? "py-4 px-3 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]"
+             : ""
+         }
+      `}
+    >
       {/* <h2 className="text-lg tracking-wide">Gallery</h2> */}
       {/* <div className="h-[2px] w-20 bg-primary rounded-full"></div> */}
       {/* <EditGallery /> */}

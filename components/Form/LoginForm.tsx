@@ -1,17 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  FormLayout,
-  TextField,
-  Button,
-  Link,
-  Toast,
-  Frame,
-} from "@shopify/polaris";
+import { FormLayout, TextField, Button, Toast, Frame } from "@shopify/polaris";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ForgotPassword from "./ForgotPassword";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [identifier, setIdentifier] = useState("");
@@ -70,7 +64,7 @@ const LoginForm = () => {
       <Frame>
         <div className="flex items-center h-screen">
           <div className="bg-white shadow w-[350px] space-y-4 p-6 rounded-md mx-auto">
-            <Link url="/">
+            <Link href="/">
               <Image
                 src="/logo.webp"
                 alt="Logo"
@@ -114,9 +108,7 @@ const LoginForm = () => {
               </Button>
               <p className="text-center text-xs text-gray-600 mt-2">
                 New to <span>Bappa Majha Laadka</span>?{" "}
-                <Link url="/register" monochrome>
-                  Create an account
-                </Link>
+                <Link href={"/register"}>Create an account</Link>
               </p>
             </FormLayout>
           </div>

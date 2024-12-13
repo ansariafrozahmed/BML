@@ -145,7 +145,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
     {
       id: 3,
       label: "Gallery",
-      content: <GalleryContainer username={userData?.username} />,
+      content: <GalleryContainer username={userData?.username} layout={1} />,
     },
 
     // { id: 3, label: "Bio", content: renderOverView() },

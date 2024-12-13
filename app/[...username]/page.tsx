@@ -11,6 +11,9 @@ import Link from "next/link";
 import QRCode from "qrcode";
 import path from "path";
 import NotFound from "./not-found";
+import Layout04 from "@/components/Layout/Layout04";
+import Layout03 from "@/components/Layout/Layout03";
+import Layout02 from "@/components/Layout/Layout02";
 
 const fetchUserData = async (username: string) => {
   try {
@@ -193,7 +196,11 @@ export async function generateMetadata({
     let qrCodeUrl;
 
     if (data) {
-      const qrCodeFilePath = path.join("public", "qrcodes", `${username}.png`);
+      const qrCodeFilePath = path.join(
+        "public",
+        "qrcodes",
+        `${data?.username}.png`
+      );
       const qrCodePath = `/qrcodes/${username}.png`;
 
       await QRCode.toFile(qrCodeFilePath, url, {
@@ -292,13 +299,58 @@ export default async function ProfilePage({ params }: { params: any }) {
       return <ProfilePending />;
     case 1:
       return (
-        <Layout01
-          username={data?.[0]}
-          isLoggedIn={userSession}
-          userData={userData}
-          isEdit={isEdit}
-        />
+        <>
+          {(() => {
+            switch (userData?.layout_id) {
+              case 1:
+                return (
+                  // <Layout01
+                  //   username={data?.[0]}
+                  //   isLoggedIn={userSession}
+                  //   userData={userData}
+                  //   isEdit={isEdit}
+                  // />
+                  <Layout02
+                    username={data?.[0]}
+                    isLoggedIn={userSession}
+                    userData={userData}
+                    isEdit={isEdit}
+                  />
+                );
+              case 2:
+                return (
+                  <Layout02
+                    username={data?.[0]}
+                    isLoggedIn={userSession}
+                    userData={userData}
+                    isEdit={isEdit}
+                  />
+                );
+              case 3:
+                return (
+                  <Layout03
+                  // username={data?.[0]}
+                  // isLoggedIn={userSession}
+                  // userData={userData}
+                  // isEdit={isEdit}
+                  />
+                );
+              case 4:
+                return (
+                  <Layout04
+                  // username={data?.[0]}
+                  // isLoggedIn={userSession}
+                  // userData={userData}
+                  // isEdit={isEdit}
+                  />
+                );
+              default:
+                return <div>Invalid Layout</div>; // Optional default case
+            }
+          })()}
+        </>
       );
+
     case 2:
       return <ProfileBlocked isLoggedIn={userSession} />;
     case 3:

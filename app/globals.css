@@ -10,7 +10,7 @@
 
 body {
   font-family: "Yantramanav", sans-serif;
-  background-color: white;
+  background-color: white !important;
 }
 
 .no-scroll {
