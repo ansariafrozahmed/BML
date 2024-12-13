@@ -56,6 +56,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [videoUrl, setUrl] = useState("");
+  const [loading, setLoading] = useState(true);
   const { data: galleryData } = useSelector(
     (state: RootState) => state.gallerySlice
   );
@@ -68,6 +69,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
 
   const fetchGalleryData = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         `${process.env.BACKEND}/api/getGalleryByUsername?username=${username}`,
         {
@@ -83,11 +85,14 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
       }
 
       const result: GalleryData = await response.json();
-      console.log(result, "result");
+      // console.log(result, "result");
+      setLoading(false);
       dispatch(setGalleryData(result as any));
     } catch (error) {
       console.error(error);
       setGalleryError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,25 +107,40 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
 
   const renderYears = () => (
     <div className="grid grid-cols-4 lg:flex items-center gap-4">
-      {galleryData &&
-        Object.keys(galleryData).map((year) => (
-          <div
-            key={year}
-            onClick={() => setSelectedYear(year)}
-            className="text-center cursor-pointer lg:w-[110px]"
-          >
-            <Image
-              className="h-full w-full object-contain"
-              src="/social media icons/folder.png"
-              alt={`Folder for ${year}`}
-              height={200}
-              width={200}
-            />
-            <h3 className="text-center text-sm text-user_primary">
-              गणेशोत्सव {year}
-            </h3>
-          </div>
-        ))}
+      {loading ? (
+        <>
+          {Array(4)
+            .fill(4)
+            .map((_, i) => (
+              <div className="space-y-2">
+                <div className="aspect-square h-full lg:w-[110px] bg-gray-200 animate-pulse rounded"></div>
+                <div className="h-[20px] lg:w-[110px] bg-gray-200 animate-pulse rounded"></div>
+              </div>
+            ))}
+        </>
+      ) : (
+        <>
+          {galleryData &&
+            Object.keys(galleryData).map((year) => (
+              <div
+                key={year}
+                onClick={() => setSelectedYear(year)}
+                className="text-center cursor-pointer lg:w-[110px]"
+              >
+                <Image
+                  className="h-full w-full object-contain"
+                  src="/social media icons/folder.png"
+                  alt={`Folder for ${year}`}
+                  height={200}
+                  width={200}
+                />
+                <h3 className="text-center text-sm text-user_primary">
+                  गणेशोत्सव {year}
+                </h3>
+              </div>
+            ))}
+        </>
+      )}
     </div>
   );
 
@@ -438,7 +458,6 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
         className="!shadablegend"
         footer={null}
       >
-        {/* <Modal.Section> */}
         <iframe
           src={videoUrl}
           className="aspect-[4/4] lg:aspect-[4/3]  w-full"

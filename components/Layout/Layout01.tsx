@@ -108,7 +108,7 @@ const Layout01: React.FC<Layout01Props> = ({
             src={
               bannerImage
                 ? bannerImage // If it's a Blob, use the URL created from Blob
-                : "https://nichemedia.co.nz/wp-content/uploads/2023/03/placeholder-banner.png"
+                : "/placeholder-banner.png"
             }
             alt={userData?.username}
             height={500}
