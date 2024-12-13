@@ -304,14 +304,8 @@ export default async function ProfilePage({ params }: { params: any }) {
             switch (userData?.layout_id) {
               case 1:
                 return (
-                  // <Layout01
-                  //   username={data?.[0]}
-                  //   isLoggedIn={userSession}
-                  //   userData={userData}
-                  //   isEdit={isEdit}
-                  // />
-                  <Layout02
-                    username={data?.[0]}
+                  <Layout01
+                    username={data?.username?.[0]}
                     isLoggedIn={userSession}
                     userData={userData}
                     isEdit={isEdit}
@@ -320,7 +314,7 @@ export default async function ProfilePage({ params }: { params: any }) {
               case 2:
                 return (
                   <Layout02
-                    username={data?.[0]}
+                    username={data?.username?.[0]}
                     isLoggedIn={userSession}
                     userData={userData}
                     isEdit={isEdit}
@@ -329,7 +323,7 @@ export default async function ProfilePage({ params }: { params: any }) {
               case 3:
                 return (
                   <Layout03
-                  // username={data?.[0]}
+                  // username={data?.username?.[0]}
                   // isLoggedIn={userSession}
                   // userData={userData}
                   // isEdit={isEdit}
@@ -338,7 +332,7 @@ export default async function ProfilePage({ params }: { params: any }) {
               case 4:
                 return (
                   <Layout04
-                  // username={data?.[0]}
+                  // username={data?.username?.[0]}
                   // isLoggedIn={userSession}
                   // userData={userData}
                   // isEdit={isEdit}

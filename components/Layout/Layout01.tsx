@@ -1,16 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileTabs from "../Tabs/ProfileTabs";
 import ProfileSidebar from "../Gallery/ProfileSidebar";
 import Shareprofile from "../Gallery/Shareprofile";
 import Image from "next/image";
 import SocialMediaLinks from "../HeadeFooterOther/SocialMediaLinks";
-import EditBanner from "../UserEdit/EditBanner";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
 import AccountandGalleryUpload from "../UserEdit/AccountandGalleryUpload";
-import { ArrowLeft, Edit, Eye, House, LayoutPanelLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Edit, House, LayoutPanelLeft } from "lucide-react";
 import Link from "next/link";
 import ViewsCounter from "../Tabs/ViewsCounter";
 
@@ -36,6 +32,7 @@ interface Layout01Props {
     status: boolean;
     user_id: number;
     username: string;
+    profile_views: any;
   };
   username: string;
   isLoggedIn: any;
@@ -48,9 +45,42 @@ const Layout01: React.FC<Layout01Props> = ({
   isEdit,
   isLoggedIn,
 }) => {
-  const userProfile = useSelector((state: RootState) => state.userProfile);
-  const router = useRouter();
-  // Check if isEdit is true or 'true' string
+  const profileViews = async (username: string) => {
+    try {
+      // Get the user's IP address
+      const response = await fetch("https://api.ipify.org/?format=json");
+      const { ip } = await response.json();
+      console.log(ip, "ip");
+
+      // Send the IP to your backend
+      const backendResponse = await fetch(
+        `${process.env.BACKEND}/api/profile-views`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ip, username }),
+        }
+      );
+
+      if (backendResponse.ok) {
+        const result = await backendResponse.json();
+        console.log(result, "Response from backend");
+      } else {
+        console.error(
+          "Failed to send data to backend",
+          backendResponse.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+
+  useEffect(() => {
+    profileViews(username);
+  }, []);
 
   // Fallback to userData if userProfile is missing certain data (e.g., banner_image)
   let bannerImage = `${process.env.BACKEND}/upload/banner/${userData.banner_image}`;
@@ -135,7 +165,7 @@ const Layout01: React.FC<Layout01Props> = ({
                   </>
                 )}
               </div>
-              <ViewsCounter />
+              <ViewsCounter count={userData?.profile_views} />
             </div>
           </div>
         </div>

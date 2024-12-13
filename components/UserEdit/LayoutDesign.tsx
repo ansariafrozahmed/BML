@@ -1,28 +1,57 @@
-import React, { useState } from "react";
+import { getCookie, showMessage } from "@/lib/reuse";
+import React, { useEffect, useState } from "react";
 
-const LayoutDesign = () => {
+const LayoutDesign = ({ layout_id }: { layout_id: number }) => {
   // Define an array of image objects with their paths
   const images = [
-    { id: 1, src: "https://img.freepik.com/free-vector/gradient-night-club-twitch-background_23-2149909675.jpg", alt: "Image 1" },
-    { id: 2, src: "https://img.freepik.com/free-vector/gradient-night-club-twitch-background_23-2149909675.jpg", alt: "Image 2" },
-    { id: 3, src: "https://img.freepik.com/free-vector/gradient-night-club-twitch-background_23-2149909675.jpg", alt: "Image 3" },
-    { id: 4, src: "https://img.freepik.com/free-vector/gradient-night-club-twitch-background_23-2149909675.jpg", alt: "Image 4" },
+    { id: 1, src: "/1.jpg", alt: "Image 1" },
+    { id: 2, src: "/2.jpg", alt: "Image 2" },
+    { id: 3, src: "/3.jpg", alt: "Image 3" },
+    { id: 4, src: "/4.jpg", alt: "Image 4" },
   ];
 
   // State to manage the active image
   const [activeImage, setActiveImage] = useState<number | null>(null);
 
+  // Set the active image based on the layout_id prop when the component mounts or layout_id changes
+  useEffect(() => {
+    setActiveImage(layout_id || null);
+  }, [layout_id]);
+
   // Function to handle click and set active image
-  const handleClick = (id: number) => {
+  const handleClick = async (id: number) => {
     setActiveImage(id);
+
+    // Send the layout change to the backend
+    try {
+      const response = await fetch(`${process.env.BACKEND}/api/update-layout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("BMLTK")}`, // Add your authentication token here if needed
+        },
+        body: JSON.stringify({
+          layout_id: id, // Send the new layout ID
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update layout on the server");
+      }
+
+      showMessage(
+        `Layout Updated Successfully. Please refresh the page to see the changes.`, 'success'
+      );
+
+      console.log("Layout updated successfully");
+    } catch (error) {
+      console.error("Error updating layout:", error);
+    }
   };
 
   return (
     <div className="mb-5">
-      <h2 className="text-xl font-semibold mb-4">
-        Choose Layout
-      </h2>
-      <p>Layout is in progress,</p>
+      <h2 className="text-xl font-semibold mb-4">Choose Layout</h2>
       <div className="grid grid-cols-2 gap-4">
         {images.map((image) => (
           <div

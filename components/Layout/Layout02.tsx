@@ -248,7 +248,7 @@ const Layout02: React.FC<Layout02Props> = ({
         </div>
       </div>
       {/* ----------- */}
-      {/* Contact Details */}
+      {/* Gallery */}
       {/* ----------- */}
       <div>
         <div className="bg-user_primary">
@@ -267,7 +267,11 @@ const Layout02: React.FC<Layout02Props> = ({
         </div>
         <div>
           <div className="templateContainer py-8 lg:py-5">
-            <GalleryContainer username={userData?.username} layout={2} />
+            <GalleryContainer
+              isLoggedIn={isLoggedIn?.logged}
+              username={userData?.username}
+              layout={2}
+            />
           </div>
         </div>
       </div>

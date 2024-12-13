@@ -22,6 +22,7 @@ import {
   EllipsisVertical,
   Pencil,
   Trash,
+  XIcon,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -44,11 +45,13 @@ type GalleryData = {
 
 interface GalleryContainerProps {
   username: string;
+  isLoggedIn: boolean;
   layout: number;
 }
 
 const GalleryContainer: React.FC<GalleryContainerProps> = ({
   username,
+  isLoggedIn,
   layout,
 }) => {
   const [galleryError, setGalleryError] = useState(false);
@@ -313,31 +316,33 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
               >
                 {selectedType === "images" ? (
                   <div className="relative space-y-2">
-                    <Popover
-                      content={
-                        <div className="w-32 text-sm ">
-                          <div
-                            className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
-                            onClick={() => handleRename(item)}
-                          >
-                            <Edit size={15} /> Rename
+                    {isLoggedIn && (
+                      <Popover
+                        content={
+                          <div className="w-32 text-sm ">
+                            <div
+                              className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                              onClick={() => handleRename(item)}
+                            >
+                              <Edit size={15} /> Rename
+                            </div>
+                            <div
+                              className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                              onClick={() => handleDelete(item)}
+                            >
+                              <Trash size={15} />
+                              Delete
+                            </div>
                           </div>
-                          <div
-                            className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
-                            onClick={() => handleDelete(item)}
-                          >
-                            <Trash size={15} />
-                            Delete
-                          </div>
+                        }
+                        placement="bottom"
+                        trigger={"click"}
+                      >
+                        <div className="absolute cursor-pointer top-1 right-1 bg-white shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] text-dark rounded-full p-1.5">
+                          <EllipsisVertical size={17} />
                         </div>
-                      }
-                      placement="bottom"
-                      trigger={"click"}
-                    >
-                      <div className="absolute cursor-pointer top-1 right-1 bg-white shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] text-dark rounded-full p-1.5">
-                        <EllipsisVertical size={17} />
-                      </div>
-                    </Popover>
+                      </Popover>
+                    )}
 
                     <Image
                       height={600}
@@ -371,33 +376,35 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
                   </div>
                 ) : (
                   <div className="relative ">
-                    <div className="relative z-[999]">
-                      <Popover
-                        content={
-                          <div className="w-32 text-sm ">
-                            {/* <div
-                            className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
-                            onClick={() => handleRename(item)}
-                          >
-                            <Edit size={15} /> Rename
-                          </div> */}
-                            <div
-                              className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
-                              onClick={() => handleDelete(item)}
-                            >
-                              <Trash size={15} />
-                              Delete
+                    {isLoggedIn && (
+                      <div className="relative z-[999]">
+                        <Popover
+                          content={
+                            <div className="w-32 text-sm ">
+                              {/* <div
+                          className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                          onClick={() => handleRename(item)}
+                        >
+                          <Edit size={15} /> Rename
+                        </div> */}
+                              <div
+                                className="flex items-center gap-2 cursor-pointer px-2 py-1 hover:bg-gray-100 rounded-md"
+                                onClick={() => handleDelete(item)}
+                              >
+                                <Trash size={15} />
+                                Delete
+                              </div>
                             </div>
+                          }
+                          placement="bottom"
+                          trigger={"click"}
+                        >
+                          <div className="absolute cursor-pointer top-0 right-1 bg-white text-dark rounded-full p-1">
+                            <EllipsisVertical size={17} />
                           </div>
-                        }
-                        placement="bottom"
-                        trigger={"click"}
-                      >
-                        <div className="absolute cursor-pointer top-0 right-1 bg-white text-dark rounded-full p-1">
-                          <EllipsisVertical size={17} />
-                        </div>
-                      </Popover>
-                    </div>
+                        </Popover>
+                      </div>
+                    )}
 
                     <div className="relative">
                       <iframe
@@ -457,6 +464,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
           setShowModal(false);
           setUrl("");
         }}
+        onClose={() => {}}
         className="!shadablegend"
         footer={null}
       >
@@ -466,6 +474,15 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
           allowFullScreen
           title={`Video`}
         />
+        <div
+          className="fixed top-10 right-10 bg-red-50 rounded-full p-1 cursor-pointer"
+          onClick={() => {
+            setShowModal(false);
+            setUrl("");
+          }}
+        >
+          <XIcon color="#000" />
+        </div>
       </Modal>
     </div>
   );

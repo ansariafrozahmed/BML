@@ -44,7 +44,7 @@ const ColorTheme = ({ userData }: any) => {
 
   return (
     <div className="mt-5 max-w-lg mx-auto">
-      <LayoutDesign />
+      <LayoutDesign layout_id={userData?.layout_id} />
       <h2 className="text-lg font-semibold text-gray-800 mb-6">
         Customize Your Theme
       </h2>
