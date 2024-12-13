@@ -4,9 +4,10 @@ import Shareprofile from "../Gallery/Shareprofile";
 import GalleryContainer from "../Gallery/GalleryContainer";
 interface Layout02Props {
   username: string;
+  isLoggedIn: boolean;
 }
 
-const Layout02: React.FC<Layout02Props> = ({ username }) => {
+const Layout02: React.FC<Layout02Props> = ({ username, isLoggedIn }) => {
   return (
     <div className="bg-gray-100">
       <div className="h-[300px] lg:h-[350px] relative">
@@ -85,7 +86,7 @@ const Layout02: React.FC<Layout02Props> = ({ username }) => {
             </p>
           </div>
           {/* ------------- */}
-          <GalleryContainer username={username} />
+          <GalleryContainer username={username} isLoggedIn={isLoggedIn} />
         </div>
         <div className="w-[30%] sticky top-5 h-full">
           <Shareprofile username={username} />
