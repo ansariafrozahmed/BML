@@ -87,7 +87,7 @@ const Layout01: React.FC<Layout01Props> = ({
             src={
               bannerImage
                 ? bannerImage // If it's a Blob, use the URL created from Blob
-                : "https://nichemedia.co.nz/wp-content/uploads/2023/03/placeholder-banner.png"
+                : "/placeholder-banner.png"
             }
             alt={userData?.username}
             height={500}
@@ -128,13 +128,15 @@ const Layout01: React.FC<Layout01Props> = ({
               </h1>
 
               <div className="flex items-center gap-2">
-                <SocialMediaLinks
-                  socialMedia={
-                    (userProfile?.social_links?.length > 0 &&
-                      userProfile?.social_links) ||
-                    (userData?.social_links as any)
-                  }
-                />
+                {userProfile?.social_links?.length > 0 && (
+                  <SocialMediaLinks
+                    socialMedia={
+                      (userProfile?.social_links?.length > 0 &&
+                        userProfile?.social_links) ||
+                      (userData?.social_links as any)
+                    }
+                  />
+                )}
                 {isLoggedIn.logged && (
                   <>
                     <div className="cursor-pointer text-white z-[990]">
