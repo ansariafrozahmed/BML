@@ -23,13 +23,13 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: 22
         script: |
-          cd /var/www/bappamajhalaadka.demo-web.live/htdocs
+          cd /var/www/bappamajhalaadka.com/htdocs
           git pull origin main
           git status
           export NVM_DIR=/home/${{ secrets.USERNAME }}/.nvm
           source /home/${{ secrets.USERNAME }}/.nvm/nvm.sh
-          nvm use 20.15.1
+          nvm use 22.12.0
           npm install
           npm run build
-          cd /var/www/bappaadmin.demo-web.live
+          cd /var/www/admin.bappamajhalaadka.com
           pm2 reload ecosystem.config.js
