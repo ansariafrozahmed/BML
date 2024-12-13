@@ -1,10 +1,10 @@
 import { Eye } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
-const ViewsCounter = () => {
+const ViewsCounter = ({ count }: any) => {
   const [counter, setCounter] = useState(0); // Start counter at 0
-  const targetViews = 2000; // Target view count
-  const duration = 2000; // Animation duration in milliseconds
+  const targetViews = count; // Target view count
+  const duration = 500; // Animation duration in milliseconds
 
   useEffect(() => {
     const increment = targetViews / (duration / 16); // Calculate increment for ~60fps

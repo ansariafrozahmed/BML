@@ -38,6 +38,7 @@ const fetchUserData = async (username: string) => {
   }
 };
 
+
 interface DataProps {
   isLoggedIn: any;
 }
@@ -293,7 +294,7 @@ export default async function ProfilePage({ params }: { params: any }) {
     case 1:
       return (
         <Layout01
-          username={data?.[0]}
+          username={data?.username?.[0]}
           isLoggedIn={userSession}
           userData={userData}
           isEdit={isEdit}
