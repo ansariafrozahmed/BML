@@ -1,13 +1,15 @@
 import { getCookie, showMessage } from "@/lib/reuse";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const LayoutDesign = ({ layout_id }: { layout_id: number }) => {
   // Define an array of image objects with their paths
+  const router = useRouter();
   const images = [
-    { id: 1, src: "/1.jpg", alt: "Image 1" },
-    { id: 2, src: "/2.jpg", alt: "Image 2" },
-    { id: 3, src: "/3.jpg", alt: "Image 3" },
-    { id: 4, src: "/4.jpg", alt: "Image 4" },
+    { id: 1, src: "/1.png", alt: "layout 01" },
+    { id: 2, src: "/2.png", alt: "layout 02" },
+    // { id: 3, src: "/3.jpg", alt: "Image 3" },
+    // { id: 4, src: "/4.jpg", alt: "Image 4" },
   ];
 
   // State to manage the active image
@@ -40,9 +42,10 @@ const LayoutDesign = ({ layout_id }: { layout_id: number }) => {
       }
 
       showMessage(
-        `Layout Updated Successfully. Please refresh the page to see the changes.`, 'success'
+        `Layout Updated Successfully. Please refresh the page to see the changes.`,
+        "success"
       );
-
+      router.refresh();
       console.log("Layout updated successfully");
     } catch (error) {
       console.error("Error updating layout:", error);

@@ -11,7 +11,7 @@ const EditAccountDetails = ({ userData }: any) => {
 
   // Function to check if the contact details have 'Phone' and 'Whatsapp Number'
   const ensurePhoneAndWhatsapp = () => {
-    let updatedContactDetails: any = formData.contact_details || [];
+    let updatedContactDetails: any = formData?.contact_details || [];
 
     if (
       !updatedContactDetails.some((contact: any) => contact.label === "Phone")
@@ -120,7 +120,10 @@ const EditAccountDetails = ({ userData }: any) => {
           onChange={(value) => handleDebouncedChange("bio", value)}
         /> */}
         <Suspense fallback="laoding">
-          <RichTextEditor bio={formData.bio} handleDebouncedChange={handleDebouncedChange}/>
+          <RichTextEditor
+            bio={formData.bio}
+            handleDebouncedChange={handleDebouncedChange}
+          />
         </Suspense>
       </div>
     </div>
