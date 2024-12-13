@@ -53,7 +53,7 @@ const AccountandGalleryUpload = ({
         {isLoggedIn && (
           <button
             onClick={handleDismiss}
-            className="absolute -top-3 right-0 text-white bg-user_dark hover:bg-user_primary rounded-full min-h-8 min-w-8 flex items-center justify-center shadow-sm"
+            className="absolute -top-3 right-0 text-white bg-user_primary border border-dark hover:bg-user_primary rounded-full min-h-8 min-w-8 flex items-center justify-center shadow-sm"
           >
             ✖
           </button>

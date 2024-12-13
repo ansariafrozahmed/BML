@@ -21,7 +21,7 @@ import { showMessage } from "@/lib/reuse";
 import { setGalleryData } from "@/store/gallerySlice";
 import { useDispatch } from "react-redux";
 import { Trash2Icon } from "lucide-react";
-import { TextField } from "@shopify/polaris";
+import { DropZone, TextField } from "@shopify/polaris";
 
 interface GalleryUploadModalProps {
   active: boolean;
@@ -71,7 +71,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
 
   // Handle Image Upload Changes
   const handleImageUploadChange = (info: any) => {
-    const updatedFileList = info.fileList.slice(0, 5);
+    const updatedFileList = info.slice(0, 5);
     setImageFileList(updatedFileList);
   };
 
@@ -106,12 +106,12 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
     // Prepare image titles, using file names as fallback
     const preparedImageTitles = imageFileList.map((file, index) => {
       const title = imageTitles[index];
-      return title && title.trim() ? title : file.originFileObj.name;
+      return title && title.trim() ? title : file.name;
     });
 
     // Append each file in the imageFileList
     imageFileList.forEach((file) => {
-      formData.append("files", file.originFileObj);
+      formData.append("files", file);
     });
 
     // Append the prepared image titles (convert to JSON string)
@@ -218,21 +218,14 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
               </Row>
             </Form>
             <div className="mb-4">
-              <Upload
-                multiple
-                fileList={imageFileList}
-                onChange={handleImageUploadChange}
-                beforeUpload={() => false} // Prevent auto upload
-                listType="picture" // Show preview as a grid
-                accept="image/*"
+              <DropZone
+                onDrop={handleImageUploadChange}
+                accept="image/jpeg, image/png, image/webp"
+                label="Drag and drop images here"
+                allowMultiple
               >
-                {imageFileList.length < 5 && (
-                  <div className="flex items-center gap-2 bg-gray-50 border-dashed p-2 cursor-pointer">
-                    <UploadOutlined />
-                    <div>Select Images</div>
-                  </div>
-                )}
-              </Upload>
+                <DropZone.FileUpload actionHint="You can upload up to 5 images (JPG, PNG, WebP)" />
+              </DropZone>
             </div>
 
             {imageFileList.length > 0 && (
@@ -249,7 +242,7 @@ const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({
                           <Image
                             width={100}
                             height={100}
-                            src={URL.createObjectURL(file.originFileObj)}
+                            src={URL.createObjectURL(file)}
                             alt="uploaded"
                             style={{ width: "20%", height: "20%" }}
                           />

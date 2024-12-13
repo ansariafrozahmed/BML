@@ -27,18 +27,9 @@ interface ProfileTabsProps {
 }
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
-  const userProfile = useSelector((state: RootState) => state.userProfile);
   const router = useRouter();
   const params = useParams();
   const username = params.username?.[0]; // Extract mode from the URL
-
-  const validateData =
-    (userProfile?.accountDetails?.first_name ||
-      userProfile?.accountDetails?.last_name ||
-      userProfile?.accountDetails?.email ||
-      userProfile?.accountDetails?.bio ||
-      userProfile?.accountDetails?.contact_details?.length > 0) &&
-    userProfile?.accountDetails;
 
   const renderBio = (userData: any) => {
     const router = useRouter();
@@ -144,12 +135,12 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
     {
       id: 1,
       label: "माझ्या बाप्पा विषयी थोडसं,",
-      content: renderBio(validateData || userData),
+      content: renderBio(userData),
     },
     {
       id: 2,
       label: "Contact Details",
-      content: renderContactDetails(validateData || userData),
+      content: renderContactDetails(userData),
     },
     {
       id: 3,
