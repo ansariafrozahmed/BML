@@ -188,7 +188,7 @@ export async function generateMetadata({
   params: any;
 }): Promise<Metadata> {
   const { username } = await params;
-  const url = `${process.env.FRONTEND}/${username}`;
+  // const url = `${process.env.FRONTEND}/${username}`;
 
   try {
     const data = await fetchUserData(username);
