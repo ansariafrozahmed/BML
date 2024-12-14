@@ -91,20 +91,21 @@ const NewFeature = () => {
     <>
       {features.map((item, index) => (
         <div
+          data-aos="fade-up"
           key={index}
           className={`${
             index % 2 === 0 ? "bg-white" : "bg-gray-100"
           } py-8 lg:py-16`}
         >
           <div
-            className={`flex templateContainer relative flex-col-reverse lg:flex-row items-center w-full gap-12 justify-center ${
+            className={`flex templateContainer relative flex-col lg:flex-row items-center w-full gap-12 justify-center ${
               index % 2 !== 0 ? "lg:flex-row-reverse" : ""
             }`}
           >
             <div className="relative w-full lg:w-[40%]">
               <div className="relative z-10">
                 <div
-                  data-aos="zoom-in"
+                  // data-aos="zoom-in"
                   className="overflow-hidden rounded-3xl relative"
                 >
                   <Image

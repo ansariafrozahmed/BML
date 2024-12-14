@@ -12,6 +12,7 @@ import {
 } from "@/lib/constants";
 import CustomLightBox from "@/components/Gallery/CustomLightBox";
 import ogImage from "@/assets/images/og.webp";
+import AosComp from "@/components/Aos";
 
 export const metadata: Metadata = {
   title: defaultTitle,
@@ -48,9 +49,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body className={`antialiased overflow-x-hidden`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         <ProviderComp>
+          <AosComp />
           {children}
           <CustomLightBox />
         </ProviderComp>

@@ -95,23 +95,26 @@ export default function HowItWorks() {
     //     </div>
     //   </div>
     // </div>
-    <div className="templateContainer space-y-6 lg:space-y-10 py-6 md:py-8 lg:py-12">
-      <h2 className="text-[18px] text-center md:text-[36px] leading-tight font-medium lg:tracking-wide text-dark">
-        Get Started in 3 Easy Steps! <br /> 3 सोप्या टप्प्यांत सुरुवात करा!
-      </h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 ">
-        {steps.map((step, index) => (
-          <div
-            key={index}
-            className={`space-y-5 relative bg-white p-5 rounded-md`}
-          >
-            <h4 className="text-lg font-medium text-primary">{step.title}</h4>
-            <hr />
-            <p className="text-sm text-gray-700 leading-[2.3]">
-              {step.description}
-            </p>
-          </div>
-        ))}
+    <div data-aos="zoom-out" className="bg-gray-100">
+      <div className="templateContainer space-y-6 lg:space-y-10 py-6 md:py-8 lg:py-12">
+        <h2 className="text-[18px] text-center md:text-[36px] leading-tight font-medium lg:tracking-wide text-dark">
+          Get Started in 3 Easy Steps! <br /> 3 सोप्या टप्प्यांत सुरुवात करा!
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 ">
+          {steps.map((step, index) => (
+            <div
+              data-aos="fade-up"
+              key={index}
+              className={`space-y-5 relative shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] bg-white p-5 rounded-md`}
+            >
+              <h4 className="text-lg font-medium text-primary">{step.title}</h4>
+              <hr />
+              <p className="text-sm text-gray-700 leading-[2.3]">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
