@@ -158,7 +158,8 @@ const Layout02: React.FC<Layout02Props> = ({
             <p
               className="text-sm tracking-wider text-gray-700 leading-loose font-light"
               dangerouslySetInnerHTML={{
-                __html: userData?.bio?.trim() || userData?.bio || "",
+                __html:
+                  userData?.bio?.trim() || userData?.bio || "No Bio Available",
               }}
             ></p>
           </div>

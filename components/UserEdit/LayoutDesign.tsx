@@ -1,13 +1,16 @@
 import { getCookie, showMessage } from "@/lib/reuse";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import layout01 from "@/assets/images/1.webp";
+import layout02 from "@/assets/images/2.webp";
+import Image from "next/image";
 
 const LayoutDesign = ({ layout_id }: { layout_id: number }) => {
   // Define an array of image objects with their paths
   const router = useRouter();
   const images = [
-    { id: 1, src: "/1.png", alt: "layout 01" },
-    { id: 2, src: "/2.png", alt: "layout 02" },
+    { id: 1, src: layout01, alt: "layout 01" },
+    { id: 2, src: layout02, alt: "layout 02" },
     // { id: 3, src: "/3.jpg", alt: "Image 3" },
     // { id: 4, src: "/4.jpg", alt: "Image 4" },
   ];
@@ -66,7 +69,9 @@ const LayoutDesign = ({ layout_id }: { layout_id: number }) => {
             } transition-all duration-300 hover:scale-105`}
             onClick={() => handleClick(image.id)}
           >
-            <img
+            <Image
+              height={200}
+              width={200}
               src={image.src}
               alt={image.alt}
               className="w-full h-full object-cover rounded-lg"

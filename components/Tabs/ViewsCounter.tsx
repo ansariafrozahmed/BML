@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 const ViewsCounter = ({ count }: any) => {
   const [counter, setCounter] = useState(0); // Start counter at 0
-  const targetViews = count; // Target view count
+  const targetViews = Number(count); // Target view count
   const duration = 500; // Animation duration in milliseconds
 
   useEffect(() => {

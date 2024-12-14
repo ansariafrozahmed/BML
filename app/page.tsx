@@ -1,6 +1,5 @@
 import React from "react";
 import Hero from "@/components/Banner/Hero";
-import FeatureList from "@/components/Features/FeatureList";
 import Header from "@/components/HeadeFooterOther/Header";
 import Footer from "@/components/HeadeFooterOther/Footer";
 import HowItWorks from "@/components/Features/Howitworks";

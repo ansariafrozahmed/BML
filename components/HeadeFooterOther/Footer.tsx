@@ -30,7 +30,7 @@ const Footer = () => {
           <h2 className="text-xl lg:text-2xl text-primary tracking-wide font-normal">
             HELPFUL LINKS
           </h2>
-          <div className="h-[2px] rounded-full w-24 bg-primaryGreen"></div>
+          <div className="h-[2px] rounded-full w-24 bg-pritext-primary"></div>
           <div className="flex flex-col gap-4 text-primaryDark text-xs tracking-widest font-medium uppercase">
             <Link href={"/faqs"}>FAQs</Link>
             <Link href={"/terms-and-conditions"}>Terms & Conditions</Link>
@@ -42,7 +42,7 @@ const Footer = () => {
           <h2 className="text-xl lg:text-2xl text-primary tracking-wide font-normal">
             USEFUL DETAILS
           </h2>
-          <div className="h-[2px] rounded-full w-24 bg-primaryGreen"></div>
+          <div className="h-[2px] rounded-full w-24 bg-pritext-primary"></div>
           <div className="flex flex-col gap-4 text-primaryDark text-xs tracking-widest font-medium uppercase">
             <Link href={"/"}>Home</Link>
             <Link href={"/about"}>About</Link>
@@ -55,7 +55,7 @@ const Footer = () => {
           <h2 className="text-xl lg:text-2xl uppercase text-primary font-normal">
             Contact Details
           </h2>
-          <div className="h-[2px] rounded-full w-24 bg-primaryGreen"></div>
+          <div className="h-[2px] rounded-full w-24 bg-pritext-primary"></div>
           <div className="flex flex-col gap-5 text-primaryDark text-sm tracking-widest font-medium">
             <div className="flex items-center gap-2">
               <img
@@ -64,7 +64,7 @@ const Footer = () => {
                 alt=""
               />
               <a
-                className="hover:text-primaryGreen"
+                className="hover:text-primary"
                 href="https://wa.me/+917021187655"
               >
                 +91 70211 87655
@@ -76,7 +76,7 @@ const Footer = () => {
                 className="h-6"
                 alt=""
               />
-              <a className="hover:text-primaryGreen" href="tel:+918652885995">
+              <a className="hover:text-primary" href="tel:+918652885995">
                 +91 86528 85995
               </a>
             </div>
@@ -86,15 +86,15 @@ const Footer = () => {
                 className="h-6"
                 alt=""
               />
-              <a className="hover:text-primaryGreen" href="tel:+918652885995">
+              <span className="hover:text-primary">
                 1904/D-1, Shreepati Castle, Khetwadi Back Road, Mumbai, MH,
                 400004
-              </a>
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <img src="/social media icons/gmail.png" className="h-6" alt="" />
               <a
-                className="hover:text-primaryGreen"
+                className="hover:text-primary"
                 href="mailto:info@bappamajhalaadka.com"
               >
                 info@bappamajhalaadka.com
@@ -106,10 +106,8 @@ const Footer = () => {
       <hr />
       <p className="text-center bg-dark text-white text-sm py-4">
         Copyright 2024{" "}
-        <span className="text-primaryGreen font-medium">
-          Bappa Majha Laadka
-        </span>{" "}
-        | All Rights Reserved
+        <span className="text-primary font-medium">Bappa Majha Laadka</span> |
+        All Rights Reserved
       </p>
       {/* ---------- */}
       <FixedWhatsapp />

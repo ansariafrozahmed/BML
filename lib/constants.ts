@@ -1,8 +1,10 @@
+import ogImage from "@/assets/images/og.webp";
+
 export const defaultTitle = "Bappa Majha Laadka";
 export const defaultDescription =
   "Create and showcase your Ganpati profiles on Bappa Majha Laadka. Register, upload images, and share your festive celebrations with the community. Join now!";
 export const frontendURL = process.env.FRONTEND;
-export const openGraphImage = "/og.webp";
+export const openGraphImage = ogImage;
 
 export const faqs = [
   {
@@ -97,8 +99,8 @@ bappamajhalaadka.com ही अशी एक व्यासपीठ आहे 
     question: `What happens after the free trial ends?
 <br/>
 मुफ्त चाचणी संपल्यानंतर काय होईल?`,
-    answer: `After the free trial, you can continue using the service by subscribing for INR 360/year.
+    answer: `After the trial period, the subscription charge is just ₹1 per day..
 <br/>
-मुफ्त चाचणी संपल्यानंतर, तुम्ही ३६० रुपये वार्षिक शुल्क भरून सेवा चालू ठेवू शकता.`,
+फ्री चाचणी नंतर, सदस्यता शुल्क फक्त ₹1 प्रति दिवस आहे.`,
   },
 ];

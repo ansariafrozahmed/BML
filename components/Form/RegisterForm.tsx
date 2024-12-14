@@ -230,7 +230,7 @@ const RegisterForm = () => {
               label="आपल्या बाप्पाचं नाव आपल्या Username म्हणून वापरा."
               loading={usernameLoading}
               value={username}
-              placeholder="for example : sindecharaja"
+              placeholder="for example : shindecharaja"
               onChange={handleUsernameChange}
               error={
                 usernameError ||

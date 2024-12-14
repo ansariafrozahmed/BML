@@ -51,7 +51,9 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userData, isLoggedIn }) => {
           className="text-sm tracking-wider text-gray-700 leading-loose font-light"
           dangerouslySetInnerHTML={{
             __html:
-              userData?.accountDetails?.bio?.trim() || userData?.bio || "",
+              userData?.accountDetails?.bio?.trim() ||
+              userData?.bio ||
+              "No Bio Available",
           }}
         ></p>
       </div>

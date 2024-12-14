@@ -106,8 +106,8 @@ const Layout01: React.FC<Layout01Props> = ({
         <div className={`group h-[250px] lg:h-[350px] relative `}>
           <Image
             src={
-              bannerImage
-                ? bannerImage // If it's a Blob, use the URL created from Blob
+              userData?.banner_image
+                ? `${process.env.BACKEND}/upload/banner/${userData.banner_image}`
                 : "/placeholder-banner.png"
             }
             alt={userData?.username}

@@ -64,8 +64,8 @@ const AccountandGalleryUpload = ({
           {/* <h3 className="text-xl font-bold">Ganpati Bappa Morya! 🙏</h3> */}
           <p className="text-xs font-light leading-snug- text-white/90 mt-1">
             {isLoggedIn
-              ? "You're all set! Share your Ganpati Bappa memories now! 🌟"
-              : "Join our community and share your Ganpati Bappa memories! 🌟"}
+              ? "You're all set! upload your Ganpati Bappa memories now! 🌟"
+              : "Join our community and upload your Ganpati Bappa memories! 🌟"}
           </p>
         </div>
         <div className="flex gap-2">
