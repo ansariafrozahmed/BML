@@ -193,23 +193,6 @@ export async function generateMetadata({
   try {
     const data = await fetchUserData(username);
 
-    let qrCodeUrl;
-
-    if (data) {
-      const qrCodeFilePath = path.join(
-        "public",
-        "qrcodes",
-        `${data?.username}.png`
-      );
-      const qrCodePath = `/qrcodes/${username}.png`;
-
-      await QRCode.toFile(qrCodeFilePath, url, {
-        margin: 2,
-        scale: 10,
-      });
-      qrCodeUrl = `${process.env.FRONTEND}${qrCodePath}`;
-    }
-
     return {
       title: data.username || defaultTitle,
       description: defaultDescription,
@@ -220,7 +203,7 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            url: qrCodeUrl || "/og.webp",
+            url: `${process.env.GALLERYURL}/${data?.profile_qr}` || "/og.webp",
             width: 1200,
             height: 630,
             alt: data.username || defaultTitle,
@@ -231,7 +214,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         title: data.username || defaultTitle,
         description: "माझा बाप्पा किती गोड दिसतो!",
-        images: [qrCodeUrl || "/og.webp"],
+        images: [`${process.env.GALLERYURL}/${data?.profile_qr}` || "/og.webp"],
       },
       alternates: {
         canonical: `${process.env.FRONTEND}/${data.username}`,
