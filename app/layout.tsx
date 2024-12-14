@@ -11,7 +11,7 @@ import {
   openGraphImage,
 } from "@/lib/constants";
 import CustomLightBox from "@/components/Gallery/CustomLightBox";
-import ogImage from "@/assets/images/og.webp";
+// import ogImage from "@/assets/images/og.png";
 
 export const metadata: Metadata = {
   title: defaultTitle,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${ogImage}`,
+        url: `/og.webp`,
         width: 1200,
         height: 630,
         alt: defaultTitle,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: defaultTitle,
     description: defaultDescription,
-    images: [`${ogImage}`],
+    images: [`/og.webp`],
   },
   alternates: {
     canonical: `${frontendURL}`,

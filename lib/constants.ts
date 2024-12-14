@@ -1,10 +1,10 @@
-import ogImage from "@/assets/images/og.webp";
+// import ogImage from "@/assets/images/og.webp";
 
 export const defaultTitle = "Bappa Majha Laadka";
 export const defaultDescription =
   "Create and showcase your Ganpati profiles on Bappa Majha Laadka. Register, upload images, and share your festive celebrations with the community. Join now!";
 export const frontendURL = process.env.FRONTEND;
-export const openGraphImage = ogImage;
+export const openGraphImage = "/og.webp";
 
 export const faqs = [
   {
