@@ -81,6 +81,17 @@ const Footer = () => {
               </a>
             </div>
             <div className="flex items-center gap-2">
+              <img
+                src="/social media icons/location-pin.png"
+                className="h-6"
+                alt=""
+              />
+              <a className="hover:text-primaryGreen" href="tel:+918652885995">
+                1904/D-1, Shreepati Castle, Khetwadi Back Road, Mumbai, MH,
+                400004
+              </a>
+            </div>
+            <div className="flex items-center gap-2">
               <img src="/social media icons/gmail.png" className="h-6" alt="" />
               <a
                 className="hover:text-primaryGreen"

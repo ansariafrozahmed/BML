@@ -277,6 +277,7 @@ export default async function ProfilePage({ params }: { params: any }) {
 
   // Fetch user data
   const userData = await fetchUserData(data?.username?.[0]);
+
   const isLoggedIn = await ValidateUser();
 
   // Handle user not found case
