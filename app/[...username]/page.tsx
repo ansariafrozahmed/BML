@@ -337,3 +337,4 @@ export default async function ProfilePage({ params }: { params: any }) {
       return <NotFound />;
   }
 }
+  
