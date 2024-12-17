@@ -53,6 +53,12 @@ const Header = () => {
         >
           My Profile
         </Link>
+        <Link
+          href={`/${username}`}
+          className="block w-full hover:text-primary hover:bg-gray-100 cursor-pointer p-2 rounded"
+        >
+          Subscription
+        </Link>
         <div
           onClick={handleLogout}
           className="hover:bg-gray-100 cursor-pointer p-2 rounded"
