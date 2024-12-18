@@ -31,6 +31,7 @@ interface Layout02Props {
     status: boolean;
     user_id: number;
     username: string;
+    profile_views: any;
   };
   username: string;
   isLoggedIn: any;
@@ -126,7 +127,7 @@ const Layout02: React.FC<Layout02Props> = ({
                 </>
               )}
             </div>
-            <ViewsCounter count={userData?.profile_views} />
+            <ViewsCounter count={userData?.profile_views as any} />
           </div>
         </div>
       </div>
