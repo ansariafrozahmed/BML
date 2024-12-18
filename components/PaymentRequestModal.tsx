@@ -9,6 +9,12 @@ import axios from "axios"; // For making the API call to create the subscription
 import { getCookie, showMessage } from "@/lib/reuse";
 import { useRouter } from "next/navigation";
 
+declare global {
+  interface Window {
+    Razorpay?: any; // Replace 'any' with a proper type if you know it.
+  }
+}
+
 const PaymentRequestModal = ({ userData }: any) => {
   const { paymentModal } = useSelector(
     (state: RootState) => state.paymentSlice

@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 const Register = () => {
   return (
     <div className="bg-gray-100 ">
-        <RegisterForm />
+      <RegisterForm />
     </div>
   );
 };

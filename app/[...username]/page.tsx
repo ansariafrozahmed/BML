@@ -336,5 +336,5 @@ export default async function ProfilePage({ params }: { params: any }) {
     default:
       return <NotFound />;
   }
+  // return <DummyLayout userData={userData} />;
 }
-  

@@ -11,6 +11,7 @@ import {
   openGraphImage,
 } from "@/lib/constants";
 import CustomLightBox from "@/components/Gallery/CustomLightBox";
+import AosComp from "@/components/Aos";
 // import ogImage from "@/assets/images/og.png";
 
 export const metadata: Metadata = {
@@ -48,9 +49,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body className={`antialiased overflow-x-hidden`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         <ProviderComp>
+          <AosComp />
           {children}
           <CustomLightBox />
         </ProviderComp>

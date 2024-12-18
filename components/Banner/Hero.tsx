@@ -4,19 +4,19 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="bg-white">
+    <div data-aos="zoom-out" className="bg-white">
       <div className="w-full h-auto">
-        <Link href={"/register"}>
-          <Image
-            src={"/latestbanner.webp"}
-            alt=""
-            height={1200}
-            width={1600}
-            className="w-full"
-            priority={true}
-            sizes="100vw"
-          />
-        </Link>
+        {/* <Link href={"/register"}> */}
+        <Image
+          src={"/latestbanner.webp"}
+          alt=""
+          height={1200}
+          width={1600}
+          className="w-full"
+          priority={true}
+          sizes="100vw"
+        />
+        {/* </Link> */}
       </div>
       <div className="templateContainer py-5 lg:py-8">
         <h1 className="text-[22px] lg:text-5xl tracking-wide font-medium text-primary leading-snug lg:leading-tight text-center">

@@ -99,7 +99,7 @@ export default function FeatureList() {
             return (
               <div
                 key={feature.title}
-                data-aos="fade-left"
+                data-aos="fade-up"
                 className="flex items-start space-x-4"
               >
                 <div className="flex-shrink-0">

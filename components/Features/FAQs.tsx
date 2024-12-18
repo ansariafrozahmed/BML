@@ -17,7 +17,10 @@ const FAQSection = () => {
       <Header />
       <div>
         <div className="templateContainer flex flex-col lg:flex-row items-start gap-10 w-full space-y-5 py-6 lg:py-12">
-          <div className="w-[45%] sticky hidden lg:block top-10 ">
+          <div
+            data-aos="fade-right"
+            className="w-[45%] sticky hidden lg:block top-10 "
+          >
             <Image
               height={600}
               width={600}
@@ -27,12 +30,16 @@ const FAQSection = () => {
             />
           </div>
           <div className="w-full lg:w-[55%] space-y-6">
-            <h1 className="text-2xl text-center lg:text-left md:text-4xl leading-tight">
+            <h1
+              data-aos="fade-up"
+              className="text-2xl text-center lg:text-left md:text-4xl leading-tight"
+            >
               Frequently Asked Questions!
             </h1>
             <div className="w-full space-y-4">
               {faqs.map((faq, index) => (
                 <div
+                  data-aos="fade-up"
                   key={index}
                   className="bg-white border border-gray-100 rounded-md shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]"
                 >
