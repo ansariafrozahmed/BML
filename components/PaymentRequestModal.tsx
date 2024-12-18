@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { closeModal, togglePaymentModal } from "@/store/paymentSlice";
 import axios from "axios"; // For making the API call to create the subscription
 import { getCookie, showMessage } from "@/lib/reuse";
+import { useRouter } from "next/navigation";
 
 const PaymentRequestModal = ({ userData }: any) => {
   const { paymentModal } = useSelector(
@@ -15,6 +16,7 @@ const PaymentRequestModal = ({ userData }: any) => {
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // Function to handle modal close and set a cookie for 24 hours
   const handleSkipForNow = () => {
@@ -88,6 +90,7 @@ const PaymentRequestModal = ({ userData }: any) => {
               if (backendRes.ok) {
                 const result = await backendRes.json();
                 console.log(result, "Backend response");
+                router.push(`/${userData?.username}/subscription`);
                 showMessage("Subscription created successfully", "success");
               } else {
                 console.error(
@@ -135,6 +138,7 @@ const PaymentRequestModal = ({ userData }: any) => {
   // Check if the modal should be shown based on the cookie
   useEffect(() => {
     const hideModal = Cookies.get("hideModal");
+    console.log(hideModal, "hideModal");
     if (!hideModal) {
       if (userData?.subscriptions?.status === "authenticated") {
         dispatch(closeModal());

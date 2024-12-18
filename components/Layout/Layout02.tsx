@@ -126,7 +126,7 @@ const Layout02: React.FC<Layout02Props> = ({
                 </>
               )}
             </div>
-            <ViewsCounter />
+            <ViewsCounter count={userData?.profile_views} />
           </div>
         </div>
       </div>
