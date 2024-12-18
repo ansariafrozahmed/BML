@@ -46,7 +46,7 @@ const Loginpage = async () => {
   }
 
   return (
-    <div data-aos="zoom-out" className="bg-gray-100 ">
+    <div className="bg-gray-100 ">
       <LoginForm />
     </div>
   );

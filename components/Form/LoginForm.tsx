@@ -1,11 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { FormLayout, TextField, Button, Toast, Frame } from "@shopify/polaris";
+import {
+  FormLayout,
+  TextField,
+  Button,
+  Toast,
+  Frame,
+  Icon,
+} from "@shopify/polaris";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ForgotPassword from "./ForgotPassword";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
+import { ViewIcon } from "@shopify/polaris-icons";
+import { HideIcon } from "@shopify/polaris-icons";
 
 const LoginForm = () => {
   const [identifier, setIdentifier] = useState("");
@@ -13,6 +23,11 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const router = useRouter();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   const handleIdentifierChange = (value: string) => {
     setIdentifier(value);
@@ -62,7 +77,7 @@ const LoginForm = () => {
   return (
     <>
       <Frame>
-        <div className="flex items-center h-screen">
+        <div data-aos="fade" className="flex items-center h-screen">
           <div className="bg-white shadow w-[350px] space-y-4 p-6 rounded-md mx-auto">
             <Link href="/">
               <Image
@@ -90,11 +105,26 @@ const LoginForm = () => {
               />
               <TextField
                 label="Password"
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 value={password}
-                onChange={(value) => handlePasswordChange(value)}
+                onChange={handlePasswordChange}
                 placeholder="Enter your password"
                 autoComplete="current-password"
+                suffix={
+                  <div
+                    className="cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {isPasswordVisible ? (
+                      <Icon source={ViewIcon} tone="base" />
+                    ) : (
+                      <Icon source={HideIcon} tone="base" />
+                    )}
+                  </div>
+                  // <Button plain onClick={togglePasswordVisibility}>
+                  //   {isPasswordVisible ? "Hide" : "Show"}
+                  // </Button>
+                }
               />
               <ForgotPassword />
               <Button

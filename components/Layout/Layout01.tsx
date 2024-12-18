@@ -9,6 +9,8 @@ import AccountandGalleryUpload from "../UserEdit/AccountandGalleryUpload";
 import { Edit, House, LayoutPanelLeft } from "lucide-react";
 import Link from "next/link";
 import ViewsCounter from "../Tabs/ViewsCounter";
+import PaymentRequestModal from "../PaymentRequestModal";
+import NoticeModal from "./NoticeModal";
 
 interface ContactDetail {
   label: string;
@@ -50,7 +52,6 @@ const Layout01: React.FC<Layout01Props> = ({
       // Get the user's IP address
       const response = await fetch("https://api.ipify.org/?format=json");
       const { ip } = await response.json();
-      console.log(ip, "ip");
 
       // Send the IP to your backend
       const backendResponse = await fetch(
@@ -78,29 +79,31 @@ const Layout01: React.FC<Layout01Props> = ({
     }
   };
 
+  let isExpired = true;
+
   useEffect(() => {
     profileViews(username);
   }, []);
 
-  // Fallback to userData if userProfile is missing certain data (e.g., banner_image)
-  let bannerImage = `${process.env.BACKEND}/upload/banner/${userData.banner_image}`;
-
   return (
     <>
       {isLoggedIn.logged && (
-        <div className="bg-white flex items-center justify-center px-4 py-2">
-          <Link
-            href={`/${userData?.username}/edit/customizeTheme/${
-              Math.random() * 100
-            }`}
-            className="flex gap-1 items-center"
-          >
-            <h2 className="text-user_primary flex items-center gap-1.5 hover:text-dark font-normal tracking-wider text-sm">
-              <LayoutPanelLeft size={16} />
-              Customize layout
-            </h2>
-          </Link>
-        </div>
+        <>
+          <PaymentRequestModal userData={userData} />
+          <div className="bg-white flex items-center justify-center px-4 py-2">
+            <Link
+              href={`/${userData?.username}/edit/customizeTheme/${
+                Math.random() * 100
+              }`}
+              className="flex gap-1 items-center"
+            >
+              <h2 className="text-user_primary flex items-center gap-1.5 hover:text-dark font-normal tracking-wider text-sm">
+                <LayoutPanelLeft size={16} />
+                Customize layout
+              </h2>
+            </Link>
+          </div>
+        </>
       )}
       <div className={`pb-28 overflow-hidden`}>
         <div className={`group h-[250px] lg:h-[350px] relative `}>
@@ -180,11 +183,16 @@ const Layout01: React.FC<Layout01Props> = ({
           </div>
         </div>
       </div>
-      <AccountandGalleryUpload
-        isLoggedIn={isLoggedIn?.logged}
-        token={isLoggedIn?.token}
-        isEdit={isEdit === "edit"}
-      />
+      {!isExpired && (
+        <AccountandGalleryUpload
+          isLoggedIn={isLoggedIn?.logged}
+          token={isLoggedIn?.token}
+          isEdit={isEdit === "edit"}
+        />
+      )}
+      {/* -------------- */}
+      {/* NOTICE MODAL */}
+      <NoticeModal />
     </>
   );
 };

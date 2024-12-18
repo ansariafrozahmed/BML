@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 const Register = () => {
   return (
-    <div data-aos="zoom-out" className="bg-gray-100 ">
+    <div className="bg-gray-100 ">
       <RegisterForm />
     </div>
   );

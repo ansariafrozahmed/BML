@@ -53,6 +53,12 @@ const Header = () => {
         >
           My Profile
         </Link>
+        <Link
+          href={`/${username}`}
+          className="block w-full hover:text-primary hover:bg-gray-100 cursor-pointer p-2 rounded"
+        >
+          Subscription
+        </Link>
         <div
           onClick={handleLogout}
           className="hover:bg-gray-100 cursor-pointer p-2 rounded"
@@ -78,7 +84,7 @@ const Header = () => {
     <>
       <AnnouncementBarV1 />
       <div
-        data-aos="zoom-out"
+        data-aos="fade-down"
         className="shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] z-[999] bg-white"
       >
         <header className="w-full templateContainer flex items-center justify-between py-2 px-4 md:px-8">

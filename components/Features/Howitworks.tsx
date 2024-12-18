@@ -95,7 +95,7 @@ export default function HowItWorks() {
     //     </div>
     //   </div>
     // </div>
-    <div data-aos="zoom-out" className="bg-gray-100">
+    <div data-aos="fade" className="bg-gray-100">
       <div className="templateContainer space-y-6 lg:space-y-10 py-6 md:py-8 lg:py-12">
         <h2 className="text-[18px] text-center md:text-[36px] leading-tight font-medium lg:tracking-wide text-dark">
           Get Started in 3 Easy Steps! <br /> 3 सोप्या टप्प्यांत सुरुवात करा!

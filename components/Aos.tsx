@@ -7,7 +7,7 @@ const AosComp = () => {
   useEffect(() => {
     Aos.init({
       once: true,
-      duration: 1000,
+      duration: 500,
       offset: 100,
     });
   }, []);

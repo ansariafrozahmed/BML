@@ -196,7 +196,10 @@ const RegisterForm = () => {
           duration={5000}
         />
       )}
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div
+        data-aos="fade"
+        className="flex items-center justify-center min-h-screen bg-gray-100"
+      >
         <div className="bg-white shadow-lg p-6 rounded-md w-96 space-y-2">
           <Nextlink href="/">
             <Image

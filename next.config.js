@@ -5,6 +5,7 @@ const nextConfig = {
     BACKEND: process.env.BACKEND,
     FRONTEND: process.env.FRONTEND,
     GALLERYURL: process.env.GALLERYURL,
+    RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID
   },
   images: {
     remotePatterns: [
