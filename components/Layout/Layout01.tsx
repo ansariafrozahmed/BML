@@ -79,7 +79,7 @@ const Layout01: React.FC<Layout01Props> = ({
     }
   };
 
-  let isExpired = true;
+  let isExpired = false;
 
   useEffect(() => {
     profileViews(username);
@@ -192,7 +192,7 @@ const Layout01: React.FC<Layout01Props> = ({
       )}
       {/* -------------- */}
       {/* NOTICE MODAL */}
-      <NoticeModal />
+      {/* <NoticeModal /> */}
     </>
   );
 };
