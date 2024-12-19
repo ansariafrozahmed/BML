@@ -9,8 +9,9 @@ const LayoutDesign = ({ layout_id }: { layout_id: number }) => {
   // Define an array of image objects with their paths
   const router = useRouter();
   const images = [
-    { id: 1, src: "/1.png", alt: "layout 01" },
-    { id: 2, src: "/2.png", alt: "layout 02" },
+    { id: 1, src: "/1.webp", alt: "layout 01" },
+    { id: 2, src: "/2.webp", alt: "layout 02" },
+    { id: 3, src: "/3.webp", alt: "layout 03" },
     // { id: 3, src: "/3.jpg", alt: "Image 3" },
     // { id: 4, src: "/4.jpg", alt: "Image 4" },
   ];
@@ -44,10 +45,7 @@ const LayoutDesign = ({ layout_id }: { layout_id: number }) => {
         throw new Error("Failed to update layout on the server");
       }
 
-      showMessage(
-        `Layout Updated Successfully. Please refresh the page to see the changes.`,
-        "success"
-      );
+      showMessage(`Layout Updated Successfully.`, "success");
       router.refresh();
       console.log("Layout updated successfully");
     } catch (error) {

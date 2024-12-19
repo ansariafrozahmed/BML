@@ -90,6 +90,7 @@ const Sidebar = ({ userData, userSession, mode }: any) => {
       if (response.status === 200) {
         showMessage(`Profile updated successfully`, "success");
         router.refresh();
+        toggleSidebar();
         setLoading(false);
       } else {
         console.error("Failed to update profile", response.data);

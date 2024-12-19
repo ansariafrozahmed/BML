@@ -307,10 +307,10 @@ export default async function ProfilePage({ params }: { params: any }) {
               case 3:
                 return (
                   <Layout03
-                  // username={data?.username?.[0]}
-                  // isLoggedIn={userSession}
-                  // userData={userData}
-                  // isEdit={isEdit}
+                    username={data?.username?.[0]}
+                    isLoggedIn={userSession}
+                    userData={userData}
+                    isEdit={isEdit}
                   />
                 );
               case 4:

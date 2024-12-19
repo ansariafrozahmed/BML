@@ -87,7 +87,7 @@ const Layout01: React.FC<Layout01Props> = ({
 
   return (
     <>
-      {isLoggedIn.logged && (
+      {/* {isLoggedIn.logged && (
         <>
           <PaymentRequestModal userData={userData} />
           <div className="bg-white flex items-center justify-center px-4 py-2">
@@ -104,7 +104,7 @@ const Layout01: React.FC<Layout01Props> = ({
             </Link>
           </div>
         </>
-      )}
+      )} */}
       <div className={`pb-28 overflow-hidden`}>
         <div className={`group h-[250px] lg:h-[350px] relative `}>
           <Image

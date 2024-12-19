@@ -108,7 +108,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
   };
 
   const renderYears = () => (
-    <div className="grid grid-cols-4 lg:flex items-center gap-4">
+    <div className="grid grid-cols-4 lg:flex items-center gap-4 py-6 lg:py-5">
       {loading ? (
         <>
           {Array(4)
