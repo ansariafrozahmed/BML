@@ -14,7 +14,7 @@ const FAQSection = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div>
         <div className="templateContainer flex flex-col lg:flex-row items-start gap-10 w-full space-y-5 py-6 lg:py-12">
           <div
@@ -71,7 +71,7 @@ const FAQSection = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

@@ -12,6 +12,10 @@ import {
 } from "@/lib/constants";
 import CustomLightBox from "@/components/Gallery/CustomLightBox";
 import AosComp from "@/components/Aos";
+import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
+import FooterWrapper from "@/components/HeadeFooterOther/FooterWrapper";
+import Header from "@/components/HeadeFooterOther/Header";
+import Footer from "@/components/HeadeFooterOther/Footer";
 // import ogImage from "@/assets/images/og.png";
 
 export const metadata: Metadata = {
@@ -52,9 +56,11 @@ export default function RootLayout({
       <body className={`antialiased overflow-x-hidden`}>
         <NextTopLoader color="#EE851C" showSpinner={false} />
         <ProviderComp>
+          <HeaderWrapper />
           <AosComp />
           {children}
           <CustomLightBox />
+          <FooterWrapper />
         </ProviderComp>
       </body>
     </html>

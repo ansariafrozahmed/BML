@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 const About = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="max-w-4xl mx-auto px-4  py-6 md:py-8 lg:py-12 space-y-14">
         <div className="space-y-4">
           <h1
@@ -210,7 +210,7 @@ const About = () => {
           </p>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

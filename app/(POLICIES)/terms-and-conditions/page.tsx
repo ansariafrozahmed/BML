@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 const Terms = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <section className="bg-gray-50 p-6 sm:p-10 lg:p-16 text-gray-800">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-2xl font-bold mb-4 text-center text-gray-900">
@@ -191,7 +191,7 @@ const Terms = () => {
         </div>
       </section>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
