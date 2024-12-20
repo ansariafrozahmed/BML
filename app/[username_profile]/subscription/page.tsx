@@ -1,5 +1,8 @@
+import Header from "@/components/HeadeFooterOther/Header";
 import ValidateUser from "@/lib/validateUser";
+import { redirect } from "next/navigation";
 import React from "react";
+import SubscriptionBuyed from "./_component/SubscriptionBuyed";
 
 const fetchUserData = async (username: string) => {
   try {
@@ -41,13 +44,12 @@ const Page = async ({ params }: any) => {
 
   console.log(userData);
 
+  if (!isLoggedIn?.logged) return redirect(`/`);
   return (
     <div>
-      <h2 className="text-3xl">UserData</h2>
-      <pre>{JSON.stringify(userData, null, 2)}</pre>
+      <Header />
 
-      <h2 className="text-3xl">isLoggedIn</h2>
-      <pre>{JSON.stringify(userSession, null, 2)}</pre>
+      <SubscriptionBuyed />
     </div>
   );
 };
