@@ -10,12 +10,12 @@ const Home = async () => {
   return (
     <>
       <EntrancePopUp />
-      <Header />
+      {/* <Header /> */}
       <Hero />
       {/* <FeatureList /> */}
       <HowItWorks />
       <NewFeature />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

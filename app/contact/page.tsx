@@ -5,12 +5,12 @@ import React from "react";
 const Contact = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="flex gap-10">
         <div></div>
         <div></div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

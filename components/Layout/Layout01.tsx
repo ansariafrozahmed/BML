@@ -89,7 +89,7 @@ const Layout01: React.FC<Layout01Props> = ({
     <>
       {isLoggedIn.logged && (
         <>
-          <PaymentRequestModal userData={userData} />
+          {/* <PaymentRequestModal userData={userData} /> */}
           <div className="bg-white flex items-center justify-center px-4 py-2">
             <Link
               href={`/${userData?.username}/edit/customizeTheme/${

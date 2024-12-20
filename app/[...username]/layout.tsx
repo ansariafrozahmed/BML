@@ -61,7 +61,6 @@ const RootLayout = async ({ children, params }: any) => {
 
       {/* Main Content */}
       <div className="w-full">{children}</div>
-      {/* <div className="w-full bg-gray-50 md:pb-10 pb-20"></div> */}
     </div>
   );
 };

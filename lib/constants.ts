@@ -6,6 +6,15 @@ export const defaultDescription =
 export const frontendURL = process.env.FRONTEND;
 export const openGraphImage = "/og.webp";
 
+export const allowedPaths = [
+  "/",
+  "/about",
+  "/faqs",
+  "/terms-and-conditions",
+  "/privacy-policy",
+  "/refund-policy",
+];
+
 export const faqs = [
   {
     question: `What is BappaMajhaLaadka.com?
