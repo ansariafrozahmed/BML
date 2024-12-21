@@ -1,8 +1,8 @@
-import Header from "@/components/HeadeFooterOther/Header";
 import ValidateUser from "@/lib/validateUser";
 import { redirect } from "next/navigation";
 import React from "react";
 import SubscriptionBuyed from "./_component/SubscriptionBuyed";
+import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
 
 const fetchUserData = async (username: string) => {
   try {
@@ -36,20 +36,13 @@ const Page = async ({ params }: any) => {
 
   const isUserMatch = isLoggedIn?.username === username_profile;
 
-  // Enhance the `isLoggedIn` object to include the match status
-  const userSession = {
-    ...isLoggedIn,
-    logged: isUserMatch,
-  };
-
   console.log(userData);
 
-  if (!isLoggedIn?.logged) return redirect(`/`);
+  if (!isUserMatch) return redirect(`/`);
+
   return (
     <div>
-      <Header />
-
-      <SubscriptionBuyed />
+      <SubscriptionBuyed userData={userData} subscriptionId={userData?.subscriptions?.id || userData?.subscriptions?.subscriptionId } />
     </div>
   );
 };

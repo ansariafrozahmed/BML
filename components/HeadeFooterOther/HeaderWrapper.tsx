@@ -7,8 +7,9 @@ import { allowedPaths } from "@/lib/constants";
 const HeaderWrapper = () => {
   const pathname = usePathname();
 
-  // Show Header only if pathname matches the specified paths
-  const shouldShowHeader = allowedPaths.includes(pathname);
+  // Check if pathname matches allowed paths or ends with 'subscription'
+  const shouldShowHeader = 
+    allowedPaths.includes(pathname) || pathname.endsWith("subscription");
 
   return shouldShowHeader ? (
     <>
