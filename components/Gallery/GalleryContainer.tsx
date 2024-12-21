@@ -206,7 +206,7 @@ const GalleryContainer: React.FC<GalleryContainerProps> = ({
           },
         });
 
-        // Check if the user confirmed the action
+        // Check if the user confirmed the action 
         if (newTitle) {
           // Send a request to the backend to update the title
           const response = await axios.post(
