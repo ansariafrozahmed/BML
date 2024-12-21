@@ -25,6 +25,7 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
     useState(false);
   const [hasPaidFirstInstallment, setHasPaidFirstInstallment] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [id, setSid] = useState(null);
   const [error, setError] = useState<string | null>(null);
 
   // Function to fetch subscription and payment status from the backend
@@ -54,8 +55,6 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
     subscriptionId ? fetchSubscriptionData() : setLoading(false);
   }, [subscriptionId]);
 
-  console.log(subscriptionId, "subscriptionId");
-
   // Render subscription status based on conditions
   const renderSubscriptionStatus = () => {
     if (loading) return <p className="text-center text-gray-500">Loading...</p>;
@@ -71,7 +70,7 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
           <p className="text-gray-700">
             You have subscribed, but the Authorization is pending.
           </p>
-          <Button variant="primary" onClick={handlePayment}>
+          <Button variant="primary" onClick={() => handlePayment(id as any)}>
             Authorize your payment
           </Button>
         </div>
@@ -86,6 +85,9 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
             Subscription Authenticated
           </h3>
           <p className="text-gray-700">Your subscription is authenticated.</p>
+          <Button variant="primary" onClick={() => handlePayment(id as any)}>
+            Authorize your payment
+          </Button>
         </div>
       );
     }
@@ -114,9 +116,8 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
         currency: "INR",
         name: "BappaMajhaLaadka",
         description: "Subscription for Your Plan",
-        subscription_id: subscriptionId,
+        subscription_id: id,
         handler: async function (response: any) {
-          console.log("Payment successful:", response);
           await updateSubscriptionRecord(id);
         },
         prefill: {
@@ -188,6 +189,7 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
       const responseData = await response.json();
       console.log(responseData, "responseData");
       if (response.ok && responseData.id) {
+        setSid(responseData.id);
         await handlePayment(responseData.id);
       } else {
         setError("Failed to create subscription");
