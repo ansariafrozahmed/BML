@@ -24,7 +24,7 @@ const FAQSection = () => {
             <Image
               height={600}
               width={600}
-              src="/mockup1.png"
+              src="/newmockups/01.webp"
               alt="Analytics Dashboard Preview"
               className="object-contain w-full h-full"
             />
