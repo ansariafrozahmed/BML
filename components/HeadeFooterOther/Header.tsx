@@ -54,7 +54,7 @@ const Header = () => {
           My Profile
         </Link>
         <Link
-          href={`/${username}`}
+          href={`/${username}/subscription`}
           className="block w-full hover:text-primary hover:bg-gray-100 cursor-pointer p-2 rounded"
         >
           Subscription

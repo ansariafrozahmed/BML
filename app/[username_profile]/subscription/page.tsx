@@ -1,5 +1,7 @@
 import ValidateUser from "@/lib/validateUser";
+import { redirect } from "next/navigation";
 import React from "react";
+import SubscriptionBuyed from "./_component/SubscriptionBuyed";
 
 const fetchUserData = async (username: string) => {
   try {
@@ -33,21 +35,16 @@ const Page = async ({ params }: any) => {
 
   const isUserMatch = isLoggedIn?.username === username_profile;
 
-  // Enhance the `isLoggedIn` object to include the match status
-  const userSession = {
-    ...isLoggedIn,
-    logged: isUserMatch,
-  };
-
-  console.log(userData);
+  if (!isUserMatch) return redirect(`/`);
 
   return (
     <div>
-      <h2 className="text-3xl">UserData</h2>
-      <pre>{JSON.stringify(userData, null, 2)}</pre>
-
-      <h2 className="text-3xl">isLoggedIn</h2>
-      <pre>{JSON.stringify(userSession, null, 2)}</pre>
+      <SubscriptionBuyed
+        userData={userData}
+        subscriptionId={
+          userData?.subscriptions?.id || userData?.subscriptions?.subscriptionId
+        }
+      />
     </div>
   );
 };

@@ -13,6 +13,7 @@ export const allowedPaths = [
   "/terms-and-conditions",
   "/privacy-policy",
   "/refund-policy",
+  "/subscription"
 ];
 
 export const faqs = [
