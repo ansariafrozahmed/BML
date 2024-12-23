@@ -84,7 +84,7 @@ const Header = () => {
     <>
       <AnnouncementBarV1 />
       <div
-        data-aos="fade-down"
+        // data-aos="fade-down"
         className="shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] z-[999] bg-white"
       >
         <header className="w-full templateContainer flex items-center justify-between py-2 px-4 md:px-8">

@@ -8,14 +8,10 @@ const HeaderWrapper = () => {
   const pathname = usePathname();
 
   // Check if pathname matches allowed paths or ends with 'subscription'
-  const shouldShowHeader = 
+  const shouldShowHeader =
     allowedPaths.includes(pathname) || pathname.endsWith("subscription");
 
-  return shouldShowHeader ? (
-    <>
-      <Header />
-    </>
-  ) : null;
+  return shouldShowHeader ? <Header /> : null;
 };
 
 export default HeaderWrapper;

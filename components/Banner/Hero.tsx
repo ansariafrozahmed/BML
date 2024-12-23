@@ -4,8 +4,8 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div data-aos="zoom-out" className="bg-white">
-      <div className="w-full h-auto">
+    <div className="bg-white">
+      <div className="w-full h-auto z-30">
         {/* <Link href={"/register"}> */}
         <Image
           src={"/latestbanner.webp"}
