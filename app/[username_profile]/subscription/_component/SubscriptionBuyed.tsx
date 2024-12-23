@@ -60,34 +60,14 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
     if (loading) return <p className="text-center text-gray-500">Loading...</p>;
     if (error) return <p className="text-center text-red-500">{error}</p>;
 
-    // Case where the subscription is created but the first installment is pending
-    if (isSUbscribedCreated && !hasPaidFirstInstallment) {
-      return (
-        <div className="bg-yellow-100 p-6 rounded-lg shadow-md space-y-4">
-          <h3 className="text-xl font-semibold text-gray-800">
-            Subscription Active
-          </h3>
-          <p className="text-gray-700">
-            You have subscribed, but the Authorization is pending.
-          </p>
-          <Button variant="primary" onClick={() => handlePayment(id as any)}>
-            Authorize your payment
-          </Button>
-        </div>
-      );
-    }
-
     // Case where the subscription is created and authenticated, and first installment is paid
-    if (isSubscribedAuthenticate && !hasPaidFirstInstallment) {
+    if (isSubscribedAuthenticate) {
       return (
         <div className="bg-green-100 p-6 rounded-lg shadow-md space-y-4">
           <h3 className="text-xl font-semibold text-gray-800">
             Subscription Authenticated
           </h3>
           <p className="text-gray-700">Your subscription is authenticated.</p>
-          <Button variant="primary" onClick={() => handlePayment(id as any)}>
-            Authorize your payment
-          </Button>
         </div>
       );
     }
@@ -206,6 +186,8 @@ const SubscriptionBuyed = ({ subscriptionId, userData }: any) => {
       <h2 className="text-2xl font-semibold text-center text-gray-800">
         Subscription Plan
       </h2>
+
+      <pre>{JSON.stringify(userData, null, 2)}</pre>
       {renderSubscriptionStatus()}
     </div>
   );

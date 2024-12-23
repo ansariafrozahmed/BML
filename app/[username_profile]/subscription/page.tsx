@@ -2,7 +2,6 @@ import ValidateUser from "@/lib/validateUser";
 import { redirect } from "next/navigation";
 import React from "react";
 import SubscriptionBuyed from "./_component/SubscriptionBuyed";
-import HeaderWrapper from "@/components/HeadeFooterOther/HeaderWrapper";
 
 const fetchUserData = async (username: string) => {
   try {
@@ -36,13 +35,16 @@ const Page = async ({ params }: any) => {
 
   const isUserMatch = isLoggedIn?.username === username_profile;
 
-  console.log(userData);
-
   if (!isUserMatch) return redirect(`/`);
 
   return (
     <div>
-      <SubscriptionBuyed userData={userData} subscriptionId={userData?.subscriptions?.id || userData?.subscriptions?.subscriptionId } />
+      <SubscriptionBuyed
+        userData={userData}
+        subscriptionId={
+          userData?.subscriptions?.id || userData?.subscriptions?.subscriptionId
+        }
+      />
     </div>
   );
 };
